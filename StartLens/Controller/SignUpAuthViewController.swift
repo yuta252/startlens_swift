@@ -18,7 +18,9 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authSecondField: UITextField!
     @IBOutlet weak var authThirdField: UITextField!
     @IBOutlet weak var authFourthField: UITextField!
-    @IBOutlet weak var errorMessage: UILabel!
+    
+    
+    
     
     
     var authCode = Int()
@@ -34,13 +36,16 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
         authThirdField.delegate = self
         authFourthField.delegate = self
         authExpText.text = "\(emailAddress) に認証コードを送信しました\n下記に認証コードを入力してください"
+        print("authCode before sendAction: \(authCode)")
+        print("emailAddress before sendAction: \(emailAddress)")
     }
     
     @IBAction func sendAction(_ sender: Any) {
         if let authFirst = Int(authFirstField.text!), let authSecond = Int(authSecondField.text!), let authThird = Int(authThirdField.text!), let authFourth = Int(authFourthField.text!){
             
             let authInput = authFirst * 1000 + authSecond * 100 + authThird * 10 + authFourth
-            
+            print("authCode: \(authCode)")
+            print("authInput: \(authInput)")
             if authCode == authInput {
                 // 認証成功
                 print("認証成功")
@@ -62,12 +67,13 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
                             UserDefaults.standard.set(true, forKey: "isLogIn")
                             // 認証完了画面へ遷移
                             self.performSegue(withIdentifier: "signupcomplete", sender: nil)
+                            print("performsegue")
                             
                         }else{
                             // 認証失敗
                             print("認証失敗")
                             DispatchQueue.main.async {
-                                self.errorMessage.text = "認証に失敗しました。新規登録画面に戻りもう一度入力ください"
+                                //self.errorMessage.text = "認証に失敗しました。新規登録画面に戻りもう一度入力ください"
                             }
                         }
 
@@ -77,17 +83,21 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }else{
-                print("認証失敗")
-                errorMessage.text = "認証コードが異なります。新規登録画面に戻りもう一度入力ください"
+                print("認証失敗 if文")
+                DispatchQueue.main.async {
+                    //self.errorMessage.text = "認証コードが異なります。新規登録画面に戻りもう一度入力ください"
+                }
             }
             
         }
+        print("if sentence end")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let completeVC = segue.destination as? SignUpCompleteViewController
         completeVC?.emailAddress = emailAddress
         completeVC?.apiKey = apiKey
+        print("Sign up auth view controller ,prepare for segue is called")
     }
 
     @IBAction func backAction(_ sender: Any) {

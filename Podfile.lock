@@ -8,6 +8,9 @@ PODS:
     - SDWebImage/Core (= 5.7.2)
   - SDWebImage/Core (5.7.2)
   - SwiftyJSON (5.0.0)
+  - TensorFlowLiteC (2.2.0)
+  - TensorFlowLiteSwift (2.2.0):
+    - TensorFlowLiteC (= 2.2.0)
   - TextFieldEffects (1.6.0)
 
 DEPENDENCIES:
@@ -18,6 +21,7 @@ DEPENDENCIES:
   - lottie-ios
   - SDWebImage
   - SwiftyJSON
+  - TensorFlowLiteSwift
   - TextFieldEffects
 
 SPEC REPOS:
@@ -29,6 +33,8 @@ SPEC REPOS:
     - lottie-ios
     - SDWebImage
     - SwiftyJSON
+    - TensorFlowLiteC
+    - TensorFlowLiteSwift
     - TextFieldEffects
 
 SPEC CHECKSUMS:
@@ -39,8 +45,10 @@ SPEC CHECKSUMS:
   lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
   SDWebImage: d9ea4959d99c52276dfada481987018fcaea3d58
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
+  TensorFlowLiteSwift: 2dd5e9c895e1819501f0fba3d8b69a536bda6c65
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
 
-PODFILE CHECKSUM: 76c67eebd1eabdf1dd402cd0221b36dd912bc58f
+PODFILE CHECKSUM: fc0e8b18a9bbe5b062bcc1f5675ea00fd7d2defd
 
 COCOAPODS: 1.9.1

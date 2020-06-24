@@ -28,6 +28,12 @@ class SpotDetailViewController: UIViewController, SpotDetailDelegate {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         spotContentViewController = (children[0] as! SpotContentViewController)
@@ -45,6 +51,10 @@ class SpotDetailViewController: UIViewController, SpotDetailDelegate {
         case "spotcontent":
             let spotContentVC = segue.destination as! SpotContentViewController
             spotContentVC.spotId = spotId
+            break
+        case "camera":
+            let cameraVC = segue.destination as! CameraViewController
+            cameraVC.spotId = spotId
             break
         case "reviewPost":
             let reviewPostVC = segue.destination as! ReviewPostViewController
@@ -76,7 +86,7 @@ class SpotDetailViewController: UIViewController, SpotDetailDelegate {
     }
     
     func moveToCamera() {
-        print("move to camera")
+        performSegue(withIdentifier: "camera", sender: nil)
     }
     
     func moveToReviewPost() {

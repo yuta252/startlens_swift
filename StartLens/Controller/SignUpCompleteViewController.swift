@@ -54,6 +54,11 @@ class SignUpCompleteViewController: UIViewController, UIPickerViewDelegate, UIPi
         
     }
     
+    @IBAction func backAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     @IBAction func sexSelect(_ sender: Any) {
         
         if let button = sender as? UIButton{

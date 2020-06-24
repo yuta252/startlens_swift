@@ -14,10 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        var vc: UIViewController?
         
         // キーボードを入力欄をかぶらなくする
         IQKeyboardManager.shared.enable = true
@@ -30,14 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 自動ログイン設定
         if isLogIn{
             // 2回目以降の起動
-            print("move home")
-            vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "home")
+//            print("move home")
+//            self.window = UIWindow(frame: UIScreen.main.bounds)
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let initialVC = storyboard.instantiateViewController(withIdentifier: "home")
+//            self.window?.rootViewController = initialVC
+//            self.window?.makeKeyAndVisible()
         }else{
             print("move to tutorial")
-            vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
         }
-        self.window?.rootViewController = vc
-        window?.makeKeyAndVisible()
         
         return true
     }

@@ -24,5 +24,6 @@ pod 'Cosmos'
 
 # Keyboard
 pod 'IQKeyboardManagerSwift'
+pod 'TensorFlowLiteSwift'
 
 end

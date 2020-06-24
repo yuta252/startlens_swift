@@ -155,10 +155,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
                 
             case .success:
                 let json:JSON = JSON(response.data as Any)
+                self.spotItem = []
                 if let num = json["info"]["num"].int, num != 0{
                     self.noSearchTitle.isHidden = true
                     self.noSearchSubtitle.isHidden = true
-                    self.spotItem = []
                     let roopNum = num - 1
 
                     for i in 0...roopNum{
@@ -203,10 +203,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
                 
             case .success:
                 let json:JSON = JSON(response.data as Any)
+                self.spotItem = []
                 if let num = json["info"]["num"].int, num != 0{
                     self.noSearchTitle.isHidden = true
                     self.noSearchSubtitle.isHidden = true
-                    self.spotItem = []
                     let roopNum = num - 1
 
                     for i in 0...roopNum{

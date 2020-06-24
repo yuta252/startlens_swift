@@ -73,8 +73,8 @@ class ExhibitDetailViewController: UIViewController {
                         self.exhibitIntroView.text = exhibitIntro
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8){
-                        self.contentHeight.constant = self.exhibitIntroView.frame.size.height + 40
-                        print(self.exhibitIntroView.frame.size.height + 40)
+                        self.contentHeight.constant = self.exhibitIntroView.frame.size.height + 50
+                        print(self.exhibitIntroView.frame.size.height + 50)
                     }
                     
                 }

@@ -36,10 +36,8 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
     }
     
     
-    
-    
     @IBAction func sendAction(_ sender: Any) {
-        
+        print("send is tapped")
         // メールアドレスがnilでも空欄でもないことを確認
         guard let emailAddress = emailField.text, !emailAddress.isEmpty else{
             passWordMessage.text = "メールアドレスを入力してください"
@@ -60,7 +58,7 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         
         // POSTするパラメータ作成
         let parameters = ["auth":["email": emailAddress, "password": passWord]]
-        
+        print("parameters: \(parameters)")
         // メールアドレスとパスワードをJSON形式でサーバーに送信する
         AF.request(Constants.signUpURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
             print(response)
@@ -78,10 +76,11 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                     }
                     
                 }else{
-                    // 認証コード画面へ遷移
-                    print("authresult. move to next")
+                    // 認証コード画面へ遷
                     if let authResult = json["result"]["authcode"].int{
+                        print("authResult: \(authResult)")
                         self.authCode = authResult
+                        print("authresult. move to next")
                         self.performSegue(withIdentifier: "auth", sender: nil)
 //                        let storyboard:UIStoryboard = self.storyboard!
 //                        let authVC = storyboard.instantiateViewController(withIdentifier: "signupauth") as! SignUpAuthViewController
@@ -96,12 +95,14 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                 
             }
         }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let authVC = segue.destination as? SignUpAuthViewController
-        authVC?.authCode = authCode
-        authVC?.emailAddress = authEmail
+        print("Sign up view controller ,prepare segue authCode: \(authCode)")
+        authVC?.authCode = self.authCode
+        authVC?.emailAddress = self.authEmail
     }
     
     

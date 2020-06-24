@@ -20,6 +20,8 @@ class IntroViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         // ScrollViewのPagingを可能にする
         scrollView.isPagingEnabled = true
@@ -40,6 +42,19 @@ class IntroViewController: UIViewController {
             
         }
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        let isLogIn = UserDefaults.standard.bool(forKey: "isLogIn")
+//        // 自動ログイン設定
+//        if isLogIn{
+//            // 2回目以降の起動
+//            print("move home")
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "home") as! HomeViewController
+//            self.present(vc, animated: false, completion: nil)
+//        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
