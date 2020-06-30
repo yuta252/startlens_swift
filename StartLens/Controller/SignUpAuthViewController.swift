@@ -18,9 +18,9 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authSecondField: UITextField!
     @IBOutlet weak var authThirdField: UITextField!
     @IBOutlet weak var authFourthField: UITextField!
-    
-    
-    
+    @IBOutlet weak var errorMessageText: UILabel!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var backButton: UIButton!
     
     
     var authCode = Int()
@@ -35,9 +35,7 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
         authSecondField.delegate = self
         authThirdField.delegate = self
         authFourthField.delegate = self
-        authExpText.text = "\(emailAddress) に認証コードを送信しました\n下記に認証コードを入力してください"
-        print("authCode before sendAction: \(authCode)")
-        print("emailAddress before sendAction: \(emailAddress)")
+        setupUI()
     }
     
     @IBAction func sendAction(_ sender: Any) {
@@ -70,10 +68,9 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
                             print("performsegue")
                             
                         }else{
-                            // 認証失敗
-                            print("認証失敗")
                             DispatchQueue.main.async {
-                                //self.errorMessage.text = "認証に失敗しました。新規登録画面に戻りもう一度入力ください"
+                                self.errorMessageText.text = "authValidFail1".localized
+                                self.errorMessageText.textColor = ThemeColor.errorString
                             }
                         }
 
@@ -83,9 +80,9 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }else{
-                print("認証失敗 if文")
                 DispatchQueue.main.async {
-                    //self.errorMessage.text = "認証コードが異なります。新規登録画面に戻りもう一度入力ください"
+                    self.errorMessageText.text = "authValidFail2".localized
+                    self.errorMessageText.textColor = ThemeColor.errorString
                 }
             }
             
@@ -97,11 +94,16 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
         let completeVC = segue.destination as? SignUpCompleteViewController
         completeVC?.emailAddress = emailAddress
         completeVC?.apiKey = apiKey
-        print("Sign up auth view controller ,prepare for segue is called")
     }
 
     @IBAction func backAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func setupUI(){
+        authExpText.text = "authExplainedText".localized
+        sendButton.setTitle("sendButtonText".localized, for: .normal)
+        backButton.setTitle("backSignupText".localized, for: .normal)
     }
     
     // 文字数制限

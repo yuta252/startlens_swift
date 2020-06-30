@@ -16,6 +16,8 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
     @IBOutlet weak var emailField: HoshiTextField!
     @IBOutlet weak var passWordField: HoshiTextField!
     @IBOutlet weak var passWordMessage: UILabel!
+    @IBOutlet weak var signinButtonText: UIButton!
+    @IBOutlet weak var passwordResetText: UIButton!
     
     
     var authCode = Int()
@@ -28,6 +30,7 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         emailField.delegate = self
         passWordField.delegate = self
         
+        setupUI()
         
     }
     
@@ -38,8 +41,8 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
     @IBAction func logInAction(_ sender: Any) {
         // メールアドレスがnilでも空欄でもないことを確認
         guard let emailAddress = emailField.text, !emailAddress.isEmpty else{
-            passWordMessage.text = "メールアドレスを入力してください"
-            passWordMessage.textColor = UIColor(red: 216/255, green: 30/255, blue: 91/255, alpha: 1)
+            passWordMessage.text = "emailValidMessage".localized
+            passWordMessage.textColor = ThemeColor.errorString
             return
         }
         
@@ -47,8 +50,8 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         
         // パスワードがnilでも空欄でもないことを確認
         guard let passWord = passWordField.text, !passWord.isEmpty else{
-            passWordMessage.text = "パスワードを入力してください"
-            passWordMessage.textColor = UIColor(red: 216/255, green: 30/255, blue: 91/255, alpha: 1)
+            passWordMessage.text = "passValidMessage".localized
+            passWordMessage.textColor = ThemeColor.errorString
             return
         }
         
@@ -77,7 +80,6 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
                         if let apiKey = json["result"]["apikey"].string{
                             UserDefaults.standard.set(apiKey, forKey: "apiKey")
                             self.performSegue(withIdentifier: "home", sender: nil)
-                            print("Success! Login to homepage")
                         }
                     }
                 }
@@ -93,6 +95,14 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         performSegue(withIdentifier: "passwordRest", sender: nil)
     }
     
+    func setupUI(){
+        emailField.placeholder = "emailInputPlace".localized
+        passWordField.placeholder = "passwordInputPlace".localized
+        passWordMessage.text = "signupErrorMessage".localized
+        signinButtonText.setTitle("logInButtonText".localized, for: .normal)
+        passwordResetText.setTitle("passwordFogotText".localized, for: .normal)
+    }
+    
     // キーボード以外の領域を押下時にキーボードを閉じる
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -106,8 +116,8 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let emailaddress = emailField.text, !emailaddress.contains("@"){
-            passWordMessage.text = "正しいメールアドレスの形式ではありません"
-            passWordMessage.textColor = UIColor(red: 216/255, green: 30/255, blue: 91/255, alpha: 1)
+            passWordMessage.text = "emailValidMessage2"
+            passWordMessage.textColor = ThemeColor.errorString
         }
     }
 }

@@ -13,6 +13,7 @@ import SDWebImage
 
 class ExhibitListViewController: UIViewController {
     
+    @IBOutlet weak var recommendTitleText: UILabel!
     @IBOutlet weak var recommendCollectionView: UICollectionView!
     @IBOutlet weak var noExhibit: UILabel!
     @IBOutlet weak var collectionIViewHeight: NSLayoutConstraint!
@@ -29,6 +30,7 @@ class ExhibitListViewController: UIViewController {
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
         
+        setupUI()
         recommendCollectionView.dataSource = self
         recommendCollectionView.delegate = self
         recommendCollectionView.register(UINib(nibName: "RecommendCell", bundle: nil), forCellWithReuseIdentifier: "RecommendCell")
@@ -52,6 +54,11 @@ class ExhibitListViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    func setupUI(){
+        recommendTitleText.text = "recommendTitleText".localized
+        noExhibit.text = "noRecommendText".localized
     }
     
     func fetchData(){

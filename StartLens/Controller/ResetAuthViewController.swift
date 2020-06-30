@@ -18,6 +18,9 @@ class ResetAuthViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authThirdField: UITextField!
     @IBOutlet weak var authFourthField: UITextField!
     @IBOutlet weak var errorMessage: UILabel!
+    @IBOutlet weak var loginButtonText: UIButton!
+    @IBOutlet weak var resetButtonText: UIButton!
+    @IBOutlet weak var backButtonText: UIButton!
     
     var authCode = Int()
     var apiKey = String()
@@ -31,7 +34,8 @@ class ResetAuthViewController: UIViewController, UITextFieldDelegate {
         authSecondField.delegate = self
         authThirdField.delegate = self
         authFourthField.delegate = self
-        authExpText.text = "\(emailAddress) に認証コードを送信しました\n下記に認証コードを入力してください"
+        
+        setupUI()
     }
     
     
@@ -42,7 +46,6 @@ class ResetAuthViewController: UIViewController, UITextFieldDelegate {
             
             if authCode == authInput {
                 // 認証成功
-                print("認証成功")
                 // メールアドレスとパスワードをJSON形式でサーバーに送信する
                 let parameters = ["auth":["email": emailAddress]]
 
@@ -74,7 +77,8 @@ class ResetAuthViewController: UIViewController, UITextFieldDelegate {
                             // 認証失敗
                             print("認証失敗")
                             DispatchQueue.main.async {
-                                self.errorMessage.text = "認証に失敗しました。新規登録画面に戻りもう一度入力ください"
+                                self.errorMessage.text = "authValidFail1".localized
+                                self.errorMessage.textColor = ThemeColor.errorString
                             }
                         }
 
@@ -84,8 +88,10 @@ class ResetAuthViewController: UIViewController, UITextFieldDelegate {
                     }
                 }
             }else{
-                print("認証失敗")
-                errorMessage.text = "認証コードが異なります。パスワードリセット画面に戻りもう一度入力ください"
+                DispatchQueue.main.async {
+                    self.errorMessage.text = "authValidFail2".localized
+                    self.errorMessage.textColor = ThemeColor.errorString
+                }
             }
         }
     }
@@ -93,6 +99,13 @@ class ResetAuthViewController: UIViewController, UITextFieldDelegate {
 
     @IBAction func backAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func setupUI(){
+        authExpText.text = "authExplainedText".localized
+        loginButtonText.setTitle("useLoginButtonText".localized, for: .normal)
+        resetButtonText.setTitle("resetPasswordButtonText".localized, for: .normal)
+        backButtonText.setTitle("backPasswordResetText".localized, for: .normal)
     }
     
     

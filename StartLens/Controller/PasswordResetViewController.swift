@@ -13,8 +13,12 @@ import SwiftyJSON
 
 class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate  {
 
+    
+    @IBOutlet weak var passwordResetText: UILabel!
+    @IBOutlet weak var passwordRestSubText: UILabel!
     @IBOutlet weak var emailField: HoshiTextField!
     @IBOutlet weak var passWordMessage: UILabel!
+    @IBOutlet weak var sendButtonText: UIButton!
     
     var authCode = Int()
     var authEmail = String()
@@ -25,6 +29,7 @@ class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextF
         // プロトコル
         emailField.delegate = self
         
+        setupUI()
         
     }
     
@@ -37,9 +42,8 @@ class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextF
     @IBAction func sendAction(_ sender: Any) {
         // メールアドレスがnilでも空欄でもないことを確認
         guard let emailAddress = emailField.text, !emailAddress.isEmpty else{
-            passWordMessage.text = "メールアドレスを入力してください"
+            passWordMessage.text = "emailValidMessage".localized
             passWordMessage.textColor = ThemeColor.errorString
-            print("メールアドレス入力ないよ")
             return
         }
         
@@ -66,7 +70,6 @@ class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextF
                     
                 }else{
                     // 認証コード画面へ遷移
-                    print("authresult. move to next")
                     if let authResult = json["result"]["authcode"].int{
                         self.authCode = authResult
                         self.performSegue(withIdentifier: "resetAuth", sender: nil)
@@ -86,6 +89,13 @@ class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextF
         authVC?.emailAddress = authEmail
     }
     
+    func setupUI(){
+        passwordResetText.text = "passwordResetTitleText".localized
+        passwordRestSubText.text = "passwordResetSubText".localized
+        emailField.placeholder = "emailInputPlace".localized
+        sendButtonText.setTitle("sendButtonText".localized, for: .normal)
+    }
+    
     
     // キーボード以外の領域を押下時にキーボードを閉じる
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -100,7 +110,7 @@ class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextF
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let emailaddress = emailField.text, !emailaddress.contains("@"){
-            passWordMessage.text = "正しいメールアドレスの形式ではありません"
+            passWordMessage.text = "emailValidMessage2".localized
             passWordMessage.textColor = ThemeColor.errorString
         }
     }

@@ -33,10 +33,20 @@ class SpotContentViewController: UIViewController {
     @IBOutlet weak var ratingStar: CosmosView!
     @IBOutlet weak var ratingNumber: UILabel!
     @IBOutlet weak var ratingAmount: UILabel!
+    @IBOutlet weak var ratingItemText: UILabel!
     @IBOutlet weak var cameraButtonView: UIButton!
     @IBOutlet weak var likeButtonView: UIButton!
+    @IBOutlet weak var spotIntroTitle: UILabel!
     @IBOutlet weak var spotIntroButton: UIButton!
     @IBOutlet weak var spotIntroView: UILabel!
+    
+    @IBOutlet weak var basicInfoTitle: UILabel!
+    @IBOutlet weak var addressTitle: UILabel!
+    @IBOutlet weak var telephoneTitle: UILabel!
+    @IBOutlet weak var spotUrlTitle: UILabel!
+    @IBOutlet weak var feeTitle: UILabel!
+    @IBOutlet weak var businessHourTitle: UILabel!
+    @IBOutlet weak var holidayTitle: UILabel!
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var telephone: UILabel!
     @IBOutlet weak var spotUrl: UILabel!
@@ -44,12 +54,16 @@ class SpotContentViewController: UIViewController {
     @IBOutlet weak var businessHour: UILabel!
     @IBOutlet weak var holiday: UILabel!
     
+    
+    @IBOutlet weak var reviewTitleText: UILabel!
     @IBOutlet weak var reviewPostButton: UIButton!
+    
     @IBOutlet weak var noReview: UILabel!
     @IBOutlet weak var reviewContinueButton: UIButton!
     @IBOutlet weak var reviewTableView: UITableView!
     @IBOutlet weak var tableHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var recommendTitleText: UILabel!
     @IBOutlet weak var recommendCollectionView: UICollectionView!
     @IBOutlet weak var collectionHeight: NSLayoutConstraint!
     @IBOutlet weak var noRecommend: UILabel!
@@ -117,6 +131,23 @@ class SpotContentViewController: UIViewController {
         recommendContinueButton.layer.cornerRadius = 5.0
         recommendContinueButton.layer.borderWidth = 1.0
         recommendContinueButton.layer.borderColor = ThemeColor.main.cgColor
+        
+        ratingItemText.text = "spotRatingItemText".localized
+        spotIntroTitle.text = "spotIntroTitle".localized
+        basicInfoTitle.text = "spotBasicInfoTitle".localized
+        addressTitle.text = "spotBasicLocation".localized
+        telephoneTitle.text = "spotBasicTel".localized
+        spotUrlTitle.text = "spotBasicHp".localized
+        feeTitle.text = "spotBasicExpense".localized
+        businessHourTitle.text = "spotBasicBusiness".localized
+        holidayTitle.text = "spotBasicHoliday".localized
+        reviewTitleText.text = "Review".localized
+        noReview.text = "noReviewText".localized
+        reviewPostButton.setTitle("reviewPostButton".localized, for: .normal)
+        reviewContinueButton.setTitle("reviewContinueButton".localized, for: .normal)
+        recommendTitleText.text = "recommendTitleText".localized
+        noRecommend.text = "noRecommendText".localized
+        recommendContinueButton.setTitle("recommedContinueButton".localized, for: .normal)
     }
     
     

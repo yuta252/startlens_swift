@@ -17,8 +17,8 @@ class ExhibitResultViewController: UIViewController {
     var exhibitObj: Exhibit?
     
     
+    @IBOutlet weak var predictionTitle: UILabel!
     @IBOutlet weak var exhibitNum: UILabel!
-    
     @IBOutlet weak var exhibitResultCollectionView: UICollectionView!
     @IBOutlet weak var contentHeight: NSLayoutConstraint!
     
@@ -29,12 +29,13 @@ class ExhibitResultViewController: UIViewController {
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
         
+        setupUI()
         exhibitResultCollectionView.dataSource = self
         exhibitResultCollectionView.delegate = self
         exhibitResultCollectionView.register(UINib(nibName: "RecommendCell", bundle: nil), forCellWithReuseIdentifier: "RecommendCell")
         exhibitResultCollectionView.reloadData()
         
-        exhibitNum.text = "(" + String(exhibitItem.count) + "件)"
+        exhibitNum.text = "(" + String(exhibitItem.count) + "exhibitResultItem".localized
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,6 +58,10 @@ class ExhibitResultViewController: UIViewController {
         default:
             break
         }
+    }
+    
+    func setupUI(){
+        predictionTitle.text = "exhibitResultText".localized
     }
 }
 

@@ -11,10 +11,17 @@ import Alamofire
 
 class SignUpCompleteViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
 
+    @IBOutlet weak var completeTitleText: UILabel!
+    @IBOutlet weak var sexTitleText: UILabel!
     @IBOutlet weak var womanTextField: UIButton!
     @IBOutlet weak var manTextField: UIButton!
     @IBOutlet weak var noAnswerTextField: UIButton!
+    @IBOutlet weak var sexHelpText: UILabel!
+    @IBOutlet weak var birthTitleText: UILabel!
     @IBOutlet weak var yearTextField: UITextField!
+    @IBOutlet weak var birthHelpText: UILabel!
+    @IBOutlet weak var completeButton: UIButton!
+    
     
     var emailAddress = String()
     var apiKey = String()
@@ -31,6 +38,8 @@ class SignUpCompleteViewController: UIViewController, UIPickerViewDelegate, UIPi
         pickerView.delegate = self
         pickerView.dataSource = self
 
+        setupUI()
+        
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 35))
         // OKボタン
         let doneButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 20))
@@ -116,6 +125,18 @@ class SignUpCompleteViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
     }
     
+    func setupUI(){
+        completeTitleText.text = "signupCompleteText".localized
+        sexTitleText.text = "sexTitleText".localized
+        womanTextField.setTitle("sexFemaleText".localized, for: .normal)
+        manTextField.setTitle("sexMaleText".localized, for: .normal)
+        noAnswerTextField.setTitle("sexNAText".localized, for: .normal)
+        sexHelpText.text = "sexHelpText".localized
+        birthTitleText.text = "birthTitleText".localized
+        birthHelpText.text = "birthHelpText".localized
+        completeButton.setTitle("signupCompleteButton".localized, for: .normal)
+    }
+    
     // UIPickerViewの列の数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -128,7 +149,8 @@ class SignUpCompleteViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     // UIPickerViewの最初の表示
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return list[49]
+        print("list49: \(list[row])")
+        return list[row]
     }
     
     // UIPickerViewのRowが選択された時の挙動

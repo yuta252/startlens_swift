@@ -1,0 +1,405 @@
+
+/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "0Yd-tS-3vt"; */
+"0Yd-tS-3vt.placeholder" = "パスワード";
+
+/* Class = "UILabel"; text = "("; ObjectID = "0eq-Yy-1Ll"; */
+"0eq-Yy-1Ll.text" = "(";
+
+/* Class = "UIButton"; normalTitle = "パスワード再設定"; ObjectID = "0gk-v0-ahr"; */
+"0gk-v0-ahr.normalTitle" = "パスワード再設定";
+
+/* Class = "UILabel"; text = "パスワードは、半角英数8文字以内で入力してください。"; ObjectID = "1Ng-h2-jGA"; */
+"1Ng-h2-jGA.text" = "パスワードは、半角英数8文字以内で入力してください。";
+
+/* Class = "UIButton"; normalTitle = "博物館・美術館"; ObjectID = "1jF-fl-0Hy"; */
+"1jF-fl-0Hy.normalTitle" = "博物館・美術館";
+
+/* Class = "UILabel"; text = "東京都港区六本木6-10-1 六本木ヒルズ"; ObjectID = "21n-nL-FNU"; */
+"21n-nL-FNU.text" = "東京都港区六本木6-10-1 六本木ヒルズ";
+
+/* Class = "UINavigationItem"; title = "登録完了"; ObjectID = "2IY-sA-G6c"; */
+"2IY-sA-G6c.title" = "登録完了";
+
+/* Class = "UITextField"; placeholder = "メールアドレス"; ObjectID = "2qY-0G-cKE"; */
+"2qY-0G-cKE.placeholder" = "メールアドレス";
+
+/* Class = "UILabel"; text = "一般1800円、学生1200円、小学生800円、幼児100円、シニア1900円"; ObjectID = "32O-JM-SeG"; */
+"32O-JM-SeG.text" = "一般1800円、学生1200円、小学生800円、幼児100円、シニア1900円";
+
+/* Class = "UIButton"; normalTitle = "送信"; ObjectID = "3Gu-Ab-gdD"; */
+"3Gu-Ab-gdD.normalTitle" = "送信";
+
+/* Class = "UIButton"; normalTitle = "食"; ObjectID = "3mS-qp-cbK"; */
+"3mS-qp-cbK.normalTitle" = "食";
+
+/* Class = "UILabel"; text = "アプリ内で性別が公開されることはありません"; ObjectID = "3wM-GF-cG5"; */
+"3wM-GF-cG5.text" = "アプリ内で性別が公開されることはありません";
+
+/* Class = "UINavigationItem"; title = "パスワード再設定"; ObjectID = "4ep-A2-Jc7"; */
+"4ep-A2-Jc7.title" = "パスワード再設定";
+
+/* Class = "UILabel"; text = "件)"; ObjectID = "5Wo-M3-Ys1"; */
+"5Wo-M3-Ys1.text" = "件)";
+
+/* Class = "UINavigationItem"; title = "お気に入り"; ObjectID = "78R-vm-fGQ"; */
+"78R-vm-fGQ.title" = "お気に入り";
+
+/* Class = "UIButton"; normalTitle = "現在地取得"; ObjectID = "8sm-IB-mij"; */
+"8sm-IB-mij.normalTitle" = "現在地取得";
+
+/* Class = "UIButton"; normalTitle = "行事"; ObjectID = "9Tn-Uw-Vky"; */
+"9Tn-Uw-Vky.normalTitle" = "行事";
+
+/* Class = "UIButton"; normalTitle = "男性"; ObjectID = "9Xj-WB-cMl"; */
+"9Xj-WB-cMl.normalTitle" = "男性";
+
+/* Class = "UIButton"; normalTitle = "庭園・公園"; ObjectID = "9Zr-ed-N3n"; */
+"9Zr-ed-N3n.normalTitle" = "庭園・公園";
+
+/* Class = "UILabel"; text = "SpotName"; ObjectID = "9qG-5G-IH2"; */
+"9qG-5G-IH2.text" = "SpotName";
+
+/* Class = "UILabel"; text = "検索画面からお気に入りを追加しよう"; ObjectID = "9wk-gO-Z9X"; */
+"9wk-gO-Z9X.text" = "検索画面からお気に入りを追加しよう";
+
+/* Class = "UINavigationItem"; title = "パスワードリセット"; ObjectID = "AYp-a2-uKE"; */
+"AYp-a2-uKE.title" = "パスワードリセット";
+
+/* Class = "UIButton"; normalTitle = "ログイン"; ObjectID = "AdF-N0-668"; */
+"AdF-N0-668.normalTitle" = "ログイン";
+
+/* Class = "UILabel"; text = "検索画面に戻ってもう一度お試しください"; ObjectID = "B1b-o7-2Ya"; */
+"B1b-o7-2Ya.text" = "検索画面に戻ってもう一度お試しください";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "BQ6-0d-njI"; */
+"BQ6-0d-njI.text" = "-";
+
+/* Class = "UIButton"; normalTitle = "温泉"; ObjectID = "Bap-k2-1xM"; */
+"Bap-k2-1xM.normalTitle" = "温泉";
+
+/* Class = "UIButton"; normalTitle = "レビューを投稿"; ObjectID = "C4i-GI-18G"; */
+"C4i-GI-18G.normalTitle" = "レビューを投稿";
+
+/* Class = "UILabel"; text = "営業時間"; ObjectID = "CWn-Mm-5L0"; */
+"CWn-Mm-5L0.text" = "営業時間";
+
+/* Class = "UINavigationItem"; title = "認証コード入力"; ObjectID = "DVc-o2-Lpt"; */
+"DVc-o2-Lpt.title" = "認証コード入力";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "Dah-lb-UlK"; */
+"Dah-lb-UlK.title" = "Item";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "Dez-TN-tpj"; */
+"Dez-TN-tpj.text" = "0";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "DyL-nb-EtW"; */
+"DyL-nb-EtW.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "女性"; ObjectID = "E5P-aB-gQG"; */
+"E5P-aB-gQG.normalTitle" = "女性";
+
+/* Class = "UILabel"; text = "性別（任意）"; ObjectID = "Egc-nZ-AvG"; */
+"Egc-nZ-AvG.text" = "性別（任意）";
+
+/* Class = "UILabel"; text = "Start Lens"; ObjectID = "FCP-yy-1KF"; */
+"FCP-yy-1KF.text" = "Start Lens";
+
+/* Class = "UIButton"; normalTitle = "スキップ"; ObjectID = "FHM-Tu-HW1"; */
+"FHM-Tu-HW1.normalTitle" = "スキップ";
+
+/* Class = "UILabel"; text = "おすすめスポット"; ObjectID = "FoU-sv-knw"; */
+"FoU-sv-knw.text" = "おすすめスポット";
+
+/* Class = "UILabel"; text = "category"; ObjectID = "G00-05-y1L"; */
+"G00-05-y1L.text" = "category";
+
+/* Class = "UINavigationItem"; title = "検索結果"; ObjectID = "GBd-gn-2oL"; */
+"GBd-gn-2oL.title" = "検索結果";
+
+/* Class = "UILabel"; text = "https://www.roppongihills.com"; ObjectID = "GFL-oq-gdg"; */
+"GFL-oq-gdg.text" = "https://www.roppongihills.com";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "HeF-uU-U1G"; */
+"HeF-uU-U1G.title" = "Item";
+
+/* Class = "UINavigationItem"; title = "新規登録"; ObjectID = "Hi1-o5-4jb"; */
+"Hi1-o5-4jb.title" = "新規登録";
+
+/* Class = "UIButton"; normalTitle = "利用する"; ObjectID = "HlJ-Ll-Zoo"; */
+"HlJ-Ll-Zoo.normalTitle" = "利用する";
+
+/* Class = "UILabel"; text = "ホームページ"; ObjectID = "ImU-fD-Jbb"; */
+"ImU-fD-Jbb.text" = "ホームページ";
+
+/* Class = "UILabel"; text = "09012345678"; ObjectID = "J6O-B4-ukh"; */
+"J6O-B4-ukh.text" = "09012345678";
+
+/* Class = "UITextField"; placeholder = "メールアドレス"; ObjectID = "KC2-me-R7H"; */
+"KC2-me-R7H.placeholder" = "メールアドレス";
+
+/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "KSZ-wL-FYG"; */
+"KSZ-wL-FYG.placeholder" = "パスワード";
+
+/* Class = "UILabel"; text = "スポット一覧"; ObjectID = "Kmx-XE-Wj9"; */
+"Kmx-XE-Wj9.text" = "スポット一覧";
+
+/* Class = "UIButton"; normalTitle = "無回答"; ObjectID = "KnN-hg-elP"; */
+"KnN-hg-elP.normalTitle" = "無回答";
+
+/* Class = "UILabel"; text = "月・水10:00~22:00　木曜日10:00-19:00  金曜日10:00-20:00 土日　10:00-23:00"; ObjectID = "LnY-hE-r9E"; */
+"LnY-hE-r9E.text" = "月・水10:00~22:00　木曜日10:00-19:00  金曜日10:00-20:00 土日　10:00-23:00";
+
+/* Class = "UINavigationItem"; title = "認証コード入力"; ObjectID = "LtK-Uh-Jru"; */
+"LtK-Uh-Jru.title" = "認証コード入力";
+
+/* Class = "UILabel"; text = "電話番号"; ObjectID = "Mru-mv-HAR"; */
+"Mru-mv-HAR.text" = "電話番号";
+
+/* Class = "UIButton"; normalTitle = "パスワードを忘れた方"; ObjectID = "NFv-Kn-juR"; */
+"NFv-Kn-juR.normalTitle" = "パスワードを忘れた方";
+
+/* Class = "UILabel"; text = "スポット紹介"; ObjectID = "O1t-IQ-kTg"; */
+"O1t-IQ-kTg.text" = "スポット紹介";
+
+/* Class = "UIBarButtonItem"; title = "キャンセル"; ObjectID = "O9q-Wi-cg0"; */
+"O9q-Wi-cg0.title" = "キャンセル";
+
+/* Class = "UILabel"; text = "六本木ヒルズは、参加する街です。住む人も、働く人も、集う人も、その全員が六本木ヒルズに参加します。\n\nここでは、たくさんの人々が対話を交わします。新しい美術やクリエイティブな食事から、現代社会の抱える困難な課題まで、六本木ヒルズで、人は様々な人の、様々な考え方に触れ、様々な体験を楽しみます。そこに参加することで一人ひとりが考え、変化し、そしてそこから、未来をつくっていくようなアイディアが生まれるのです。\n\nここ、六本木ヒルズが日本、そしてアジア地域をリードし、世界と開かれた対話を起こし、そしてここから未来へのビジョンが生まれる…そんな街を、つくっていきます。"; ObjectID = "OnK-Fu-ZpW"; */
+"OnK-Fu-ZpW.text" = "六本木ヒルズは、参加する街です。住む人も、働く人も、集う人も、その全員が六本木ヒルズに参加します。\n\nここでは、たくさんの人々が対話を交わします。新しい美術やクリエイティブな食事から、現代社会の抱える困難な課題まで、六本木ヒルズで、人は様々な人の、様々な考え方に触れ、様々な体験を楽しみます。そこに参加することで一人ひとりが考え、変化し、そしてそこから、未来をつくっていくようなアイディアが生まれるのです。\n\nここ、六本木ヒルズが日本、そしてアジア地域をリードし、世界と開かれた対話を起こし、そしてここから未来へのビジョンが生まれる…そんな街を、つくっていきます。";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "Our-ph-sK6"; */
+"Our-ph-sK6.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "パスワードリセット画面に戻る"; ObjectID = "P7K-ko-fDu"; */
+"P7K-ko-fDu.normalTitle" = "パスワードリセット画面に戻る";
+
+/* Class = "UILabel"; text = "に同意の上、お進みください。"; ObjectID = "PMy-4k-q7d"; */
+"PMy-4k-q7d.text" = "に同意の上、お進みください。";
+
+/* Class = "UITextField"; placeholder = "メールアドレス"; ObjectID = "PPy-VI-Er0"; */
+"PPy-VI-Er0.placeholder" = "メールアドレス";
+
+/* Class = "UILabel"; text = "新しいパスワードを入力してください"; ObjectID = "PWl-JI-lpf"; */
+"PWl-JI-lpf.text" = "新しいパスワードを入力してください";
+
+/* Class = "UINavigationItem"; title = "カテゴリー"; ObjectID = "Pvf-3S-gST"; */
+"Pvf-3S-gST.title" = "カテゴリー";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "Qqb-NJ-gn8"; */
+"Qqb-NJ-gn8.title" = "Item";
+
+/* Class = "UILabel"; text = "入力されたメールアドレスに認証コードが送信されます。"; ObjectID = "RIG-7v-P84"; */
+"RIG-7v-P84.text" = "入力されたメールアドレスに認証コードが送信されます。";
+
+/* Class = "UIButton"; normalTitle = "場所"; ObjectID = "RQR-bR-EtC"; */
+"RQR-bR-EtC.normalTitle" = "場所";
+
+/* Class = "UILabel"; text = "費用"; ObjectID = "Rbz-oY-lpc"; */
+"Rbz-oY-lpc.text" = "費用";
+
+/* Class = "UILabel"; text = "定休日"; ObjectID = "S9l-Ck-fEb"; */
+"S9l-Ck-fEb.text" = "定休日";
+
+/* Class = "UIButton"; normalTitle = "カテゴリー"; ObjectID = "Sa3-Lq-6ho"; */
+"Sa3-Lq-6ho.normalTitle" = "カテゴリー";
+
+/* Class = "UIBarButtonItem"; title = "送信"; ObjectID = "T0E-7U-U2X"; */
+"T0E-7U-U2X.title" = "送信";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "UNT-lQ-szW"; */
+"UNT-lQ-szW.title" = "Item";
+
+/* Class = "UILabel"; text = "生年（任意）"; ObjectID = "VJl-Ik-weN"; */
+"VJl-Ik-weN.text" = "生年（任意）";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "VbB-dL-ThA"; */
+"VbB-dL-ThA.title" = "Item";
+
+/* Class = "UIButton"; normalTitle = "削除"; ObjectID = "VqM-HO-00G"; */
+"VqM-HO-00G.normalTitle" = "削除";
+
+/* Class = "UILabel"; text = "アプリ内で生年が公開されることはありません"; ObjectID = "X30-Az-xxn"; */
+"X30-Az-xxn.text" = "アプリ内で生年が公開されることはありません";
+
+/* Class = "UITextField"; placeholder = "パスワード"; ObjectID = "Y3b-xd-zHn"; */
+"Y3b-xd-zHn.placeholder" = "パスワード";
+
+/* Class = "UILabel"; text = "検索結果がありません"; ObjectID = "YCo-Ba-2y7"; */
+"YCo-Ba-2y7.text" = "検索結果がありません";
+
+/* Class = "UILabel"; text = "おすすめスポットはありません"; ObjectID = "YX6-OQ-Rz0"; */
+"YX6-OQ-Rz0.text" = "おすすめスポットはありません";
+
+/* Class = "UILabel"; text = "場所・カテゴリーから検索"; ObjectID = "aLS-57-ZLi"; */
+"aLS-57-ZLi.text" = "場所・カテゴリーから検索";
+
+/* Class = "UIButton"; normalTitle = "神社・寺院・教会"; ObjectID = "b6D-YO-Gtr"; */
+"b6D-YO-Gtr.normalTitle" = "神社・寺院・教会";
+
+/* Class = "UIButton"; normalTitle = "送信"; ObjectID = "be7-j2-6gA"; */
+"be7-j2-6gA.normalTitle" = "送信";
+
+/* Class = "UILabel"; text = "スポット一覧"; ObjectID = "cj4-h9-ONw"; */
+"cj4-h9-ONw.text" = "スポット一覧";
+
+/* Class = "UIButton"; normalTitle = "検索画面に戻る"; ObjectID = "cjh-E7-3nJ"; */
+"cjh-E7-3nJ.normalTitle" = "検索画面に戻る";
+
+/* Class = "UILabel"; text = "登録が完了しました"; ObjectID = "ctd-Ju-J5o"; */
+"ctd-Ju-J5o.text" = "登録が完了しました";
+
+/* Class = "UILabel"; text = "予測結果"; ObjectID = "cx1-JI-wx2"; */
+"cx1-JI-wx2.text" = "予測結果";
+
+/* Class = "UIButton"; normalTitle = "送信"; ObjectID = "dCZ-gO-yO9"; */
+"dCZ-gO-yO9.normalTitle" = "送信";
+
+/* Class = "UILabel"; text = "レビュー"; ObjectID = "dIC-R3-7fK"; */
+"dIC-R3-7fK.text" = "レビュー";
+
+/* Class = "UIButton"; normalTitle = "新規登録"; ObjectID = "dSg-Q1-vcN"; */
+"dSg-Q1-vcN.normalTitle" = "新規登録";
+
+/* Class = "UILabel"; text = "検索結果がありません"; ObjectID = "eC9-ee-8Ur"; */
+"eC9-ee-8Ur.text" = "検索結果がありません";
+
+/* Class = "UIButton"; normalTitle = "建造物"; ObjectID = "eN3-93-dou"; */
+"eN3-93-dou.normalTitle" = "建造物";
+
+/* Class = "UILabel"; text = "認証コードを送信しました。下記に認証コードを入力してください"; ObjectID = "ede-Lb-tyh"; */
+"ede-Lb-tyh.text" = "認証コードを送信しました。下記に認証コードを入力してください";
+
+/* Class = "UITabBarItem"; title = "Search"; ObjectID = "em8-Kh-zpH"; */
+"em8-Kh-zpH.title" = "Search";
+
+/* Class = "UIButton"; normalTitle = "動植物園・水族館"; ObjectID = "f1K-T9-Mls"; */
+"f1K-T9-Mls.normalTitle" = "動植物園・水族館";
+
+/* Class = "UIButton"; normalTitle = "続きを見る"; ObjectID = "fTW-5b-18a"; */
+"fTW-5b-18a.normalTitle" = "続きを見る";
+
+/* Class = "UILabel"; text = "登録されているスポットはありません。"; ObjectID = "fmw-hG-Ylp"; */
+"fmw-hG-Ylp.text" = "登録されているスポットはありません。";
+
+/* Class = "UIButton"; normalTitle = "自然"; ObjectID = "g1g-z7-7vQ"; */
+"g1g-z7-7vQ.normalTitle" = "自然";
+
+/* Class = "UIButton"; normalTitle = "イベント"; ObjectID = "g38-DW-XOP"; */
+"g38-DW-XOP.normalTitle" = "イベント";
+
+/* Class = "UILabel"; text = "パスワードの再設定"; ObjectID = "gah-bP-L8J"; */
+"gah-bP-L8J.text" = "パスワードの再設定";
+
+/* Class = "UIButton"; normalTitle = "新規登録"; ObjectID = "gtW-fI-2AQ"; */
+"gtW-fI-2AQ.normalTitle" = "新規登録";
+
+/* Class = "UIButton"; normalTitle = "プライバシーポリシー"; ObjectID = "gxK-zr-zWj"; */
+"gxK-zr-zWj.normalTitle" = "プライバシーポリシー";
+
+/* Class = "UILabel"; text = "基本情報"; ObjectID = "hAH-qn-8JL"; */
+"hAH-qn-8JL.text" = "基本情報";
+
+/* Class = "UIButton"; normalTitle = "新規登録画面に戻る"; ObjectID = "hO9-uf-HKo"; */
+"hO9-uf-HKo.normalTitle" = "新規登録画面に戻る";
+
+/* Class = "UIButton"; normalTitle = "城跡・宮殿"; ObjectID = "jDE-Uo-lUE"; */
+"jDE-Uo-lUE.normalTitle" = "城跡・宮殿";
+
+/* Class = "UILabel"; text = "と"; ObjectID = "jDn-7Y-PoP"; */
+"jDn-7Y-PoP.text" = "と";
+
+/* Class = "UILabel"; text = "3.5"; ObjectID = "jNN-NN-72E"; */
+"jNN-NN-72E.text" = "3.5";
+
+/* Class = "UILabel"; text = "お気に入り登録がありません"; ObjectID = "jpj-gt-TiI"; */
+"jpj-gt-TiI.text" = "お気に入り登録がありません";
+
+/* Class = "UILabel"; text = "場所"; ObjectID = "k5F-qt-aHm"; */
+"k5F-qt-aHm.text" = "場所";
+
+/* Class = "UILabel"; text = "/500"; ObjectID = "kMF-6D-wGr"; */
+"kMF-6D-wGr.text" = "/500";
+
+/* Class = "UIButton"; normalTitle = "街・郷土景観"; ObjectID = "l1e-cL-ZnH"; */
+"l1e-cL-ZnH.normalTitle" = "街・郷土景観";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "lbh-od-6uB"; */
+"lbh-od-6uB.title" = "Item";
+
+/* Class = "UILabel"; text = "500文字以内で入力してください。"; ObjectID = "lnV-XG-3eL"; */
+"lnV-XG-3eL.text" = "500文字以内で入力してください。";
+
+/* Class = "UIButton"; normalTitle = "利用規約"; ObjectID = "ndV-Ew-n40"; */
+"ndV-Ew-n40.normalTitle" = "利用規約";
+
+/* Class = "UIButton"; normalTitle = "史跡"; ObjectID = "nsB-JM-YT9"; */
+"nsB-JM-YT9.normalTitle" = "史跡";
+
+/* Class = "UILabel"; text = "毎週火曜日"; ObjectID = "o2p-Tr-QgB"; */
+"o2p-Tr-QgB.text" = "毎週火曜日";
+
+/* Class = "UILabel"; text = "検索画面に戻ってもう一度お試しください"; ObjectID = "ouT-Vj-yVS"; */
+"ouT-Vj-yVS.text" = "検索画面に戻ってもう一度お試しください";
+
+/* Class = "UILabel"; text = "intro"; ObjectID = "out-Ak-TJL"; */
+"out-Ak-TJL.text" = "intro";
+
+/* Class = "UILabel"; text = "パスワードは、半角英数8文字以内で入力してください。"; ObjectID = "psg-ci-eYT"; */
+"psg-ci-eYT.text" = "パスワードは、半角英数8文字以内で入力してください。";
+
+/* Class = "UINavigationItem"; title = "ログイン"; ObjectID = "qDO-Yz-rP6"; */
+"qDO-Yz-rP6.title" = "ログイン";
+
+/* Class = "UIButton"; normalTitle = "続きを見る"; ObjectID = "r3A-4Z-5iN"; */
+"r3A-4Z-5iN.normalTitle" = "続きを見る";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "rS6-TH-LT4"; */
+"rS6-TH-LT4.title" = "Item";
+
+/* Class = "UILabel"; text = "( 0件)"; ObjectID = "rdo-kG-RP8"; */
+"rdo-kG-RP8.text" = "( 0件)";
+
+/* Class = "UILabel"; text = "200"; ObjectID = "rkl-ra-52w"; */
+"rkl-ra-52w.text" = "200";
+
+/* Class = "UILabel"; text = "パスワードは、半角英数8文字以内で入力してください。"; ObjectID = "rtr-eM-fnT"; */
+"rtr-eM-fnT.text" = "パスワードは、半角英数8文字以内で入力してください。";
+
+/* Class = "UIButton"; normalTitle = "ログイン"; ObjectID = "rxK-6E-B5c"; */
+"rxK-6E-B5c.normalTitle" = "ログイン";
+
+/* Class = "UIButton"; normalTitle = "削除"; ObjectID = "sWq-QX-1nJ"; */
+"sWq-QX-1nJ.normalTitle" = "削除";
+
+/* Class = "UINavigationItem"; title = "認証コード入力"; ObjectID = "siA-qh-oZf"; */
+"siA-qh-oZf.title" = "認証コード入力";
+
+/* Class = "UIButton"; normalTitle = "テーマ施設"; ObjectID = "t3i-b2-9HY"; */
+"t3i-b2-9HY.normalTitle" = "テーマ施設";
+
+/* Class = "UILabel"; text = "レビューはありません。"; ObjectID = "tEa-ru-N2R"; */
+"tEa-ru-N2R.text" = "レビューはありません。";
+
+/* Class = "UIButton"; normalTitle = "検索"; ObjectID = "tMn-so-T9g"; */
+"tMn-so-T9g.normalTitle" = "検索";
+
+/* Class = "UILabel"; text = "レビューはありません"; ObjectID = "vDK-tQ-xHg"; */
+"vDK-tQ-xHg.text" = "レビューはありません";
+
+/* Class = "UIBarButtonItem"; title = "戻る"; ObjectID = "vlH-xy-0JR"; */
+"vlH-xy-0JR.title" = "戻る";
+
+/* Class = "UIButton"; normalTitle = "ログインして利用"; ObjectID = "wTB-Ta-VaC"; */
+"wTB-Ta-VaC.normalTitle" = "ログインして利用";
+
+/* Class = "UIBarButtonItem"; title = "Item"; ObjectID = "wuD-lK-9ur"; */
+"wuD-lK-9ur.title" = "Item";
+
+/* Class = "UILabel"; text = "spotTitle"; ObjectID = "xTi-W1-81J"; */
+"xTi-W1-81J.text" = "spotTitle";
+
+/* Class = "UILabel"; text = "レビュー一覧"; ObjectID = "yB8-Vj-sUE"; */
+"yB8-Vj-sUE.text" = "レビュー一覧";
+
+/* Class = "UILabel"; text = "認証コードを送信しました。下記に認証コードを入力してください"; ObjectID = "zF7-LM-N3Q"; */
+"zF7-LM-N3Q.text" = "認証コードを送信しました。下記に認証コードを入力してください";

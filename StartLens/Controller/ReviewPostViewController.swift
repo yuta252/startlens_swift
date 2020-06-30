@@ -13,6 +13,8 @@ import SwiftyJSON
 
 class ReviewPostViewController: UIViewController, UITextViewDelegate {
 
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var sendButton: UIBarButtonItem!
     @IBOutlet weak var postTextView: UITextView!
     @IBOutlet weak var textCount: UILabel!
     @IBOutlet weak var errorMessage: UILabel!
@@ -30,6 +32,7 @@ class ReviewPostViewController: UIViewController, UITextViewDelegate {
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
 
+        setupUI()
         postTextView.delegate = self
         // 自動的にキーボードを出す
         //postTextView.becomeFirstResponder()
@@ -60,13 +63,13 @@ class ReviewPostViewController: UIViewController, UITextViewDelegate {
     @IBAction func postAction(_ sender: Any) {
         // メールアドレスがnilでも空欄でもないことを確認
         guard let postReview = postTextView.text, !postReview.isEmpty else{
-            errorMessage.text = "レビューを入力してください。"
+            errorMessage.text = "reviewPostPlace".localized
             errorMessage.textColor = ThemeColor.errorString
             return
         }
         
         if postReview.count > 500{
-            errorMessage.text = "500文字以内で入力してください。。"
+            errorMessage.text = "reviewPostHelp".localized
             errorMessage.textColor = ThemeColor.errorString
         }else{
             // POSTするパラメータ作成
@@ -83,9 +86,9 @@ class ReviewPostViewController: UIViewController, UITextViewDelegate {
                     let errorMessage = json["error"]["message"].string
                     if let errorMessage = errorMessage, !errorMessage.isEmpty {
                         // 送信失敗アラートを出す
-                        let title = "レビュー失敗"
+                        let title = "reviewFailText".localized
                         let message = errorMessage
-                        let okText = "OK"
+                        let okText = "okButtonText".localized
                         
                         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                         let okayButton = UIAlertAction(title: okText, style: UIAlertAction.Style.cancel, handler: nil)
@@ -101,5 +104,12 @@ class ReviewPostViewController: UIViewController, UITextViewDelegate {
                 }
             }
         }
+    }
+    
+    func setupUI(){
+        cancelButton.title = "cancelButton".localized
+        sendButton.title = "sendButtonText".localized
+        //postTextView
+        errorMessage.text = "reviewPostHelp".localized
     }
 }

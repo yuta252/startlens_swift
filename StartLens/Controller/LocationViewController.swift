@@ -22,13 +22,18 @@ class LocationViewController: UIViewController {
     var locationManager: CLLocationManager!
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
+    var language = String()
     
     @IBOutlet weak var indicator: UIActivityIndicatorView!
-
+    @IBOutlet weak var getCurrentLocationText: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        language = UserDefaults.standard.string(forKey: "language") ?? "ja"
         locationManager = CLLocationManager()
+        setupUI()
     }
     
     
@@ -63,13 +68,18 @@ class LocationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func setupUI(){
+        getCurrentLocationText.setTitle("locationCurrent".localized, for: .normal)
+        deleteButton.setTitle("deleteButtonTitle".localized, for: .normal)
+    }
+    
     func showAlert(){
         // アラートを表示する
         let alertTitle = "位置情報取得が許可されていません。"
         let alertMessage = "設定>プライバシー>位置情報サービスから設定を変更してください。"
         let alert:UIAlertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
         
-        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "okButtonText".localized, style: .default, handler: nil)
         alert.addAction(defaultAction)
         present(alert, animated: true, completion: nil)
     }
@@ -90,7 +100,7 @@ extension LocationViewController: CLLocationManagerDelegate{
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: lat, longitude: lon)
         
-        geocoder.reverseGeocodeLocation(location) { (placeMark, error) in
+        geocoder.reverseGeocodeLocation(location, preferredLocale: Locale(identifier: language)) { (placeMark, error) in
             if let placeMark = placeMark{
                 if let pm = placeMark.first{
                     if pm.administrativeArea != nil || pm.locality != nil{

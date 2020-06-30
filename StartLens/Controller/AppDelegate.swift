@@ -23,19 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().barTintColor = .white
         UITabBar.appearance().unselectedItemTintColor = ThemeColor.secondString
         
-        let isLogIn = UserDefaults.standard.bool(forKey: "isLogIn")
-        // 自動ログイン設定
-        if isLogIn{
-            // 2回目以降の起動
-//            print("move home")
-//            self.window = UIWindow(frame: UIScreen.main.bounds)
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let initialVC = storyboard.instantiateViewController(withIdentifier: "home")
-//            self.window?.rootViewController = initialVC
-//            self.window?.makeKeyAndVisible()
-        }else{
-            print("move to tutorial")
-        }
         
         return true
     }

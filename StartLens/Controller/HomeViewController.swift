@@ -19,13 +19,17 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var heightContent: NSLayoutConstraint!
     @IBOutlet weak var height: NSLayoutConstraint!
+    @IBOutlet weak var searchTitleText: UILabel!
     @IBOutlet weak var locationButton: UIButton!
     @IBOutlet weak var categoryButton: UIButton!
+    @IBOutlet weak var searchButtonText: UIButton!
+    @IBOutlet weak var spotlistTitleText: UILabel!
     @IBOutlet weak var noSearchTitle: UILabel!
     @IBOutlet weak var noSearchSubtitle: UILabel!
     
     var spotItem = [Spot]()
     var apiKey = String()
+    var language = String()
     var searchBar: UISearchBar!
     var searchQuery: String = "all"
     var locationQuery: String = "all"
@@ -41,6 +45,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
 
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        language = UserDefaults.standard.string(forKey: "language")!
         setupUI()
         // TabaleView
         tableView.delegate = self
@@ -65,10 +70,16 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("wiewwill appear is called")
         spotItem = []
-        fetchData(address: self.locationQuery, category: self.categoryQuery)
-        tableView.reloadData()
+//        // 言語変更時の逆ジオコーディングを行う
+//        fetchData(address: self.locationQuery, category: self.categoryQuery)
+//        tableView.reloadData()
+        // 位置情報の取得
+        locationManager.startUpdatingLocation()
+        // 遅延処理
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+            self.fetchData(address: self.locationQuery, category: self.categoryQuery)
+        }
     }
     
     func setupUI(){
@@ -80,6 +91,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         categoryButton.layer.borderColor = UIColor.lightGray.cgColor
         categoryButton.layer.borderWidth = 1.0
         categoryButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 0)
+        searchTitleText.text = "searchTitleText".localized
+        locationButton.setTitle("searchLocationPlace".localized, for: .normal)
+        categoryButton.setTitle("searchCategoryPlace".localized, for: .normal)
+        searchButtonText.setTitle("searchButtonText".localized, for: .normal)
+        spotlistTitleText.text = "spotlistTitleText".localized
+        noSearchTitle.text = "noSearchResultText".localized
+        noSearchSubtitle.text = "noSearchResultHelp".localized
     }
     
     func setupLocationManager(){
@@ -99,19 +117,16 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
                 self.fetchData(address: self.locationQuery, category: "all")
             }
-            print("現在地のデータ取得します")
-            locationButton.setTitle("現在地", for: .normal)
+            locationButton.setTitle("currentLocationText".localized, for: .normal)
             locationButton.setTitleColor(ThemeColor.firstString, for: .normal)
         }
     }
     
     @IBAction func locationSearchAction(_ sender: Any) {
-        print("場所取得")
         performSegue(withIdentifier: "location", sender: nil)
     }
     
     @IBAction func categorySearchAction(_ sender: Any) {
-        print("編集開始")
         performSegue(withIdentifier: "category", sender: nil)
     }
     
@@ -276,7 +291,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             // NavigationBarに適したサイズの検索バーを設置
             let searchBar: UISearchBar = UISearchBar(frame: navigationBarFrame)
             searchBar.delegate = self
-            searchBar.placeholder = "目的地を検索"
+            searchBar.placeholder = "searchDestinationText".localized
             searchBar.autocapitalizationType = UITextAutocapitalizationType.none
             navigationItem.titleView = searchBar
             navigationItem.titleView?.frame = searchBar.frame
@@ -288,11 +303,13 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: lat, longitude: lon)
         
-        geocoder.reverseGeocodeLocation(location) { (placeMark, error) in
+        geocoder.reverseGeocodeLocation(location, preferredLocale: Locale(identifier: language)) { (placeMark, error) in
             if let placeMark = placeMark{
                 if let pm = placeMark.first{
                     if pm.administrativeArea != nil || pm.locality != nil{
                         self.locationQuery = pm.locality!
+                        print("language: \(self.language)")
+                        print("locationQuery: \(self.locationQuery)")
                     }else{
                         self.locationQuery = pm.name!
                     }
@@ -425,14 +442,12 @@ extension HomeViewController: CategoryListDelegate{
         categoryButton.setTitle(label, for: .normal)
         categoryButton.setTitleColor(ThemeColor.firstString, for: .normal)
         categoryQuery = key
-        print("category Key: \(key)")
     }
     
     func defaultCategoryData(key: String, label: String) {
         categoryButton.setTitle(label, for: .normal)
         categoryButton.setTitleColor(.lightGray, for: .normal)
         categoryQuery = key
-        print("category Key: \(key)")
     }
 }
 
@@ -455,10 +470,10 @@ extension HomeViewController: LocationListDelegate{
 extension HomeViewController: CLLocationManagerDelegate{
     // 位置情報が更新されたときに位置情報を格納する
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("locationManager is called")
         let location = locations.last
         latitude = location?.coordinate.latitude
         longitude = location?.coordinate.longitude
         convert(lat: latitude!, lon: longitude!)
-        print("ロケーション情報をコンバートしました")
     }
 }

@@ -1,0 +1,359 @@
+/* 
+  Localizable.strings
+  StartLens
+
+  Created by 中野　裕太 on 2020/06/24.
+  Copyright © 2020 Nakano Yuta. All rights reserved.
+*/
+// Common
+"settingVersionNumber" = "1.0.0";
+
+
+// LogInSelectVC
+"introANimationSkip" = "Skip";
+"introAnimationText1" = "Start taking photo";
+"introAnimationText2" = "Go on a journey";
+"introAnimationText3" = "Get more information";
+"signUpButtonText" = "Sign up";
+"logInButtonText" = "Sign in";
+"privacyPolicyButtonText" = "Privacy Policy";
+"termsButtonText" = "Terms of service";
+"agreementText" = "Please agree to the above before proceeding";
+// SignUpVC
+"emailInputPlace" = "Email address";
+"passwordInputPlace" = "Password";
+"signupErrorMessage" = "Password must be at least 8 characters in length.";
+"signupSendText" = "Sign up";
+"emailValidMessage" = "Enter email address";
+"passValidMessage" = "Enter password";
+"emailValidMessage2" = "The email address is not in the correct format.";
+// SignUpAuthVC
+"authExplainedText" = "The authentification code has been sent to your email address.\n Please make sure and then input below.";
+"sendButtonText" = "Send";
+"backSignupText" = "Return to sign up";
+"authValidFail1" = "Authentication failed.Return to the sign up screen and try again.";
+"authValidFail2" = "Authentication code does not match.";
+// SignUpCompleteVC
+"signupCompleteText" = "Completed!";
+"sexTitleText" = "Sex(Optional)";
+"sexFemaleText" = "Female";
+"sexMaleText" = "Male";
+"sexNAText" = "NA";
+"sexHelpText" = "Gender is never published in the app.";
+"birthTitleText" = "Year of birth(Optional)";
+"birthHelpText" = "Year of birth is never published in the app.";
+"signupCompleteButton" = "Use";
+// LoginVC
+"passwordFogotText" = "If you forgot your password, click here.";
+// PasswordResetVC
+"passwordResetTitleText" = "Password reset";
+"passwordResetSubText" = "The authentication code will be sent to your email address.";
+// ResetAuthVC
+"useLoginButtonText" = "Login to use";
+"resetPasswordButtonText" = "Reset password";
+"backPasswordResetText" = "Return to password reset";
+// PassSendVC
+"resetNewPasswordText" = "Enter new password";
+// HomeVC
+"searchTitleText" = "Search by category/location";
+"searchLocationPlace" = "Location";
+"searchCategoryPlace" = "Category";
+"searchButtonText" = "Search";
+"spotlistTitleText" = "Spot list";
+"noSearchResultText" = "No search result";
+"noSearchResultHelp" = "Please try again";
+"searchDestinationText" = "Search from destination";
+"currentLocationText" = "Current location";
+// CategoryListVC
+"categoryNature" = "Nature";
+"categoryHistoric" = "Historic site";
+"categoryReligion" = "Religious building";
+"categoryCastle" = "Castle/Palace";
+"categoryLocal" = "Town/Local landscape";
+"categoryPark" = "Park";
+"categoryBuilding" = "Building";
+"categoryAnnual" = "Annual event";
+"categoryZoo" = "Zoo/Aquarium";
+"categoryMuseum" = "Museum/Art Museum";
+"categoryTheme" = "Theme facility";
+"categorySpring" = "Hot spring";
+"categoryFood" = "Food";
+"categoryEvent" = "Event";
+"deleteButtonTitle" = "Delete";
+// LocationVC
+"locationCurrent" = "Get current location";
+"locationAlertTitle" = "Getting location information is not allowed";
+"locationAlertMessage" = "Please cahnge the setting from Settings>Privacy>Location Services";
+"okButtonText" = "OK";
+// FavoriteVC
+"noFavoriteText" = "No favorite registration";
+"noFavoriteHelp" = "Add to favorites from search list";
+// SpotContentVC
+"spotRatingItemText" = "Reviews)";
+"spotIntroTitle" = "Spot introduction";
+"spotBasicInfoTitle" = "Basic info";
+"spotBasicLocation" = "Location";
+"spotBasicTel" = "Tel";
+"spotBasicHp" = "HP";
+"spotBasicExpense" = "Expense";
+"spotBasicBusiness" = "Business Hour";
+"spotBasicHoliday" = "Holiday";
+"reviewTitleText" = "Review";
+"reviewPostButton" = "Post review";
+"noReviewText" = "No Review";
+"reviewContinueButton" = "More reviews";
+"recommendTitleText" = "Recommended spot";
+"noRecommendText" = "No recommended spot";
+"recommedContinueButton" = "More";
+// ReviewPostVC
+"cancelButton" = "Cancel";
+"reviewPostPlace" = "Enter a review";
+"reviewPostHelp" = "Please enter within 500 characters.";
+"reviewFailText" = "Review failed";
+// ReviewListVC
+"revewListTitle" = "Review list";
+// ExhibitResultVC
+"exhibitResultText" = "Prediction result";
+"exhibitResultItem" = "Item)";
+// SettingVC
+"settingHeaderTitle" = "Setting";
+"appSettingHeaderTitle" = "About thie app";
+"settingLanguageTitle" = "Language";
+"settingCountryTitle" = "Country";
+"settingContactTitle" = "Contact us";
+"settingVersionTitle" = "Version";
+"settingLogoutTitle" = "Log out";
+// ContactVC
+"contactHelpText" = "Please enter within 1,000 characters.";
+"contactHelpText2" = "Enter contents of inquiry";
+"contactFailTitle" = "Failed";
+"contactFailText" = "Failed to send a message";
+"contactSuccessTitle" = "Send completely";
+"contactSuccessText" = "Please wait for a reply from Startlens";
+
+// PrivacyPolicyVC
+"privacyPolicyTitle" = "Privacy Policy";
+"privacyPolicyContent" = "
+LINE株式会社は、利用者のプライバシー保護を重要なものと考えています。この度、当社における利用者情報の取扱いの明確化を図ること、及び利用者の皆様によりよいサービスを提供していくことを目的として、プライバシーポリシーを変更いたします。主要な変更点は以下のとおりです。
+
+・2018年1月15日より「サービス向上のための情報利用」にご同意いただいたお客様に限り新たな情報の利用を開始します。対象情報の概要は以下のとおりです（詳細はこちら）。
+　•公式アカウント等に投稿、送信したテキスト、画像、動画等（コンテンツ）
+　•コンテンツの送信相手、日時、データ形式、アクセスURL情報等
+　なお、これらの情報の利用は情報利用にご同意されたお客様に限られます。ご同意はいつでもLINEの「設定>プライバシー管理」から変更可能です。これにあわせて、当社においてどのような情報が取得され、どのように利用されるのかをより明確にするため、取得される情報及び利用目的を再整理いたしました。
+
+・公式アカウント運営者等の第三者に対して利用者情報の一部を提供することがあることを記載いたしました。これにより例えばLINEで公式アカウントを友だちにする際の許諾画面が省略されることになります。提供される情報は内部識別子、言語設定などの機器情報等、必要最低限の情報に限られます、これら以外の情報の提供にあたっては従来どおりお客様の意思確認を行います。
+・LINEグループ会社に対してお客様情報を共同利用することがある旨記載いたしました。これは例えばLINEグループ会社間でサービス上の不正を早期に防止することや、グループ会社が提供するサービス（LINE Payなどが該当します）とアカウント情報を連携したお客様に重複した個人情報の入力を省略することなどが目的です。共同利用は必要最低限かつ当社の責任範囲内においてのみ行われます。
+・広告に関する記載を追加いたしました。当社は各種サービスを原則無償で提供しており、サービス内でお客様の興味関心に即した広告を配信することで収益を得て運営しております。これら広告の配信においては当然ながらお客様のプライバシーを重視しており、その仕組や配信の停止/再開方法等について記載いたしました。
+
+また、本プライバシーポリシー改定は日本国内のお客様のみが対象であり、海外でご利用のお客様は他言語のプライバシーポリシーが適用されます。
+
+＝＝
+
+私たちLINE株式会社（以下、「当社」といいます）は、当社が提供するLINE サービスにおける利用者に関する情報（サービスをご利用いただくお客様に関する全ての情報を指し、以下、「利用者情報」といいます）を以下の通り取り扱います。
+
+適用範囲
+本プライバシーポリシーはLINEに関する全てのサービス（以下、「本サービス」といいます）に適用されます。サービス別のプライバシーポリシーまたは利用規約等（以下、「個別規約」といいます）において個別に利用者情報の取り扱いを規定する場合は、個別規約も適用されます。本プライバシーポリシーと個別規約において矛盾が発生する場合は個別規約が優先されます。
+なお、「他社モジュールの設置について」等に記載される他事業者等による利用者情報の収集は、本プライバシーポリシーの適用範囲ではございません。また、本プライバシーポリシーは日本で本サービスをご利用のお客様に適用されます。日本以外でご利用のお客様はこちらをご覧ください。
+
+取得する利用者情報及び利用方法
+当社は本サービスにおいて次のように利用者情報を取得及び利用いたします。
+
+ご提供いただく情報
+お客様が本サービスをご利用いただくに当たり、以下情報のご提供をお願いする場合があります。ご提供はお客様の任意ですが、ご提供いただけない場合、本サービスまたは本サービスの一部をご利用いただけない場合がございます。
+
+•アカウント登録情報
+お客様が本サービスをご利用開始いただく際、電話番号、メールアドレス、FacebookID等をご登録いただく場合がございます。これらの情報は利用者による本サービスへのログイン、アカウントの引継ぎ等、本サービス上における利用者識別等に利用いたします。
+
+•アドレス帳
+お客様が友だち自動追加機能をご利用の場合、端末のアドレス帳を取得する場合がございます。アドレス帳からは電話番号と、フィーチャーフォンをご利用の場合に限り携帯電話用メールアドレスを取得いたします。アドレス帳に登録されている氏名、写真、住所、携帯電話用以外のメールアドレス等の情報は取得いたしません。これらの情報は知り合いまたは知り合いの可能性がある他の利用者を探して友だちとして登録または推薦するため、及び不正利用防止のためにのみ利用いたします。
+
+•プロフィール情報
+本サービスの円滑利用やお客様間で円滑にコミュニケーションを行っていただく等の目的で、プロフィール情報（本サービス上での表示名、アイコン画像、ステータスメッセージ、氏名、生年月日等）をご登録いただく場合がございます。生年月日など一部の非公開設定が可能な項目を除き、プロフィール情報は本サービス上や本サービスをご利用される他のお客様（公式アカウントを運用する企業等の第三者を含みます）も閲覧することができます。
+
+ •キャンペーン等で取得する情報
+アンケートやキャンペーン及びそれらに関わる抽選及び賞品発送、ご購入商品の発送等の目的で、氏名、住所、電話番号、メールアドレス、性別、生年月日等を取得する場合がございます。
+
+•お問い合わせ
+電話番号、メールアドレス、端末機種名、OS情報等を取得しております。これらの情報はお問い合わせに対する調査、返答、及びご本人確認等のために利用いたします。
+
+•お支払い情報
+商品購入や有料サービス利用時等、お客様にご利用代金をお支払いいただくためにクレジットカード情報等の入力を求める場合がございます。ただし、決済は決済代行会社が行うため、当社はクレジットカード情報を保有いたしません。";
+// TermsVC
+"termsTitle" = "Terms of service";
+"termsContent" = "
+LINE株式会社は、利用者のプライバシー保護を重要なものと考えています。この度、当社における利用者情報の取扱いの明確化を図ること、及び利用者の皆様によりよいサービスを提供していくことを目的として、プライバシーポリシーを変更いたします。主要な変更点は以下のとおりです。
+
+・2018年1月15日より「サービス向上のための情報利用」にご同意いただいたお客様に限り新たな情報の利用を開始します。対象情報の概要は以下のとおりです（詳細はこちら）。
+　•公式アカウント等に投稿、送信したテキスト、画像、動画等（コンテンツ）
+　•コンテンツの送信相手、日時、データ形式、アクセスURL情報等
+　なお、これらの情報の利用は情報利用にご同意されたお客様に限られます。ご同意はいつでもLINEの「設定>プライバシー管理」から変更可能です。これにあわせて、当社においてどのような情報が取得され、どのように利用されるのかをより明確にするため、取得される情報及び利用目的を再整理いたしました。
+
+・公式アカウント運営者等の第三者に対して利用者情報の一部を提供することがあることを記載いたしました。これにより例えばLINEで公式アカウントを友だちにする際の許諾画面が省略されることになります。提供される情報は内部識別子、言語設定などの機器情報等、必要最低限の情報に限られます、これら以外の情報の提供にあたっては従来どおりお客様の意思確認を行います。
+・LINEグループ会社に対してお客様情報を共同利用することがある旨記載いたしました。これは例えばLINEグループ会社間でサービス上の不正を早期に防止することや、グループ会社が提供するサービス（LINE Payなどが該当します）とアカウント情報を連携したお客様に重複した個人情報の入力を省略することなどが目的です。共同利用は必要最低限かつ当社の責任範囲内においてのみ行われます。
+・広告に関する記載を追加いたしました。当社は各種サービスを原則無償で提供しており、サービス内でお客様の興味関心に即した広告を配信することで収益を得て運営しております。これら広告の配信においては当然ながらお客様のプライバシーを重視しており、その仕組や配信の停止/再開方法等について記載いたしました。
+
+また、本プライバシーポリシー改定は日本国内のお客様のみが対象であり、海外でご利用のお客様は他言語のプライバシーポリシーが適用されます。
+
+＝＝
+
+私たちLINE株式会社（以下、「当社」といいます）は、当社が提供するLINE サービスにおける利用者に関する情報（サービスをご利用いただくお客様に関する全ての情報を指し、以下、「利用者情報」といいます）を以下の通り取り扱います。
+
+適用範囲
+本プライバシーポリシーはLINEに関する全てのサービス（以下、「本サービス」といいます）に適用されます。サービス別のプライバシーポリシーまたは利用規約等（以下、「個別規約」といいます）において個別に利用者情報の取り扱いを規定する場合は、個別規約も適用されます。本プライバシーポリシーと個別規約において矛盾が発生する場合は個別規約が優先されます。
+なお、「他社モジュールの設置について」等に記載される他事業者等による利用者情報の収集は、本プライバシーポリシーの適用範囲ではございません。また、本プライバシーポリシーは日本で本サービスをご利用のお客様に適用されます。日本以外でご利用のお客様はこちらをご覧ください。
+
+取得する利用者情報及び利用方法
+当社は本サービスにおいて次のように利用者情報を取得及び利用いたします。
+
+ご提供いただく情報
+お客様が本サービスをご利用いただくに当たり、以下情報のご提供をお願いする場合があります。ご提供はお客様の任意ですが、ご提供いただけない場合、本サービスまたは本サービスの一部をご利用いただけない場合がございます。
+
+•アカウント登録情報
+お客様が本サービスをご利用開始いただく際、電話番号、メールアドレス、FacebookID等をご登録いただく場合がございます。これらの情報は利用者による本サービスへのログイン、アカウントの引継ぎ等、本サービス上における利用者識別等に利用いたします。
+
+•アドレス帳
+お客様が友だち自動追加機能をご利用の場合、端末のアドレス帳を取得する場合がございます。アドレス帳からは電話番号と、フィーチャーフォンをご利用の場合に限り携帯電話用メールアドレスを取得いたします。アドレス帳に登録されている氏名、写真、住所、携帯電話用以外のメールアドレス等の情報は取得いたしません。これらの情報は知り合いまたは知り合いの可能性がある他の利用者を探して友だちとして登録または推薦するため、及び不正利用防止のためにのみ利用いたします。
+
+•プロフィール情報
+本サービスの円滑利用やお客様間で円滑にコミュニケーションを行っていただく等の目的で、プロフィール情報（本サービス上での表示名、アイコン画像、ステータスメッセージ、氏名、生年月日等）をご登録いただく場合がございます。生年月日など一部の非公開設定が可能な項目を除き、プロフィール情報は本サービス上や本サービスをご利用される他のお客様（公式アカウントを運用する企業等の第三者を含みます）も閲覧することができます。
+
+ •キャンペーン等で取得する情報
+アンケートやキャンペーン及びそれらに関わる抽選及び賞品発送、ご購入商品の発送等の目的で、氏名、住所、電話番号、メールアドレス、性別、生年月日等を取得する場合がございます。
+
+•お問い合わせ
+電話番号、メールアドレス、端末機種名、OS情報等を取得しております。これらの情報はお問い合わせに対する調査、返答、及びご本人確認等のために利用いたします。
+
+•お支払い情報
+商品購入や有料サービス利用時等、お客様にご利用代金をお支払いいただくためにクレジットカード情報等の入力を求める場合がございます。ただし、決済は決済代行会社が行うため、当社はクレジットカード情報を保有いたしません。";
+
+// LanguageVC
+"languageEN" = "English";
+"languageJA" = "Japanese";
+
+// CountryVC
+"countryAF" = "Afghanistan";
+"countryDZ" = "Algeria";
+"countryAR" = "Argentina";
+"countryAM" = "Armenia";
+"countryAU" = "Australia";
+"countryAT" = "Austria";
+"countryAZ" = "Azerbaijan";
+"countryBH" = "Bahrain";
+"countryBD" = "Bangladesh";
+"countryBY" = "Belarus";
+"countryBE" = "Belgium";
+"countryBO" = "Bolivia";
+"countryBA" = "Bosnia and Herzegovina";
+"countryBR" = "Brazil";
+"countryBG" = "Bulgaria";
+"countryKH" = "Cambodia";
+"countryCM" = "Cameroon";
+"countryCA" = "Canada";
+"countryCF" = "Central African Republic";
+"countryTD" = "Chad";
+"countryCL" = "Chile";
+"countryCN" = "China";
+"countryCO" = "Colombia";
+"countryCG" = "Congo";
+"countryCR" = "Costa Rica";
+"countryCI" = "Cote d'Ivoire";
+"countryHR" = "Croatia";
+"countryCU" = "Cuba";
+"countryCZ" = "Czechia";
+"countryDK" = "Denmark";
+"countryDO" = "Dominica";
+"countryEC" = "Ecuador";
+"countryEG" = "Egypt";
+"countryET" = "Ethiopia";
+"countryFI" = "Finland";
+"countryFR" = "France";
+"countryGE" = "Georgia";
+"countryDE" = "Germany";
+"countryGH" = "Ghana";
+"countryGR" = "Greece";
+"countryGL" = "Greenland";
+"countryGT" = "Guatemala";
+"countryGN" = "Guinea";
+"countryHN" = "Honduras";
+"countryHK" = "Hong Kong";
+"countryHU" = "Hungary";
+"countryIS" = "Iceland";
+"countryIN" = "India";
+"countryID" = "Indonesia";
+"countryIR" = "Iran";
+"countryIQ" = "Iraq";
+"countryIE" = "Ireland";
+"countryIL" = "Israel";
+"countryIT" = "Italy";
+"countryJM" = "Jamaica";
+"countryJP" = "Japan";
+"countryJO" = "Jordan";
+"countryKZ" = "Kazakhstan";
+"countryKE" = "Kenya";
+"countryKP" = "North Korea";
+"countryKR" = "Korea";
+"countryKW" = "Kuwait";
+"countryLA" = "Lao";
+"countryLV" = "Latvia";
+"countryLB" = "Lebanon";
+"countryLR" = "Liberia";
+"countryLY" = "Libya";
+"countryLI" = "Liechtenstein";
+"countryLT" = "Lithuania";
+"countryLU" = "Luxembourg";
+"countryMY" = "Malaysia";
+"countryML" = "Mali";
+"countryMX" = "Mexico";
+"countryMN" = "Mongolia";
+"countryME" = "Montenegro";
+"countryMA" = "Morocco";
+"countryMM" = "Myanmar";
+"countryNA" = "Namibia";
+"countryNP" = "Nepal";
+"countryNL" = "Netherlands";
+"countryNZ" = "New Zealand";
+"countryNG" = "Nigeria";
+"countryNO" = "Norway";
+"countryPK" = "Pakistan";
+"countryPA" = "Panama";
+"countryPY" = "Paraguay";
+"countryPE" = "Peru";
+"countryPH" = "Philippines";
+"countryPL" = "Poland";
+"countryPT" = "Portugal";
+"countryQA" = "Qatar";
+"countryRO" = "Romania";
+"countryRU" = "Russian";
+"countryRW" = "Rwanda";
+"countrySA" = "Saudi Arabia";
+"countrySN" = "Senegal";
+"countryRS" = "Serbia";
+"countrySG" = "Singapore";
+"countrySK" = "Slovakia";
+"countrySI" = "Slovenia";
+"countryZA" = "South Africa";
+"countrySS" = "Sudan";
+"countryES" = "Spain";
+"countryLK" = "Sri Lanka";
+"countrySD" = "Sudan";
+"countrySE" = "Sweden";
+"countryCH" = "Switzerland";
+"countryTW" = "Taiwan";
+"countryTJ" = "Tajikistan";
+"countryTZ" = "Tanzania";
+"countryTH" = "Thailand";
+"countryTN" = "Tunisia";
+"countryTR" = "Turkey";
+"countryUG" = "Uganda";
+"countryUA" = "Ukraine";
+"countryAE" = "United Arab Emirates";
+"countryGB" = "United Kingdom";
+"countryUS" = "United States";
+"countryUY" = "Uruguay";
+"countryUZ" = "Uzbekistan";
+"countryVE" = "Venezuela";
+"countryVN" = "Viet Nam";
+"countryYE" = "Yemen";
+"countryZM" = "Zambia";
+"countryZW" = "Zimbabwe";
+"countryOT" = "Others";

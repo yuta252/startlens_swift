@@ -92,4 +92,6 @@ struct Constants{
     static let exhibitId = "&exhibitId="
     // Camera
     static let cameraURL = "http://startlens.local/api2/camera/"
+    // Contact
+    static let contactURL = "http://startlens.local/api2/contact/"
 }

@@ -17,19 +17,27 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
     @IBOutlet weak var emailField: HoshiTextField!
     @IBOutlet weak var passWordField: HoshiTextField!
     @IBOutlet weak var passWordMessage: UILabel!
+    @IBOutlet weak var sendButton: UIButton!
+    @IBOutlet weak var navigationBar: UINavigationBar!
+    
     
     var authCode = Int()
     var authEmail = String()
+    var language = String()
+    var country = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // プロトコル
         emailField.delegate = self
         passWordField.delegate = self
         
+        setupUI()
+        language = UserDefaults.standard.string(forKey: "language") ?? "en"
+        country = UserDefaults.standard.string(forKey: "country") ?? "NA"
         
     }
+    
     
     @IBAction func backAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -37,12 +45,10 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
     
     
     @IBAction func sendAction(_ sender: Any) {
-        print("send is tapped")
         // メールアドレスがnilでも空欄でもないことを確認
         guard let emailAddress = emailField.text, !emailAddress.isEmpty else{
-            passWordMessage.text = "メールアドレスを入力してください"
-            passWordMessage.textColor = UIColor(red: 216/255, green: 30/255, blue: 91/255, alpha: 1)
-            print("メールアドレス入力ないよ")
+            passWordMessage.text = "emailValidMessage".localized
+            passWordMessage.textColor = ThemeColor.errorString
             return
         }
         
@@ -50,14 +56,13 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         
         // パスワードがnilでも空欄でもないことを確認
         guard let passWord = passWordField.text, !passWord.isEmpty else{
-            passWordMessage.text = "パスワードを入力してください"
-            passWordMessage.textColor = UIColor(red: 216/255, green: 30/255, blue: 91/255, alpha: 1)
-            print("パスワード入力ないよ")
+            passWordMessage.text = "passwordValidMessage".localized
+            passWordMessage.textColor = ThemeColor.errorString
             return
         }
         
         // POSTするパラメータ作成
-        let parameters = ["auth":["email": emailAddress, "password": passWord]]
+        let parameters = ["auth":["email": emailAddress, "password": passWord, "language": language, "country": country]]
         print("parameters: \(parameters)")
         // メールアドレスとパスワードをJSON形式でサーバーに送信する
         AF.request(Constants.signUpURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
@@ -69,7 +74,6 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                 let json: JSON = JSON(response.data as Any)
                 let errorMessage = json["error"]["message"].string
                 if let errorMessage = errorMessage, !errorMessage.isEmpty {
-                    print("Empty error message")
                     DispatchQueue.main.async {
                         self.passWordMessage.text = String(errorMessage)
                         self.passWordMessage.textColor = ThemeColor.errorString
@@ -78,16 +82,8 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                 }else{
                     // 認証コード画面へ遷
                     if let authResult = json["result"]["authcode"].int{
-                        print("authResult: \(authResult)")
                         self.authCode = authResult
-                        print("authresult. move to next")
                         self.performSegue(withIdentifier: "auth", sender: nil)
-//                        let storyboard:UIStoryboard = self.storyboard!
-//                        let authVC = storyboard.instantiateViewController(withIdentifier: "signupauth") as! SignUpAuthViewController
-//                        authVC.authCode = authResult
-//                        authVC.emailAddress = self.authEmail
-//                        // self.navigationController?.pushViewController(authVC, animated: true)
-//                        self.present(authVC, animated: true, completion: nil)
                     }
                 }
             case .failure(let error):
@@ -105,6 +101,14 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         authVC?.emailAddress = self.authEmail
     }
     
+    func setupUI(){
+        navigationBar.tintColor = UIColor.white
+        emailField.placeholder = "emailInputPlace".localized
+        passWordField.placeholder = "passwordInputPlace".localized
+        passWordMessage.text = "signupErrorMessage".localized
+        sendButton.setTitle("signupSendText".localized, for: .normal)
+        
+    }
     
     // キーボード以外の領域を押下時にキーボードを閉じる
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -119,8 +123,8 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let emailaddress = emailField.text, !emailaddress.contains("@"){
-            passWordMessage.text = "正しいメールアドレスの形式ではありません"
-            passWordMessage.textColor = UIColor(red: 216/255, green: 30/255, blue: 91/255, alpha: 1)
+            passWordMessage.text = "emailValidMessage2".localized
+            passWordMessage.textColor = ThemeColor.errorString
         }
     }
 }

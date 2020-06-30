@@ -19,7 +19,7 @@ class favoriteViewController: UIViewController {
     
     var spotItem = [Spot]()
     var apiKey = String()
-    
+    var spotId = Int()
     
     let refresh = UIRefreshControl()
     
@@ -28,6 +28,7 @@ class favoriteViewController: UIViewController {
 
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        setupUI()
         // TabaleView
         tableView.delegate = self
         tableView.dataSource = self
@@ -44,7 +45,6 @@ class favoriteViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print("viewwillapper is called")
         fetchData()
         tableView.reloadData()
     }
@@ -104,6 +104,11 @@ class favoriteViewController: UIViewController {
         refresh.endRefreshing()
     }
     
+    func setupUI(){
+        noFavoriteTItle.text = "No favorite registration".localized
+        noFavoriteSubtitle.text = "Add to favorites from search list".localized
+    }
+    
     func likeUpdate(isLike: Bool, spotId: String){
         var text = String()
         if isLike {
@@ -133,6 +138,19 @@ class favoriteViewController: UIViewController {
             }
 
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let identifier = segue.identifier else {return}
+        
+        switch identifier{
+        case "spotContent":
+            let spotDetailVC = segue.destination as! SpotDetailViewController
+            spotDetailVC.spotId = spotId
+        default:
+            break
+        }
+        
     }
 }
 
@@ -191,12 +209,13 @@ extension favoriteViewController: UITableViewDelegate{
         return 150
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        // セルが選択された場合の処理
-//        let indexNumber = indexPath.row
-//        // spotPkを渡す
-//
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // セルが選択された場合の処理
+        spotId = spotItem[indexPath.row].spotPk
+        // spotPkを渡す
+        performSegue(withIdentifier: "spotContent", sender: nil)
+
+    }
 }
 
 extension favoriteViewController: CellDelegate{

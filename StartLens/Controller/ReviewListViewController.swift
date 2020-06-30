@@ -13,6 +13,7 @@ import SwiftyJSON
 
 class ReviewListViewController: UIViewController {
 
+    @IBOutlet weak var reviewTitleText: UILabel!
     @IBOutlet weak var reviewTableView: UITableView!
     @IBOutlet weak var noReview: UILabel!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -28,6 +29,7 @@ class ReviewListViewController: UIViewController {
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
         
+        setupUI()
         reviewTableView.delegate = self
         reviewTableView.dataSource = self
         reviewTableView.register(UINib(nibName: "WriterCell", bundle: nil), forCellReuseIdentifier: "WriterCell")
@@ -44,6 +46,11 @@ class ReviewListViewController: UIViewController {
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func setupUI(){
+        reviewTitleText.text = "revewListTitle".localized
+        noReview.text = "noReviewText".localized
     }
     
     func fetchData(){

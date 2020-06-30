@@ -14,8 +14,10 @@ import SwiftyJSON
 class PassSendViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
 
     
+    @IBOutlet weak var passwordTitleText: UILabel!
     @IBOutlet weak var passWordField: HoshiTextField!
     @IBOutlet weak var passWordMessage: UILabel!
+    @IBOutlet weak var sendButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,16 +25,15 @@ class PassSendViewController: UIViewController, UITextViewDelegate, UITextFieldD
         // プロトコル
         passWordField.delegate = self
         
-        
+        setupUI()
     }
     
     
     @IBAction func sendAction(_ sender: Any) {
         // パスワードがnilでも空欄でもないことを確認
         guard let passWord = passWordField.text, !passWord.isEmpty else{
-            passWordMessage.text = "パスワードを入力してください"
+            passWordMessage.text = "emailValidMessage".localized
             passWordMessage.textColor = ThemeColor.errorString
-            print("パスワード入力ないよ")
             return
         }
         
@@ -53,6 +54,13 @@ class PassSendViewController: UIViewController, UITextViewDelegate, UITextFieldD
                 
             }
         }
+    }
+    
+    func setupUI(){
+        passwordTitleText.text = "resetNewPasswordText".localized
+        passWordField.placeholder = "passwordInputPlace".localized
+        passWordMessage.text = "signupErrorMessage".localized
+        sendButton.setTitle("sendButtonText".localized, for: .normal)
     }
     
     // キーボード以外の領域を押下時にキーボードを閉じる
