@@ -70,6 +70,7 @@ struct Constants{
     // Home
     static let homeURL = "http://startlens.local/api2/spotlist/?key="
     static let query = "&q="
+    static let lang = "&lang="
     // Search
     static let searchURL = "http://startlens.local/api2/searchlist/?key="
     static let category = "&cat="

@@ -23,6 +23,7 @@ class ExhibitDetailViewController: UIViewController {
     
     var apiKey = String()
     var spotId: Int?
+    var language = String()
     var exhibitObj: Exhibit?
     var exhibitId: Int?
     
@@ -31,6 +32,7 @@ class ExhibitDetailViewController: UIViewController {
 
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        language = UserDefaults.standard.string(forKey: "language")!
         
         exhibitId = exhibitObj?.exhibitId
         
@@ -55,7 +57,7 @@ class ExhibitDetailViewController: UIViewController {
     }
     
     func fetchData(){
-        let text = Constants.exhibitDetailURL + apiKey + Constants.exhibitId + String(exhibitId!)
+        let text = Constants.exhibitDetailURL + apiKey + Constants.spot + String(spotId!) + Constants.exhibitId + String(exhibitId!) + Constants.lang + language
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print("url: \(url)")
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in

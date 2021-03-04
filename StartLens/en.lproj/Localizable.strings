@@ -7,7 +7,8 @@
 */
 // Common
 "settingVersionNumber" = "1.0.0";
-
+"cancelButton" = "Cancel";
+"okButtonText" = "OK";
 
 // LogInSelectVC
 "introANimationSkip" = "Skip";
@@ -84,7 +85,7 @@
 "locationCurrent" = "Get current location";
 "locationAlertTitle" = "Getting location information is not allowed";
 "locationAlertMessage" = "Please cahnge the setting from Settings>Privacy>Location Services";
-"okButtonText" = "OK";
+
 // FavoriteVC
 "noFavoriteText" = "No favorite registration";
 "noFavoriteHelp" = "Add to favorites from search list";
@@ -106,7 +107,6 @@
 "noRecommendText" = "No recommended spot";
 "recommedContinueButton" = "More";
 // ReviewPostVC
-"cancelButton" = "Cancel";
 "reviewPostPlace" = "Enter a review";
 "reviewPostHelp" = "Please enter within 500 characters.";
 "reviewFailText" = "Review failed";
@@ -123,6 +123,8 @@
 "settingContactTitle" = "Contact us";
 "settingVersionTitle" = "Version";
 "settingLogoutTitle" = "Log out";
+"logoutMessage" = "Are you sure you want to log out of Startlens?";
+
 // ContactVC
 "contactHelpText" = "Please enter within 1,000 characters.";
 "contactHelpText2" = "Enter contents of inquiry";
@@ -357,3 +359,4 @@ LINE株式会社は、利用者のプライバシー保護を重要なものと�
 "countryZM" = "Zambia";
 "countryZW" = "Zimbabwe";
 "countryOT" = "Others";
+

@@ -74,6 +74,7 @@ class SpotContentViewController: UIViewController {
     var contentHeight: CGFloat?
     var spotId: Int?
     var variable = String()
+    var language = String()
     
     var isLike = false
     var isIntroExtend = false
@@ -85,6 +86,7 @@ class SpotContentViewController: UIViewController {
         
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        language = UserDefaults.standard.string(forKey: "language")!
         setupUI()
         
         reviewTableView.delegate = self
@@ -212,7 +214,7 @@ class SpotContentViewController: UIViewController {
     
     func fetchData(){
         
-        let text = Constants.spotDetailURL + apiKey + Constants.spot + String(spotId!)
+        let text = Constants.spotDetailURL + apiKey + Constants.spot + String(spotId!) + Constants.lang + language
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print("url: \(url)")
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in

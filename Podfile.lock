@@ -1,16 +1,20 @@
 PODS:
-  - Alamofire (5.1.0)
-  - Cosmos (21.0.0)
+  - Alamofire (5.4.1)
+  - Cosmos (23.0.0)
   - ImpressiveNotifications (0.5.0)
-  - IQKeyboardManagerSwift (6.5.5)
-  - lottie-ios (3.1.6)
-  - SDWebImage (5.7.2):
-    - SDWebImage/Core (= 5.7.2)
-  - SDWebImage/Core (5.7.2)
+  - IQKeyboardManagerSwift (6.5.6)
+  - lottie-ios (3.2.1)
+  - SDWebImage (5.10.4):
+    - SDWebImage/Core (= 5.10.4)
+  - SDWebImage/Core (5.10.4)
   - SwiftyJSON (5.0.0)
-  - TensorFlowLiteC (2.2.0)
-  - TensorFlowLiteSwift (2.2.0):
-    - TensorFlowLiteC (= 2.2.0)
+  - TensorFlowLiteC (2.4.0):
+    - TensorFlowLiteC/Core (= 2.4.0)
+  - TensorFlowLiteC/Core (2.4.0)
+  - TensorFlowLiteSwift (2.4.0):
+    - TensorFlowLiteSwift/Core (= 2.4.0)
+  - TensorFlowLiteSwift/Core (2.4.0):
+    - TensorFlowLiteC (= 2.4.0)
   - TextFieldEffects (1.6.0)
 
 DEPENDENCIES:
@@ -38,17 +42,17 @@ SPEC REPOS:
     - TextFieldEffects
 
 SPEC CHECKSUMS:
-  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
-  Cosmos: 3dfb6e4ba48bd48b8c9aa2a77048ae11ed114f96
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
   ImpressiveNotifications: 9a3921276e916e244abb7e4b2a6661133479a17c
-  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
-  lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
-  SDWebImage: d9ea4959d99c52276dfada481987018fcaea3d58
+  IQKeyboardManagerSwift: c7df9d2deb356c04522f5c4b7b6e4ce4d8ed94fe
+  lottie-ios: 106e92eaf11fbed0a76590b4cdb9b5ec26123ff7
+  SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
-  TensorFlowLiteC: b3ab9e867b0b71052ca102a32a786555b330b02e
-  TensorFlowLiteSwift: 2dd5e9c895e1819501f0fba3d8b69a536bda6c65
+  TensorFlowLiteC: 09f8ac75a76caeadb19bcfa694e97454cc1ecf87
+  TensorFlowLiteSwift: f062dc1178120100d825d7799fd9f115b4a37fee
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
 
 PODFILE CHECKSUM: fc0e8b18a9bbe5b062bcc1f5675ea00fd7d2defd
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.1

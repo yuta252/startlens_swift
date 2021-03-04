@@ -20,6 +20,7 @@ class ExhibitListViewController: UIViewController {
     
     var apiKey = String()
     var spotId: Int?
+    var language = String()
     var exhibitItem = [Exhibit]()
     //var exhibitId: Int?
     var exhibitObj: Exhibit?
@@ -29,6 +30,7 @@ class ExhibitListViewController: UIViewController {
 
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        language = UserDefaults.standard.string(forKey: "language")!
         
         setupUI()
         recommendCollectionView.dataSource = self
@@ -62,7 +64,7 @@ class ExhibitListViewController: UIViewController {
     }
     
     func fetchData(){
-        let text = Constants.exhibitListURL + apiKey + Constants.spot + String(spotId!)
+        let text = Constants.exhibitListURL + apiKey + Constants.spot + String(spotId!) + Constants.lang + language
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print("url: \(url)")
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
@@ -83,7 +85,6 @@ class ExhibitListViewController: UIViewController {
                         let exhibitId = json["result"]["recommend"][i]["exhibitId"].int
                         let exhibitName = json["result"]["recommend"][i]["exhibitName"].string
                         let exhibitUrl = json["result"]["recommend"][i]["exhibitUrl"].string
-                        print("exhibitName: \(exhibitName!), exhibitUrl: \(exhibitUrl!)")
                         let exhibit: Exhibit = Exhibit(exhibitId: exhibitId!, exhibitName: exhibitName!, exhibitImage: exhibitUrl!, exhibitIntro: "like")
                         self.exhibitItem.append(exhibit)
                     }

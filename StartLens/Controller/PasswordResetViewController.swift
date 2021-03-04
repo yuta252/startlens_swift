@@ -22,10 +22,12 @@ class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextF
     
     var authCode = Int()
     var authEmail = String()
+    var language = String()
         
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        language = UserDefaults.standard.string(forKey: "language") ?? "en"
         // プロトコル
         emailField.delegate = self
         
@@ -50,7 +52,7 @@ class PasswordResetViewController: UIViewController, UITextViewDelegate, UITextF
         authEmail = emailAddress
         
         // POSTするパラメータ作成
-        let parameters = ["auth":["email": emailAddress]]
+        let parameters = ["auth":["email": emailAddress, "language": language]]
         
         // メールアドレスとパスワードをJSON形式でサーバーに送信する
         AF.request(Constants.passResetURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in

@@ -70,14 +70,11 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        spotItem = []
-//        // 言語変更時の逆ジオコーディングを行う
-//        fetchData(address: self.locationQuery, category: self.categoryQuery)
-//        tableView.reloadData()
-        // 位置情報の取得
+        //spotItem = []
+        // 位置情報の取得開始
         locationManager.startUpdatingLocation()
         // 遅延処理
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
             self.fetchData(address: self.locationQuery, category: self.categoryQuery)
         }
     }
@@ -103,7 +100,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     func setupLocationManager(){
         locationManager = CLLocationManager()
         // 位置情報取得許可ダイアログの表示
-        guard let locationManger = locationManager else {return}
+        guard let locationManager = locationManager else {return}
         locationManager.requestWhenInUseAuthorization()
         // ステータスごとの処理
         let status = CLLocationManager.authorizationStatus()
@@ -209,7 +206,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     // 場所カテゴリー検索による抽出
     func fetchData(address: String, category: String){
         
-        let text = Constants.searchURL + apiKey + Constants.category + category + Constants.address + address
+        let text = Constants.searchURL + apiKey + Constants.category + category + Constants.address + address + Constants.lang + language
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print("url: \(url)")
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
@@ -258,10 +255,10 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         var text = String()
         if isLike {
             // 登録
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "1"
+            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "1" + Constants.lang + language
         }else{
             // 削除
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "0"
+            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "0" + Constants.lang + language
         }
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print("url: \(url)")
@@ -391,6 +388,7 @@ extension HomeViewController: CellDelegate{
     func didTapButton(cell: CustomCell, index: IndexPath) {
         // Likeを消去した時の処理
         print(index.row)
+        print("spotItem:\(spotItem)")
         let isLike = spotItem[index.row].isLike
         
         if isLike{

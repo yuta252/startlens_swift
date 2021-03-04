@@ -116,12 +116,28 @@ class SettingsTableViewController: UITableViewController {
                 // 利用規約
                 performSegue(withIdentifier: "terms", sender: nil)
                 break
-            case 3:
-                print("didSelect: \(indexPath.section), \(indexPath.row)")
-                break
             case 4:
                 // ログアウト
                 print("didSelect: \(indexPath.section), \(indexPath.row)")
+                let alert: UIAlertController = UIAlertController(title: "settingLogoutTitle".localized, message: "logoutMessage".localized, preferredStyle: .alert)
+                // OKボタンアクション
+                let defaultAction: UIAlertAction = UIAlertAction(title: "okButtonText".localized, style: UIAlertAction.Style.default) { (action: UIAlertAction!) in
+                    // ログアウト処理
+                    UserDefaults.standard.set(false, forKey: "isLogIn")
+                    let LoginSelectVC = self.storyboard!.instantiateViewController(withIdentifier: "loginSelect") as! LoginSelectViewController
+                    UIApplication.shared.keyWindow?.rootViewController = LoginSelectVC
+                    UIApplication.shared.keyWindow?.makeKeyAndVisible()
+                    print("ok is tapped")
+                }
+                
+                let cancelAction: UIAlertAction = UIAlertAction(title: "cancelButton".localized, style: UIAlertAction.Style.cancel) { (action: UIAlertAction!) in
+                    // キャンセル時の処理
+                    print("cancel is tapped")
+                }
+                alert.addAction(cancelAction)
+                alert.addAction(defaultAction)
+                present(alert, animated: true, completion: nil)
+                
                 break
             default:
                 break

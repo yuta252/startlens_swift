@@ -7,7 +7,10 @@
 */
 // Common
 "settingVersionNumber" = "1.0.0";
+"cancelButton" = "キャンセル";
+"okButtonText" = "OK";
 
+// IntroVC
 "introANimationSkip" = "スキップ";
 "introAnimationText1" = "写真を撮ろう";
 "introAnimationText2" = "旅に出よう";
@@ -81,7 +84,7 @@
 "locationCurrent" = "現在地を取得";
 "locationAlertTitle" = "位置情報の取得が許可されていません";
 "locationAlertMessage" = "設定>プライバシー>位置情報サービスから設定を変更してください。";
-"okButtonText" = "OK";
+
 // FavoriteVC
 "noFavoriteText" = "お気に入り登録はありません。";
 "noFavoriteHelp" = "検索画面からお気に入りに追加しよう";
@@ -103,7 +106,6 @@
 "noRecommendText" = "おすすめスポットはありません";
 "recommedContinueButton" = "続きを見る";
 // ReviewPostVC
-"cancelButton" = "キャンセル";
 "reviewPostPlace" = "レビューを入力する";
 "reviewPostHelp" = "500文字以内で入力してください。";
 "reviewFailText" = "レビュー失敗";
@@ -120,6 +122,7 @@
 "settingContactTitle" = "お問い合わせ";
 "settingVersionTitle" = "バージョン";
 "settingLogoutTitle" = "ログアウト";
+"logoutMessage" = "本当にログアウトしますか？";
 // ContactVC
 "contactHelpText" = "1000文字以内で入力してください。";
 "contactHelpText2" = "お問い合わせ内容を入力してください";

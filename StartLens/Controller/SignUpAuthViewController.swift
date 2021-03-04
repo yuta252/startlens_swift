@@ -84,10 +84,8 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
                     self.errorMessageText.text = "authValidFail2".localized
                     self.errorMessageText.textColor = ThemeColor.errorString
                 }
-            }
-            
+            }   
         }
-        print("if sentence end")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

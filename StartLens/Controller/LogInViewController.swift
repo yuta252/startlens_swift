@@ -79,6 +79,7 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
                     if let isLogin = json["result"]["authsuccess"].bool, isLogin{
                         if let apiKey = json["result"]["apikey"].string{
                             UserDefaults.standard.set(apiKey, forKey: "apiKey")
+                            UserDefaults.standard.set(true, forKey: "isLogIn")
                             self.performSegue(withIdentifier: "home", sender: nil)
                         }
                     }

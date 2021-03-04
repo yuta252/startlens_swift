@@ -25,12 +25,14 @@ class ReviewPostViewController: UIViewController, UITextViewDelegate {
     var spotId: Int?
     var apiKey = String()
     var ratingNum = 2.5
+    var language = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 初期設定
         apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        language = UserDefaults.standard.string(forKey: "language")!
 
         setupUI()
         postTextView.delegate = self
@@ -73,7 +75,7 @@ class ReviewPostViewController: UIViewController, UITextViewDelegate {
             errorMessage.textColor = ThemeColor.errorString
         }else{
             // POSTするパラメータ作成
-            let parameters = ["spot": String(spotId!), "apikey": apiKey,"review": postReview, "rating": ratingNum] as [String : Any]
+            let parameters = ["spot": String(spotId!), "apikey": apiKey,"review": postReview, "rating": ratingNum, "lang": language] as [String : Any]
             print(parameters)
             
             AF.request(Constants.postReviewURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in

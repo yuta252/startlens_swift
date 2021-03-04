@@ -21,6 +21,7 @@ class ReviewListViewController: UIViewController {
     
     var apiKey = String()
     var spotId: Int?
+    var language = String()
     var reviewItem = [Review]()
     
     override func viewDidLoad() {
@@ -54,7 +55,7 @@ class ReviewListViewController: UIViewController {
     }
     
     func fetchData(){
-        let text = Constants.reviewListURL + apiKey + Constants.spot + String(spotId!)
+        let text = Constants.reviewListURL + apiKey + Constants.spot + String(spotId!) + Constants.lang + language
         let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         print("url: \(url)")
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in

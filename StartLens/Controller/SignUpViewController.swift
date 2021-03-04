@@ -34,7 +34,7 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         
         setupUI()
         language = UserDefaults.standard.string(forKey: "language") ?? "en"
-        country = UserDefaults.standard.string(forKey: "country") ?? "NA"
+        country = UserDefaults.standard.string(forKey: "country") ?? "OT"
         
     }
     

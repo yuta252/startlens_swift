@@ -94,8 +94,8 @@
             filePath = "StartLens/Controller/SpotContentViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "setupUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "StartLens/Controller/SpotContentViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +126,8 @@
             filePath = "StartLens/Controller/ReviewPostViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -152,7 +152,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "EE68F0B8-D662-42C3-95E4-A8CE52E8AEE6"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StartLens/Controller/CameraViewController.swift"
@@ -180,7 +180,7 @@
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - 907893a62d992b5f"
+                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - d71a5e997a74b5b3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -195,7 +195,7 @@
                   offsetFromSymbolStart = "52">
                </Location>
                <Location
-                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - 95efd6f8d93b9667"
+                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - d28d1bc78ed6088b"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -210,7 +210,7 @@
                   offsetFromSymbolStart = "627">
                </Location>
                <Location
-                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - c3c75aabc28c5123"
+                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - 84a597949561cfcf"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -225,7 +225,7 @@
                   offsetFromSymbolStart = "620">
                </Location>
                <Location
-                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - 55fa06fba47eb602"
+                  uuid = "364CEE36-1DED-47F7-905A-C40EE4DA303E - 1298cbc4f39328ee"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -240,6 +240,22 @@
                   offsetFromSymbolStart = "558">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D35E7AC0-BCC3-4A4F-A41C-3E008AAFDE28"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StartLens/Controller/SpotContentViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "SpotContentViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
