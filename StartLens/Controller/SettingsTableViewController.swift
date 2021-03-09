@@ -124,9 +124,16 @@ class SettingsTableViewController: UITableViewController {
                 let defaultAction: UIAlertAction = UIAlertAction(title: "okButtonText".localized, style: UIAlertAction.Style.default) { (action: UIAlertAction!) in
                     // ログアウト処理
                     UserDefaults.standard.set(false, forKey: "isLogIn")
-                    let LoginSelectVC = self.storyboard!.instantiateViewController(withIdentifier: "loginSelect") as! LoginSelectViewController
-                    UIApplication.shared.keyWindow?.rootViewController = LoginSelectVC
-                    UIApplication.shared.keyWindow?.makeKeyAndVisible()
+                    print("logout")
+                    //self.navigationController?.popToRootViewController(animated: true)
+//                    let LoginSelectVC = self.storyboard!.instantiateViewController(withIdentifier: "loginSelect") as! LoginSelectViewController
+                    // UIApplication.shared.keyWindow?.rootViewController = LoginSelectVC
+                    // UIApplication.shared.keyWindow?.makeKeyAndVisible()
+//                    UIApplication.shared.windows.first{ $0.isKeyWindow }?.rootViewController = LoginSelectVC
+//                    UIApplication.shared.windows.first{ $0.isKeyWindow }?.makeKeyAndVisible()
+                    print("navigationController: \(self.navigationController!.viewControllers)")
+                    // TODO: ログアウト処理を更新する
+                    self.navigationController?.popToViewController(self.navigationController!.viewControllers[0], animated: true)
                     print("ok is tapped")
                 }
                 

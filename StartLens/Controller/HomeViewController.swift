@@ -27,27 +27,32 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var noSearchTitle: UILabel!
     @IBOutlet weak var noSearchSubtitle: UILabel!
     
-    var spotItem = [Spot]()
-    var apiKey = String()
+    var token = String()
+    var pagedSpot: PagedSpot?
+    var spots = [Spot]()
+    var spotId: Int?
     var language = String()
     var searchBar: UISearchBar!
     var searchQuery: String = "all"
     var locationQuery: String = "all"
     var categoryQuery: String = "all"
-    var locationManager: CLLocationManager!
-    var latitude: CLLocationDegrees?
-    var longitude: CLLocationDegrees?
-    var spotId: Int?
+    var parameters = [String: String]()
     let refresh = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // 初期設定
-        apiKey = UserDefaults.standard.string(forKey: "apiKey")!
-        language = UserDefaults.standard.string(forKey: "language")!
+        // Initial settings
+        language = Language.getLanguage()
+        guard let savedToken = UserDefaults.standard.string(forKey: "token") else{
+            // if cannot get a token, move to login screen
+            print("Error: No token")
+            return
+        }
+        token = savedToken
+        
+        // UI settings
         setupUI()
-        // TabaleView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
@@ -56,30 +61,25 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         tableView.separatorStyle = .none
         tableView.bounces = false
         tableView.isScrollEnabled = false
-        
         scrollView.delegate = self
         scrollView.bounces = false
-        // NavigationBarに検索バーを設定
+        // Set search bar in navigation bar
         setSearchBar()
         
-        fetchData(query: "all")
-        tableView.reloadData()
-        // Location Managerの設定
-        setupLocationManager()
+        // Data settings
+        // fetchData(params: ["items": "3"])
+        // tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //spotItem = []
-        // 位置情報の取得開始
-        locationManager.startUpdatingLocation()
-        // 遅延処理
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
-            self.fetchData(address: self.locationQuery, category: self.categoryQuery)
-        }
+        // To be considerd: whether fetchData is called in viewDidLoad or viewDidAppear
+        self.parameters = createParameters()
+        fetchData(params: self.parameters)
+        tableView.reloadData()
     }
     
-    func setupUI(){
+    func setupUI() {
         locationButton.layer.cornerRadius = 5.0
         locationButton.layer.borderColor = UIColor.lightGray.cgColor
         locationButton.layer.borderWidth = 1.0
@@ -97,28 +97,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         noSearchSubtitle.text = "noSearchResultHelp".localized
     }
     
-    func setupLocationManager(){
-        locationManager = CLLocationManager()
-        // 位置情報取得許可ダイアログの表示
-        guard let locationManager = locationManager else {return}
-        locationManager.requestWhenInUseAuthorization()
-        // ステータスごとの処理
-        let status = CLLocationManager.authorizationStatus()
-        if status == .authorizedWhenInUse{
-            locationManager.delegate = self
-            // 位置情報の更新頻度
-            locationManager.distanceFilter = 100
-            // 位置情報の取得
-            locationManager.startUpdatingLocation()
-            // 遅延処理
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0){
-                self.fetchData(address: self.locationQuery, category: "all")
-            }
-            locationButton.setTitle("currentLocationText".localized, for: .normal)
-            locationButton.setTitleColor(ThemeColor.firstString, for: .normal)
-        }
-    }
-    
     @IBAction func locationSearchAction(_ sender: Any) {
         performSegue(withIdentifier: "location", sender: nil)
     }
@@ -128,14 +106,14 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func searchButtonAction(_ sender: Any) {
-        fetchData(address: locationQuery, category: categoryQuery)
+        self.parameters = createParameters()
+        fetchData(params: self.parameters)
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let identifier = segue.identifier else {return}
+        guard let identifier = segue.identifier else { return }
         
-        switch identifier{
+        switch identifier {
         case "category":
             let categoryVC = segue.destination as! CategoryListViewController
             categoryVC.delegate = self
@@ -150,98 +128,41 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         default:
             break
         }
-        
     }
     
-    
-    // クエリによるデータの抽出
-    func fetchData(query: String){
-        
-        let text = Constants.homeURL + apiKey + Constants.query + query
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            
-            print(response)
-            switch response.result{
-                
+    func fetchData(params: [String: String]) {
+        /**
+         - Parameters: params: dictionary of parameters
+            items: Int
+                The number of fetching spot
+            query: String
+                Free word to search spot name
+            category: Int
+                Spot category
+            prefecture: String
+                Address of spot
+         */
+        let headers: HTTPHeaders = ["Authorization": token, "Content-Type": "application/json"]
+        let url = Constants.baseURL + Constants.spotURL
+        let urlWithParams = createURLWithParameters(url: url, params: params)
+        let encodedUrl = urlWithParams.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        print("url: \(encodedUrl)")
+        AF.request(encodedUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            switch response.result {
             case .success:
                 let json:JSON = JSON(response.data as Any)
-                self.spotItem = []
-                if let num = json["info"]["num"].int, num != 0{
+                print("json: \(json)")
+                self.pagedSpot = try? JSONDecoder().decode(PagedSpot.self, from: response.data!)
+                print("pagedSpot: \(self.pagedSpot)")
+                self.spots = []
+                if let num = self.pagedSpot?.data.count, num != 0 {
+                    self.spots = self.pagedSpot!.data
                     self.noSearchTitle.isHidden = true
                     self.noSearchSubtitle.isHidden = true
-                    let roopNum = num - 1
-
-                    for i in 0...roopNum{
-                        let spotTitle = json["result"][i]["spotTitle"].string
-                        let category = json["result"][i]["category"].string
-                        let imageURLString = json["result"][i]["thumbnail"].string
-                        let address = json["result"][i]["address"].string
-                        let ratingStar = json["result"][i]["ratingstar"].float
-                        let ratingAmount = json["result"][i]["ratingAmount"].int
-                        let spotPk = json["result"][i]["spotpk"].int
-                        let isLike = json["result"][i]["like"].bool
-                        let spot:Spot = Spot(spotTitle: spotTitle!, category: category!, thumbnail: imageURLString!, address: address!, ratingStar: ratingStar!, ratingAmount: ratingAmount!, spotPk: spotPk!, isLike: isLike!)
-                        self.spotItem.append(spot)
-                        
-                    }
-                    print("spotItem: \(self.spotItem)")
-                }else{
-                    // 検索結果がない場合
+                } else {
                     self.noSearchTitle.isHidden = false
                     self.noSearchSubtitle.isHidden = false
                 }
-                
-                break
-            case .failure(let error):
-                print(error)
-                break
-            }
-            
-            self.tableView.reloadData()
-        }
-    }
-    
-    // 場所カテゴリー検索による抽出
-    func fetchData(address: String, category: String){
-        
-        let text = Constants.searchURL + apiKey + Constants.category + category + Constants.address + address + Constants.lang + language
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            print(response)
-            switch response.result{
-                
-            case .success:
-                let json:JSON = JSON(response.data as Any)
-                self.spotItem = []
-                if let num = json["info"]["num"].int, num != 0{
-                    self.noSearchTitle.isHidden = true
-                    self.noSearchSubtitle.isHidden = true
-                    let roopNum = num - 1
-
-                    for i in 0...roopNum{
-                        let spotTitle = json["result"][i]["spotTitle"].string
-                        let category = json["result"][i]["category"].string
-                        let imageURLString = json["result"][i]["thumbnail"].string
-                        let address = json["result"][i]["address"].string
-                        let ratingStar = json["result"][i]["ratingstar"].float
-                        let ratingAmount = json["result"][i]["ratingAmount"].int
-                        let spotPk = json["result"][i]["spotpk"].int
-                        let isLike = json["result"][i]["like"].bool
-                        let spot:Spot = Spot(spotTitle: spotTitle!, category: category!, thumbnail: imageURLString!, address: address!, ratingStar: ratingStar!, ratingAmount: ratingAmount!, spotPk: spotPk!, isLike: isLike!)
-                        self.spotItem.append(spot)
-                        
-                    }
-                    print("spotItem: \(self.spotItem)")
-                }else{
-                    // 検索結果がない場合
-                    self.noSearchTitle.isHidden = false
-                    self.noSearchSubtitle.isHidden = false
-                }
-                
-                break
             case .failure(let error):
                 print(error)
                 break
@@ -249,103 +170,99 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             self.tableView.reloadData()
         }
     }
-
     
-    func likeUpdate(isLike: Bool, spotId: String){
-        var text = String()
-        if isLike {
-            // 登録
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "1" + Constants.lang + language
-        }else{
-            // 削除
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "0" + Constants.lang + language
+    func createParameters() -> [String: String] {
+        /**
+         - Returns: dictionary of query parameters
+        */
+        // if all is selected, skip the query
+        var parameters = [String: String]()
+        if searchQuery != "all" {
+            parameters["query"] = searchQuery
         }
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            print(response)
-            switch response.result{
-            case .success:
-                let json:JSON = JSON(response.data as Any)
-                let isSaved:Bool = json["result"]["like"].bool!
-                
-                if isSaved{
-                    print("正常に処理終了")
-                }
-                
-                break
-            case .failure(let error):
-                print(error)
-                break
-            }
-
+        if locationQuery != "all" {
+            parameters["prefecture"] = locationQuery
         }
+        if categoryQuery != "all" {
+            parameters["category"] = categoryQuery
+        }
+        // if any parameters is not set, set items query
+        if parameters.isEmpty {
+            parameters["items"] = "20"
+            return parameters
+        }
+        return parameters
     }
     
-    // 検索バーの設置
-    func setSearchBar(){
-        if let navigationBarFrame = self.navigationController?.navigationBar.bounds{
-            // NavigationBarに適したサイズの検索バーを設置
+    func createURLWithParameters(url: String, params: [String: String]) -> String {
+        /**
+         Create request url with parameters
+         - Parameters
+            url: http://startlens.jp/api/v1/tourist/spots
+            params: dictionary of parameters
+             items: The number of fetching spot
+             query: Free word to search spot name
+             category: Spot category
+             prefecture: Address of spot
+         */
+        var urlWithParams = url
+        var isQuestion = true
+        
+        for (key, value) in params {
+            if (isQuestion) {
+                urlWithParams = urlWithParams + "?" + key + "=" + value
+                isQuestion = false
+            } else {
+                urlWithParams = urlWithParams + "&" + key + "=" + value
+            }
+        }
+        return urlWithParams
+    }
+    
+    func setSearchBar() {
+        if let navigationBarFrame = self.navigationController?.navigationBar.bounds {
+            // Set search bar
             let searchBar: UISearchBar = UISearchBar(frame: navigationBarFrame)
             searchBar.delegate = self
             searchBar.placeholder = "searchDestinationText".localized
             searchBar.autocapitalizationType = UITextAutocapitalizationType.none
             navigationItem.titleView = searchBar
             navigationItem.titleView?.frame = searchBar.frame
+            // Remove back button
+            navigationItem.hidesBackButton = true
         }
-    }
-    
-    // 逆ギオコーディング処理
-    func convert(lat: CLLocationDegrees, lon:CLLocationDegrees){
-        let geocoder = CLGeocoder()
-        let location = CLLocation(latitude: lat, longitude: lon)
-        
-        geocoder.reverseGeocodeLocation(location, preferredLocale: Locale(identifier: language)) { (placeMark, error) in
-            if let placeMark = placeMark{
-                if let pm = placeMark.first{
-                    if pm.administrativeArea != nil || pm.locality != nil{
-                        self.locationQuery = pm.locality!
-                        print("language: \(self.language)")
-                        print("locationQuery: \(self.locationQuery)")
-                    }else{
-                        self.locationQuery = pm.name!
-                    }
-                }
-            }
-        }
-        print("逆ジオコーデング")
     }
 }
 
 extension HomeViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return spotItem.count
+        print("tableView count: \(self.spots.count)")
+        return self.spots.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
         
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        height.constant = CGFloat(Double(spotItem.count) * 150 + 43)
+        height.constant = CGFloat(Double(self.spots.count) * 150 + 43)
         
-        cell.spotId = spotItem[indexPath.row].spotPk
-        cell.spotTitle.text = spotItem[indexPath.row].spotTitle
-        // textが枠内に入るようにする
+        cell.spotId = self.spots[indexPath.row].id
+        // TODO: 言語ごとに切り替える
+        cell.spotTitle.text = self.spots[indexPath.row].multiProfiles[0].username
         cell.spotTitle?.adjustsFontSizeToFitWidth = true
-        cell.spotCategory.text = spotItem[indexPath.row].category
-        cell.spotAddress.text = spotItem[indexPath.row].address
+        cell.spotCategory.text = Constants.majorCategoryMap[self.spots[indexPath.row].profile.majorCategory]
+        cell.spotAddress.text = self.spots[indexPath.row].multiProfiles[0].addressPrefecture + self.spots[indexPath.row].multiProfiles[0].addressCity + self.spots[indexPath.row].multiProfiles[0].addressStreet
         cell.spotAddress?.adjustsFontSizeToFitWidth = true
         // Cosmos
         cell.ratingStar.settings.updateOnTouch = false
-        cell.ratingStar.rating = Double(spotItem[indexPath.row].ratingStar)
+        cell.ratingStar.rating = Double(self.spots[indexPath.row].profile.rating)
         cell.ratingStar.settings.fillMode = .half
-        cell.ratingNumber.text = String(spotItem[indexPath.row].ratingStar)
-        cell.ratingAmount.text = String(spotItem[indexPath.row].ratingAmount)
+        cell.ratingNumber.text = String(self.spots[indexPath.row].profile.rating)
+        cell.ratingAmount.text = String(self.spots[indexPath.row].profile.ratingCount)
 
-        let profileImageURL = URL(string: self.spotItem[indexPath.row].thumbnail as String)
-        //cell.spotImageView?.sd_setImage(with: profileImageURL, completed: nil)
-        // 画像の高速化処理
+        let profileImageURL = URL(string: self.spots[indexPath.row].profile.url)
+        // Acceleration processing of image
         cell.spotImageView?.sd_setImage(with: profileImageURL, completed: { (image, error, _, _) in
             if error == nil{
                 cell.setNeedsLayout()
@@ -354,10 +271,10 @@ extension HomeViewController: UITableViewDataSource{
         // like
         cell.delegate = self
         cell.index = indexPath
-        if spotItem[indexPath.row].isLike{
+        if self.spots[indexPath.row].isFavorite {
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             cell.likeButton.tintColor = ThemeColor.errorString
-        }else{
+        } else {
             cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             cell.likeButton.tintColor = .lightGray
         }
@@ -365,8 +282,7 @@ extension HomeViewController: UITableViewDataSource{
     }
 }
 
-extension HomeViewController: UITableViewDelegate{
-    
+extension HomeViewController: UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -376,66 +292,63 @@ extension HomeViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // セルが選択された場合の処理
-        spotId = spotItem[indexPath.row].spotPk
-        // spotPkを渡す
+        spotId = self.spots[indexPath.row].id
+        // TODO: 変数を渡す処理を変更　navitaionController用に
         performSegue(withIdentifier: "spotdetail", sender: nil)
     }
 }
 
-extension HomeViewController: CellDelegate{
-    
+extension HomeViewController: CellDelegate {
     func didTapButton(cell: CustomCell, index: IndexPath) {
-        // Likeを消去した時の処理
         print(index.row)
-        print("spotItem:\(spotItem)")
-        let isLike = spotItem[index.row].isLike
+        let isFavorite = self.spots[index.row].isFavorite
         
-        if isLike{
-            // Likeの場合Likeを消去する
+        if isFavorite {
+            // Remove like if has already been favorite
             cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             cell.likeButton.tintColor = .lightGray
-            spotItem[index.row].isLike = false
-            self.likeUpdate(isLike: false, spotId: String(cell.spotId!))
-        }else{
-            // Likeに追加する
+            self.spots[index.row].removeFavorite(token: self.token, spotId: cell.spotId!)
+        } else {
+            // Add like if has never been favorite
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             cell.likeButton.tintColor = ThemeColor.errorString
-            spotItem[index.row].isLike = true
-            self.likeUpdate(isLike: true, spotId: String(cell.spotId!))
+            self.spots[index.row].addFavorite(token: self.token, spotId: cell.spotId!)
         }
-        
     }
 }
 
 // SearchBar
-extension HomeViewController: UISearchBarDelegate{
-    // 検索バーで入力する時
+extension HomeViewController: UISearchBarDelegate {
+    // When search bar is inputed
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.setShowsCancelButton(true, animated: true)
         return true
     }
     
-    // 検索バーのキャンセルボタンタップ時
+    // Cancel button in search bar is tapped
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
     }
-    // 検索バーでEnterが押された時
+
+    // Enter button in search bar is tapped
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let searchQuery = searchBar.text{
-            print("lets search")
-            fetchData(query: searchQuery)
+        if let query = searchBar.text {
+            print("Action: searchBarSearchButtonClicked, Message: Start to search with \(searchQuery)")
+            self.searchQuery = query
+            self.parameters = createParameters()
+            fetchData(params: self.parameters)
         }
+        // Reset search bar query
+        self.searchQuery = "all"
         searchBar.text = ""
         searchBar.showsCancelButton = false
         searchBar.resignFirstResponder()
     }
 }
 
-extension HomeViewController: CategoryListDelegate{
-    
+extension HomeViewController: CategoryListDelegate {
     func categoryData(key: String, label: String) {
         categoryButton.setTitle(label, for: .normal)
         categoryButton.setTitleColor(ThemeColor.firstString, for: .normal)
@@ -449,8 +362,7 @@ extension HomeViewController: CategoryListDelegate{
     }
 }
 
-extension HomeViewController: LocationListDelegate{
-    
+extension HomeViewController: LocationListDelegate {
     func locationData(key: String, label: String) {
         locationButton.setTitle(label, for: .normal)
         locationButton.setTitleColor(ThemeColor.firstString, for: .normal)
@@ -458,20 +370,9 @@ extension HomeViewController: LocationListDelegate{
         
     }
     
-    func defaultLocationData(key: String, label: String){
+    func defaultLocationData(key: String, label: String) {
         locationButton.setTitle(label, for: .normal)
         locationButton.setTitleColor(.lightGray, for: .normal)
         locationQuery = key
-    }
-}
-
-extension HomeViewController: CLLocationManagerDelegate{
-    // 位置情報が更新されたときに位置情報を格納する
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("locationManager is called")
-        let location = locations.last
-        latitude = location?.coordinate.latitude
-        longitude = location?.coordinate.longitude
-        convert(lat: latitude!, lon: longitude!)
     }
 }

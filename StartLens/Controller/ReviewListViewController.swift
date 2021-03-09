@@ -67,24 +67,24 @@ class ReviewListViewController: UIViewController {
                 self.noReview.isHidden = true
                 let json:JSON = JSON(response.data as Any)
                 // レビューデータのParse
-                if let num = json["info"]["reviewNum"].int, num != 0{
-                    self.reviewItem = []
-                    let roopNum = num - 1
-
-                    for i in 0...roopNum{
-                        let writer = json["result"]["review"][i]["writer"].string
-                        let ratingStar = json["result"]["review"][i]["ratingstar"].float
-                        let postedReview = json["result"]["review"][i]["postedreview"].string
-                        let postedDate = json["result"]["review"][i]["posteddate"].string
-                        let review:Review = Review(writerName: writer!, ratingStar: ratingStar!, postDate: postedDate!, reviewPosted: postedReview!)
-                        self.reviewItem.append(review)
-                        
-                    }
-                    print("reviewItem: \(self.reviewItem)")
-                }else{
-                    // 検索結果がない場合
-                    self.noReview.isHidden = false
-                }
+//                if let num = json["info"]["reviewNum"].int, num != 0{
+//                    self.reviewItem = []
+//                    let roopNum = num - 1
+//
+//                    for i in 0...roopNum{
+//                        let writer = json["result"]["review"][i]["writer"].string
+//                        let ratingStar = json["result"]["review"][i]["ratingstar"].float
+//                        let postedReview = json["result"]["review"][i]["postedreview"].string
+//                        let postedDate = json["result"]["review"][i]["posteddate"].string
+//                        let review:Review = Review(writerName: writer!, ratingStar: ratingStar!, postDate: postedDate!, reviewPosted: postedReview!)
+//                        self.reviewItem.append(review)
+//
+//                    }
+//                    print("reviewItem: \(self.reviewItem)")
+//                }else{
+//                    // 検索結果がない場合
+//                    self.noReview.isHidden = false
+//                }
 
                 break
             case .failure(let error):
@@ -116,15 +116,15 @@ extension ReviewListViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WriterCell", for: indexPath) as! WriterCell
 
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.writerName.text = reviewItem[indexPath.row].writerName
-        cell.postedDate.text = reviewItem[indexPath.row].postDate
-        // Cosmos
-        cell.ratingStar.settings.updateOnTouch = false
-        cell.ratingStar.rating = Double(reviewItem[indexPath.row].ratingStar)
-        cell.ratingStar.settings.fillMode = .half
-        cell.ratingNumber.text = String(reviewItem[indexPath.row].ratingStar)
-        cell.reviewPosted.text = reviewItem[indexPath.row].reviewPosted
+//        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+//        cell.writerName.text = reviewItem[indexPath.row].writerName
+//        cell.postedDate.text = reviewItem[indexPath.row].postDate
+//        // Cosmos
+//        cell.ratingStar.settings.updateOnTouch = false
+//        cell.ratingStar.rating = Double(reviewItem[indexPath.row].ratingStar)
+//        cell.ratingStar.settings.fillMode = .half
+//        cell.ratingNumber.text = String(reviewItem[indexPath.row].ratingStar)
+//        cell.reviewPosted.text = reviewItem[indexPath.row].reviewPosted
         
         return cell
     }

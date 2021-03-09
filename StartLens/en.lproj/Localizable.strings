@@ -9,9 +9,10 @@
 "settingVersionNumber" = "1.0.0";
 "cancelButton" = "Cancel";
 "okButtonText" = "OK";
+"deleteButtonTitle" = "Delete";
 
 // LogInSelectVC
-"introANimationSkip" = "Skip";
+"introAnimationSkip" = "Skip";
 "introAnimationText1" = "Start taking photo";
 "introAnimationText2" = "Go on a journey";
 "introAnimationText3" = "Get more information";
@@ -28,14 +29,17 @@
 "emailValidMessage" = "Enter email address";
 "passValidMessage" = "Enter password";
 "emailValidMessage2" = "The email address is not in the correct format.";
+"authValidFail3" = "Email address or password is invalid";
+"authValidFail4" = "Authentication failed. Try it again.";
 // SignUpAuthVC
 "authExplainedText" = "The authentification code has been sent to your email address.\n Please make sure and then input below.";
 "sendButtonText" = "Send";
 "backSignupText" = "Return to sign up";
-"authValidFail1" = "Authentication failed.Return to the sign up screen and try again.";
+"authValidFail1" = "Authentication failed. Return to the sign up screen and try again.";
 "authValidFail2" = "Authentication code does not match.";
 // SignUpCompleteVC
-"signupCompleteText" = "Completed!";
+"signupCompleteText" = "Questionnaire";
+"signupCompleteSubText" = "Please cooperate with the questionnaire. This information is never published in this app.";
 "sexTitleText" = "Sex(Optional)";
 "sexFemaleText" = "Female";
 "sexMaleText" = "Male";
@@ -66,21 +70,32 @@
 "searchDestinationText" = "Search from destination";
 "currentLocationText" = "Current location";
 // CategoryListVC
-"categoryNature" = "Nature";
-"categoryHistoric" = "Historic site";
-"categoryReligion" = "Religious building";
-"categoryCastle" = "Castle/Palace";
-"categoryLocal" = "Town/Local landscape";
-"categoryPark" = "Park";
-"categoryBuilding" = "Building";
-"categoryAnnual" = "Annual event";
-"categoryZoo" = "Zoo/Aquarium";
-"categoryMuseum" = "Museum/Art Museum";
-"categoryTheme" = "Theme facility";
-"categorySpring" = "Hot spring";
-"categoryFood" = "Food";
-"categoryEvent" = "Event";
-"deleteButtonTitle" = "Delete";
+"unselected" = "Unselected";
+"mountains" = "Mountains";
+"plateau" = "Plateau";
+"lake" = "Lake";
+"river" = "River";
+"waterfall" = "Waterfall";
+"coast" = "Coast";
+"rock" = "Rock, Cave";
+"animal" = "Animal";
+"plant" = "Plant";
+"naturalPhenomenon" = "Natural Phenomenon";
+"historicSite" = "Historic site";
+"religiousBuilding" = "Religious building";
+"castle" = "Castle, Palace";
+"village" = "Village, Town";
+"localLandscape" = "Local landscape";
+"park" = "Park";
+"building" = "Building";
+"annualEvent" = "Annual Event";
+"zoo" = "Zoo, Aquarium";
+"museum" = "Museum, Art museum";
+"themePark" = "Theme park";
+"hotSpring" = "Hot Spring";
+"food" = "Food";
+"event" = "Event";
+
 // LocationVC
 "locationCurrent" = "Get current location";
 "locationAlertTitle" = "Getting location information is not allowed";

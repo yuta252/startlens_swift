@@ -85,7 +85,7 @@ class SpotContentViewController: UIViewController {
         super.viewDidLoad()
         
         // 初期設定
-        apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        //apiKey = UserDefaults.standard.string(forKey: "apiKey")!
         language = UserDefaults.standard.string(forKey: "language")!
         setupUI()
         
@@ -271,28 +271,28 @@ class SpotContentViewController: UIViewController {
                 }
                 
                 // レビューデータのParse
-                if let num = json["info"]["reviewNum"].int, num != 0{
-                    self.noReview.isHidden = true
-                    self.noReview.isHidden = true
-                    self.reviewItem = []
-                    let roopNum = num - 1
-
-                    for i in 0...roopNum{
-                        let writer = json["result"]["review"][i]["writer"].string
-                        let ratingStar = json["result"]["review"][i]["ratingstar"].float
-                        let postedReview = json["result"]["review"][i]["postedreview"].string
-                        let postedDate = json["result"]["review"][i]["posteddate"].string
-                        let review:Review = Review(writerName: writer!, ratingStar: ratingStar!, postDate: postedDate!, reviewPosted: postedReview!)
-                        self.reviewItem.append(review)
-                        
-                    }
-                    print("reviewItem: \(self.reviewItem)")
-                }else{
-                    // 検索結果がない場合
-                    self.noReview.isHidden = false
-                    self.noReview.isHidden = false
-                    self.reviewContinueButton.isHidden = true
-                }
+//                if let num = json["info"]["reviewNum"].int, num != 0{
+//                    self.noReview.isHidden = true
+//                    self.noReview.isHidden = true
+//                    self.reviewItem = []
+//                    let roopNum = num - 1
+//
+//                    for i in 0...roopNum{
+//                        let writer = json["result"]["review"][i]["writer"].string
+//                        let ratingStar = json["result"]["review"][i]["ratingstar"].float
+//                        let postedReview = json["result"]["review"][i]["postedreview"].string
+//                        let postedDate = json["result"]["review"][i]["posteddate"].string
+//                        let review:Review = Review(writerName: writer!, ratingStar: ratingStar!, postDate: postedDate!, reviewPosted: postedReview!)
+//                        self.reviewItem.append(review)
+//
+//                    }
+//                    print("reviewItem: \(self.reviewItem)")
+//                }else{
+//                    // 検索結果がない場合
+//                    self.noReview.isHidden = false
+//                    self.noReview.isHidden = false
+//                    self.reviewContinueButton.isHidden = true
+//                }
                 
                 // レコメンドデータのParse
                 if let num = json["info"]["recommendNum"].int, num != 0{
@@ -377,15 +377,15 @@ extension SpotContentViewController:UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "WriterCell", for: indexPath) as! WriterCell
         print("cell is created")
 
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.writerName.text = reviewItem[indexPath.row].writerName
-        cell.postedDate.text = reviewItem[indexPath.row].postDate
-        // Cosmos
-        cell.ratingStar.settings.updateOnTouch = false
-        cell.ratingStar.rating = Double(reviewItem[indexPath.row].ratingStar)
-        cell.ratingStar.settings.fillMode = .half
-        cell.ratingNumber.text = String(reviewItem[indexPath.row].ratingStar)
-        cell.reviewPosted.text = reviewItem[indexPath.row].reviewPosted
+//        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+//        cell.writerName.text = reviewItem[indexPath.row].writerName
+//        cell.postedDate.text = reviewItem[indexPath.row].postDate
+//        // Cosmos
+//        cell.ratingStar.settings.updateOnTouch = false
+//        cell.ratingStar.rating = Double(reviewItem[indexPath.row].ratingStar)
+//        cell.ratingStar.settings.fillMode = .half
+//        cell.ratingNumber.text = String(reviewItem[indexPath.row].ratingStar)
+//        cell.reviewPosted.text = reviewItem[indexPath.row].reviewPosted
         
         return cell
     }

@@ -90,8 +90,8 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let completeVC = segue.destination as? SignUpCompleteViewController
-        completeVC?.emailAddress = emailAddress
-        completeVC?.apiKey = apiKey
+//        completeVC?.emailAddress = emailAddress
+//        completeVC?.apiKey = apiKey
     }
 
     @IBAction func backAction(_ sender: Any) {

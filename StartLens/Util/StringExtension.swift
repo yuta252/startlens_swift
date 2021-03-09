@@ -10,7 +10,13 @@ import Foundation
 
 extension String{
     var localized: String{
-        let lang = UserDefaults.standard.string(forKey: "language")!
+        var lang: String?
+        
+        if let language = UserDefaults.standard.string(forKey: "language") {
+            lang = language
+        }else{
+            lang = "en"
+        }
         guard let path = Bundle.main.path(forResource: lang, ofType: "lproj"), let bundle = Bundle(path: path) else {
             return NSLocalizedString(self, comment: "")
         }
