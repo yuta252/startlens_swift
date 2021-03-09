@@ -8,10 +8,13 @@
 
 import Foundation
 
-struct Review{
-    let writerName: String
-    let ratingStar: Float
-    let postDate: String
-    let reviewPosted: String
+struct Review: Codable {
+    var id: Int
+    var userId: Int
+    var touristId: Int
+    var lang: String
+    var postReview: String
+    var rating: Int
+    var tourist: Tourist
+    var createdAt: String
 }
-

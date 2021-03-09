@@ -26,6 +26,11 @@
 		E9544A5B24701586000CB1D4 /* ResetAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9544A5A24701586000CB1D4 /* ResetAuthViewController.swift */; };
 		E9544A5D247015D9000CB1D4 /* PassSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9544A5C247015D9000CB1D4 /* PassSendViewController.swift */; };
 		E9544A5F247125BB000CB1D4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9544A5E247125BB000CB1D4 /* HomeViewController.swift */; };
+		E979375325F5D5FE00FCCD89 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979375225F5D5FD00FCCD89 /* Language.swift */; };
+		E979375625F61BAF00FCCD89 /* PagedSpot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979375525F61BAE00FCCD89 /* PagedSpot.swift */; };
+		E979375925F61E1600FCCD89 /* Tourist.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979375825F61E1600FCCD89 /* Tourist.swift */; };
+		E979375C25F61F8500FCCD89 /* MultiProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979375B25F61F8500FCCD89 /* MultiProfile.swift */; };
+		E979375F25F6213500FCCD89 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E979375E25F6213500FCCD89 /* Profile.swift */; };
 		E9ABC4202491E75D00A9FF38 /* RecommendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ABC41E2491E75D00A9FF38 /* RecommendCell.swift */; };
 		E9ABC4212491E75D00A9FF38 /* RecommendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9ABC41F2491E75D00A9FF38 /* RecommendCell.xib */; };
 		E9ABC4232491F60700A9FF38 /* Exhibit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ABC4222491F60700A9FF38 /* Exhibit.swift */; };
@@ -84,6 +89,11 @@
 		E9544A5A24701586000CB1D4 /* ResetAuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetAuthViewController.swift; sourceTree = "<group>"; };
 		E9544A5C247015D9000CB1D4 /* PassSendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassSendViewController.swift; sourceTree = "<group>"; };
 		E9544A5E247125BB000CB1D4 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		E979375225F5D5FD00FCCD89 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		E979375525F61BAE00FCCD89 /* PagedSpot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedSpot.swift; sourceTree = "<group>"; };
+		E979375825F61E1600FCCD89 /* Tourist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tourist.swift; sourceTree = "<group>"; };
+		E979375B25F61F8500FCCD89 /* MultiProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiProfile.swift; sourceTree = "<group>"; };
+		E979375E25F6213500FCCD89 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		E9ABC41E2491E75D00A9FF38 /* RecommendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendCell.swift; sourceTree = "<group>"; };
 		E9ABC41F2491E75D00A9FF38 /* RecommendCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendCell.xib; sourceTree = "<group>"; };
 		E9ABC4222491F60700A9FF38 /* Exhibit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exhibit.swift; sourceTree = "<group>"; };
@@ -266,6 +276,11 @@
 				E9F8A1BA249120CD0082F9AE /* Review.swift */,
 				E9ABC4222491F60700A9FF38 /* Exhibit.swift */,
 				E9CB13A324A9AA18003E249C /* Country.swift */,
+				E979375225F5D5FD00FCCD89 /* Language.swift */,
+				E979375525F61BAE00FCCD89 /* PagedSpot.swift */,
+				E979375825F61E1600FCCD89 /* Tourist.swift */,
+				E979375B25F61F8500FCCD89 /* MultiProfile.swift */,
+				E979375E25F6213500FCCD89 /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -404,9 +419,12 @@
 				E9544A4B2469B5B4000CB1D4 /* SignUpAuthViewController.swift in Sources */,
 				E9BD886A249CA9F70023DF27 /* ExhibitResultViewController.swift in Sources */,
 				E93C888B247CD76F00F289A2 /* favoriteViewController.swift in Sources */,
+				E979375325F5D5FE00FCCD89 /* Language.swift in Sources */,
 				E9CB139C24A85034003E249C /* LanguageTableViewController.swift in Sources */,
+				E979375625F61BAF00FCCD89 /* PagedSpot.swift in Sources */,
 				E90DA244247A39CA00DF0FAE /* CategoryListViewController.swift in Sources */,
 				E9544A57246E1370000CB1D4 /* LogInViewController.swift in Sources */,
+				E979375F25F6213500FCCD89 /* Profile.swift in Sources */,
 				E90DA2412478FEF800DF0FAE /* CustomCell.swift in Sources */,
 				E9BD888424A76EBB0023DF27 /* SettingsTableViewController.swift in Sources */,
 				E9ABC42C24967F5600A9FF38 /* ReviewListViewController.swift in Sources */,
@@ -418,6 +436,7 @@
 				E9CB13A224A978E0003E249C /* CountryTableViewController.swift in Sources */,
 				E9F8A1BB249120CD0082F9AE /* Review.swift in Sources */,
 				E9EB7ACA2465A11300EDE7F2 /* SceneDelegate.swift in Sources */,
+				E979375C25F61F8500FCCD89 /* MultiProfile.swift in Sources */,
 				E9CB139624A79DBD003E249C /* PrivacyPolicyViewController.swift in Sources */,
 				E93C8891247D5C3800F289A2 /* SpotContentViewController.swift in Sources */,
 				E9544A55246AC196000CB1D4 /* ThemeColor.swift in Sources */,
@@ -425,6 +444,7 @@
 				E9544A51246A7557000CB1D4 /* SignUpCompleteViewController.swift in Sources */,
 				E9BD888224A3AA900023DF27 /* TabBarController.swift in Sources */,
 				E9CB139A24A7AD3F003E249C /* ContactViewController.swift in Sources */,
+				E979375925F61E1600FCCD89 /* Tourist.swift in Sources */,
 				E9ABC4252495D6A400A9FF38 /* ReviewPostViewController.swift in Sources */,
 				E9544A5B24701586000CB1D4 /* ResetAuthViewController.swift in Sources */,
 				E9ABC4282495E41A00A9FF38 /* PlaceHolderedTextView.swift in Sources */,

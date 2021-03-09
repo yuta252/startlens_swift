@@ -21,22 +21,33 @@ class LoginSelectViewController: UIViewController {
         super.viewDidLoad()
 
         setupUI()
-        // 言語国設定の保存
-        setupLocale()
+        let locale = Language()
+        locale.setLocale()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isToolbarHidden = true
+        navigationController?.isToolbarHidden = true
+        
+        let isLogIn = UserDefaults.standard.bool(forKey: "isLogIn")
+        // Auto login
+        if isLogIn {
+//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            let homeView = storyboard.instantiateViewController(identifier: "home") as! HomeViewController
+//            self.navigationController?.pushViewController(homeView, animated: true)
+            let tabBarVC = self.storyboard?.instantiateViewController(identifier: "homeTabBar") as! TabBarController
+            self.navigationController?.pushViewController(tabBarVC, animated: true)
+        }
     }
     
-    
     @IBAction func signUpAction(_ sender: Any) {
-        performSegue(withIdentifier: "signUp", sender: nil)
+        let signUpVC = storyboard?.instantiateViewController(identifier: "signUp") as! SignUpViewController
+        navigationController?.pushViewController(signUpVC, animated: true)
     }
     
     @IBAction func logInAction(_ sender: Any) {
-        performSegue(withIdentifier: "logIn", sender: nil)
+        let logInVC = storyboard?.instantiateViewController(identifier: "logIn") as! LogInViewController
+        navigationController?.pushViewController(logInVC, animated: true)
     }
     
     func setupUI(){
@@ -47,15 +58,5 @@ class LoginSelectViewController: UIViewController {
         let AttributedTermsString = NSAttributedString(string: "termsButtonText".localized, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue, NSAttributedString.Key.foregroundColor: UIColor.white])
         termsButton.setAttributedTitle(AttributedTermsString, for: .normal)
         agreementLabel.text = "agreementText".localized
-    }
-    
-    
-    func setupLocale(){
-        let locale = NSLocale.current
-        let localeId = locale.identifier
-        let arr: [String] = localeId.components(separatedBy: "_")
-        
-        UserDefaults.standard.set(arr[0], forKey: "language")
-        UserDefaults.standard.set(arr[1], forKey: "country")
     }
 }

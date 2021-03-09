@@ -17,127 +17,82 @@ class favoriteViewController: UIViewController {
     @IBOutlet weak var noFavoriteTItle: UILabel!
     @IBOutlet weak var noFavoriteSubtitle: UILabel!
     
-    var spotItem = [Spot]()
-    var apiKey = String()
-    var spotId = Int()
+    var token = String()
+    var language = String()
+    var spots: [Spot]?
+    var spotId: Int?
     
     let refresh = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // 初期設定
-        apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        // Initial settings
+        language = Language.getLanguage()
+        guard let savedToken = UserDefaults.standard.string(forKey: "token") else{
+            // if cannot get a token, move to login screen
+            print("Error: No token")
+            return
+        }
+        token = savedToken
+
+        // UI settings
         setupUI()
-        // TabaleView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "CustomCell", bundle: nil), forCellReuseIdentifier: "CustomCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 150
         tableView.separatorStyle = .none
-        
         tableView.refreshControl = refresh
         refresh.addTarget(self, action: #selector(favoriteViewController.update), for: .valueChanged)
         
-        fetchData()
-        tableView.reloadData()
+        // Data settings
+        // fetchData()
+        // tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // To be considerd: whether fetchData is called in viewDidLoad or viewDidAppear
         fetchData()
         tableView.reloadData()
     }
     
-    // クエリによるデータの抽出
-    func fetchData(){
-        
-        let url = Constants.favoriteURL + apiKey
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            
-            print(response)
-            switch response.result{
-                
+    func fetchData() {
+        let headers: HTTPHeaders = ["Authorization": token, "Content-Type": "application/json"]
+        let url = Constants.baseURL + Constants.favoriteURL
+        print("favoriteurl: \(url)")
+        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON{ (response) in
+            switch response.result {
             case .success:
                 let json:JSON = JSON(response.data as Any)
-                if let num = json["info"]["num"].int, num != 0{
+                print("json: \(json)")
+                self.spots = try? JSONDecoder().decode([Spot].self, from: response.data!)
+                
+                if let num = self.spots?.count, num != 0 {
                     self.noFavoriteTItle.isHidden = true
                     self.noFavoriteSubtitle.isHidden = true
-                    self.spotItem = []
-                    let roopNum = num - 1
-
-                    for i in 0...roopNum{
-                        let spotTitle = json["result"][i]["spotTitle"].string
-                        let category = json["result"][i]["category"].string
-                        let imageURLString = json["result"][i]["thumbnail"].string
-                        let address = json["result"][i]["address"].string
-                        let ratingStar = json["result"][i]["ratingstar"].float
-                        let ratingAmount = json["result"][i]["ratingAmount"].int
-                        let spotPk = json["result"][i]["spotpk"].int
-                        let isLike = json["result"][i]["like"].bool
-                        let spot:Spot = Spot(spotTitle: spotTitle!, category: category!, thumbnail: imageURLString!, address: address!, ratingStar: ratingStar!, ratingAmount: ratingAmount!, spotPk: spotPk!, isLike: isLike!)
-                        self.spotItem.append(spot)
-                        
-                    }
-                    print("spotItem: \(self.spotItem)")
-                }else{
-                    // 検索結果がない場合
-                    self.spotItem = []
+                } else {
                     self.noFavoriteTItle.isHidden = false
                     self.noFavoriteSubtitle.isHidden = false
                 }
-                
-                break
             case .failure(let error):
                 print(error)
                 break
             }
-            
             self.tableView.reloadData()
         }
     }
     
-    @objc func update(){
+    @objc func update() {
         fetchData()
         tableView.reloadData()
         refresh.endRefreshing()
     }
     
     func setupUI(){
-        noFavoriteTItle.text = "No favorite registration".localized
-        noFavoriteSubtitle.text = "Add to favorites from search list".localized
-    }
-    
-    func likeUpdate(isLike: Bool, spotId: String){
-        var text = String()
-        if isLike {
-            // 登録
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "1"
-        }else{
-            // 削除
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "0"
-        }
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            print(response)
-            switch response.result{
-            case .success:
-                let json:JSON = JSON(response.data as Any)
-                let isSaved:Bool = json["result"]["like"].bool!
-                
-                if isSaved{
-                    print("正常に処理終了")
-                }
-                
-                break
-            case .failure(let error):
-                print(error)
-                break
-            }
-
-        }
+        noFavoriteTItle.text = "noFavoriteText".localized
+        noFavoriteSubtitle.text = "noFavoriteHelp".localized
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -157,30 +112,27 @@ class favoriteViewController: UIViewController {
 extension favoriteViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return spotItem.count
+        return self.spots?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
         
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.spotId = spotItem[indexPath.row].spotPk
-        cell.spotTitle.text = spotItem[indexPath.row].spotTitle
-        // textが枠内に入るようにする
+        cell.spotId = self.spots![indexPath.row].id
+        cell.spotTitle.text = self.spots![indexPath.row].multiProfiles[0].username
         cell.spotTitle?.adjustsFontSizeToFitWidth = true
-        cell.spotCategory.text = spotItem[indexPath.row].category
-        cell.spotAddress.text = spotItem[indexPath.row].address
+        cell.spotCategory.text = Constants.majorCategoryMap[self.spots![indexPath.row].profile.majorCategory]
+        cell.spotAddress.text = self.spots![indexPath.row].multiProfiles[0].addressPrefecture + self.spots![indexPath.row].multiProfiles[0].addressCity + self.spots![indexPath.row].multiProfiles[0].addressStreet
         cell.spotAddress?.adjustsFontSizeToFitWidth = true
         // Cosmos
         cell.ratingStar.settings.updateOnTouch = false
-        cell.ratingStar.rating = Double(spotItem[indexPath.row].ratingStar)
+        cell.ratingStar.rating = Double(self.spots![indexPath.row].profile.rating)
         cell.ratingStar.settings.fillMode = .half
-        cell.ratingNumber.text = String(spotItem[indexPath.row].ratingStar)
-        cell.ratingAmount.text = String(spotItem[indexPath.row].ratingAmount)
+        cell.ratingNumber.text = String(self.spots![indexPath.row].profile.rating)
+        cell.ratingAmount.text = String(self.spots![indexPath.row].profile.ratingCount)
 
-        let profileImageURL = URL(string: self.spotItem[indexPath.row].thumbnail as String)
-        //cell.spotImageView?.sd_setImage(with: profileImageURL, completed: nil)
-        // 画像の高速化処理
+        let profileImageURL = URL(string: self.spots![indexPath.row].profile.url)
         cell.spotImageView?.sd_setImage(with: profileImageURL, completed: { (image, error, _, _) in
             if error == nil{
                 cell.setNeedsLayout()
@@ -189,11 +141,10 @@ extension favoriteViewController: UITableViewDataSource{
         // like
         cell.delegate = self
         cell.index = indexPath
-        if spotItem[indexPath.row].isLike{
+        if self.spots![indexPath.row].isFavorite {
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             cell.likeButton.tintColor = ThemeColor.errorString
         }
-        
         return cell
     }
     
@@ -210,34 +161,29 @@ extension favoriteViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // セルが選択された場合の処理
-        spotId = spotItem[indexPath.row].spotPk
-        // spotPkを渡す
+        spotId = self.spots![indexPath.row].id
+        // TODO: 変数を渡す処理を変更　navitaionController用に
         performSegue(withIdentifier: "spotContent", sender: nil)
 
     }
 }
 
 extension favoriteViewController: CellDelegate{
-    
     func didTapButton(cell: CustomCell, index: IndexPath) {
-        // Likeを消去した時の処理
+        // TODO: Favarite
         print(index.row)
-        let isLike = spotItem[index.row].isLike
+        let isFavorite = self.spots![index.row].isFavorite
         
-        if isLike{
-            // Likeの場合Likeを消去する
+        if isFavorite {
+            // Remove like if has already been favorite
             cell.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             cell.likeButton.tintColor = .lightGray
-            spotItem[index.row].isLike = false
-            self.likeUpdate(isLike: false, spotId: String(cell.spotId!))
-        }else{
-            // Likeに追加する
+            self.spots![index.row].removeFavorite(token: self.token, spotId: cell.spotId!)
+        } else {
+            // Add like if has never been favorite
             cell.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             cell.likeButton.tintColor = ThemeColor.errorString
-            spotItem[index.row].isLike = true
-            self.likeUpdate(isLike: true, spotId: String(cell.spotId!))
+            self.spots![index.row].addFavorite(token: self.token, spotId: cell.spotId!)
         }
-        
     }
 }

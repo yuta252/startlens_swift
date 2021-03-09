@@ -9,9 +9,10 @@
 "settingVersionNumber" = "1.0.0";
 "cancelButton" = "キャンセル";
 "okButtonText" = "OK";
+"deleteButtonTitle" = "削除";
 
 // IntroVC
-"introANimationSkip" = "スキップ";
+"introAnimationSkip" = "スキップ";
 "introAnimationText1" = "写真を撮ろう";
 "introAnimationText2" = "旅に出よう";
 "introAnimationText3" = "もっと情報を得よう";
@@ -20,6 +21,7 @@
 "privacyPolicyButtonText" = "プライバシポリシー";
 "termsButtonText" = "利用規約";
 "agreementText" = "上記に同意の上次にお進みください。";
+// SignUpVC
 "emailInputPlace" = "メールアドレス";
 "passwordInputPlace" = "パスワード";
 "signupErrorMessage" = "パスワードは、半角英数8文字以上で入力してください。";
@@ -27,6 +29,8 @@
 "emailValidMessage" = "メールアドレスを入力してください。";
 "passValidMessage" = "パスワードを入力してください";
 "emailValidMessage2" = "メールアドレスが正しいフォーマットではありません。";
+"authValidFail3" = "メールアドレスもしくはパスワードが無効です。";
+"authValidFail4" = "認証に失敗しました。もう一度お試しください。";
 // SignUpAuthVC
 "authExplainedText" = "認証コードをメールアドレスに送信しました。\n 認証コードを下記に入力してください。";
 "sendButtonText" = "送信";
@@ -34,7 +38,8 @@
 "authValidFail1" = "認証に失敗しました。新規登録画面に戻りもう一度試してください。";
 "authValidFail2" = "認証コードが一致しません。";
 // SignUpCompleteVC
-"signupCompleteText" = "登録が完了しました";
+"signupCompleteText" = "アンケート";
+"signupCompleteSubText" = "アンケートにご協力ください。入力された情報はアプリ内で公開されることはありません。";
 "sexTitleText" = "性別(任意)";
 "sexFemaleText" = "女性";
 "sexMaleText" = "男性";
@@ -65,21 +70,32 @@
 "searchDestinationText" = "目的地から検索";
 "currentLocationText" = "現在地";
 // CategoryListVC
-"categoryNature" = "自然";
-"categoryHistoric" = "史跡";
-"categoryReligion" = "神社・寺院・教会";
-"categoryCastle" = "城跡・宮殿";
-"categoryLocal" = "街・郷土景観";
-"categoryPark" = "庭園・公園";
-"categoryBuilding" = "建造物";
-"categoryAnnual" = "年中行事";
-"categoryZoo" = "動植物園・水族館";
-"categoryMuseum" = "博物館・美術館";
-"categoryTheme" = "テーマ施設";
-"categorySpring" = "温泉";
-"categoryFood" = "食";
-"categoryEvent" = "イベント";
-"deleteButtonTitle" = "削除";
+"unselected" = "未選択";
+"mountains" = "山岳";
+"plateau" = "高原・湿原・原野";
+"lake" = "湖沼";
+"river" = "河川・渓谷";
+"waterfall" = "滝";
+"coast" = "海岸・岬";
+"rock" = "岩石・洞窟";
+"animal" = "動物";
+"plant" = "植物";
+"naturalPhenomenon" = "自然現象";
+"historicSite" = "史跡";
+"religiousBuilding" = "神社・寺院・教会";
+"castle" = "城跡・城郭・宮殿";
+"village" = "集落・街";
+"localLandscape" = "郷土景観";
+"park" = "庭園・公園";
+"building" = "建造物";
+"annualEvent" = "年中行事（祭り・伝統行事）";
+"zoo" = "動植物園・水族館";
+"museum" = "博物館・美術館";
+"themePark" = "テーマ公園・テーマ施設";
+"hotSpring" = "温泉";
+"food" = "食";
+"event" = "芸能・イベント";
+
 // LocationVC
 "locationCurrent" = "現在地を取得";
 "locationAlertTitle" = "位置情報の取得が許可されていません";
