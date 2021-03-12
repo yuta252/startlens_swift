@@ -23,7 +23,6 @@ class CustomCell: UITableViewCell {
     @IBOutlet weak var ratingNumber: UILabel!
     @IBOutlet weak var ratingAmount: UILabel!
     @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var cameraButton: UIButton!
     
     var delegate: CellDelegate?
     var index: IndexPath?
@@ -31,24 +30,14 @@ class CustomCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        cameraButton.layer.cornerRadius = 5.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        print("row is tapped")
-        // Configure the view for the selected state
     }
 
     
     @IBAction func likeAction(_ sender: UIButton) {
-        print("heart is tapped")
-        
         self.delegate?.didTapButton(cell: self, index: index!)
-    }
-    
-    @IBAction func cameraAction(_ sender: Any) {
-        print("camera is tapped")
     }
 }

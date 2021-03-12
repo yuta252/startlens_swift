@@ -12,14 +12,14 @@ import Alamofire
 import SwiftyJSON
 import Cosmos
 
-protocol SpotDetailDelegate: AnyObject{
+
+protocol SpotDetailDelegate: AnyObject {
     func getContentHeight(height: CGFloat)
-    func moveToCamera()
+    func moveToCamera(exhibits: [Exhibit])
     func moveToReviewPost()
     func moveToReviewContinue()
-    func moveToExhibitContinue()
-    // func moveToExhibitDetail(id: Int)
-    func moveToExhibitDetail(Obj: Exhibit)
+    func moveToExhibitContinue(exhibits: [Exhibit])
+    func moveToExhibitDetail(exhibit: Exhibit)
 }
 
 
@@ -39,7 +39,7 @@ class SpotContentViewController: UIViewController {
     @IBOutlet weak var spotIntroTitle: UILabel!
     @IBOutlet weak var spotIntroButton: UIButton!
     @IBOutlet weak var spotIntroView: UILabel!
-    
+
     @IBOutlet weak var basicInfoTitle: UILabel!
     @IBOutlet weak var addressTitle: UILabel!
     @IBOutlet weak var telephoneTitle: UILabel!
@@ -53,7 +53,6 @@ class SpotContentViewController: UIViewController {
     @IBOutlet weak var fee: UILabel!
     @IBOutlet weak var businessHour: UILabel!
     @IBOutlet weak var holiday: UILabel!
-    
     
     @IBOutlet weak var reviewTitleText: UILabel!
     @IBOutlet weak var reviewPostButton: UIButton!
@@ -69,55 +68,55 @@ class SpotContentViewController: UIViewController {
     @IBOutlet weak var noRecommend: UILabel!
     @IBOutlet weak var recommendContinueButton: UIButton!
     
-    var apiKey = String()
-    var delegate: SpotDetailDelegate?
+    var token = String()
     var contentHeight: CGFloat?
+    var spot: Spot?
     var spotId: Int?
     var variable = String()
     var language = String()
-    
-    var isLike = false
+    var isFavorite = false
     var isIntroExtend = false
-    var reviewItem = [Review]()
-    var exhibitItem = [Exhibit]()
+    var reviews = [Review]()
+    var exhibits: [Exhibit]?
+    
+    var delegate: SpotDetailDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 初期設定
-        //apiKey = UserDefaults.standard.string(forKey: "apiKey")!
-        language = UserDefaults.standard.string(forKey: "language")!
+        // Initial settings
+        language = Language.getLanguage()
+        guard let savedToken = UserDefaults.standard.string(forKey: "token") else {
+            // if cannot get a token, move to login screen
+            print("Action: ViewDidLoad, Message: No token Error")
+            return
+        }
+        token = savedToken
+        self.reviews = self.spot!.reviews
+        
+        // UI settings
+        setupData()
         setupUI()
+        setupTableView()
+        setupCollectionView()
         
-        reviewTableView.delegate = self
-        reviewTableView.dataSource = self
-        reviewTableView.register(UINib(nibName: "WriterCell", bundle: nil), forCellReuseIdentifier: "WriterCell")
-        reviewTableView.estimatedRowHeight = 110
-        reviewTableView.rowHeight = UITableView.automaticDimension
-        reviewTableView.separatorStyle = .none
-        reviewTableView.bounces = false
-        reviewTableView.isScrollEnabled = false
-        
-        recommendCollectionView.dataSource = self
-        recommendCollectionView.delegate = self
-        recommendCollectionView.register(UINib(nibName: "RecommendCell", bundle: nil), forCellWithReuseIdentifier: "RecommendCell")
-        
+        // Data settings
         fetchData()
         reviewTableView.reloadData()
+        print("Action: viewDidLoad, Message: recommendCollectionView is called")
         recommendCollectionView.reloadData()
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         tableHeight.constant = reviewTableView.contentSize.height
         collectionHeight.constant = recommendCollectionView.contentSize.height
-        // SpotDetailViewControllerに高さを渡す
+        // Send content height to SpotDetailVC
         contentHeight = contentView.frame.origin.y + contentView.frame.size.height
-        print("contentHeight1: \(contentHeight!)")
         self.delegate?.getContentHeight(height: contentHeight!)
+        print("Action: viewDidAppear, contentHeight: \(contentHeight!)")
     }
     
-    func setupUI(){
+    func setupUI() {
         contentView.layer.cornerRadius = 10.0
         contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         headerView.layer.cornerRadius = 10.0
@@ -133,6 +132,26 @@ class SpotContentViewController: UIViewController {
         recommendContinueButton.layer.cornerRadius = 5.0
         recommendContinueButton.layer.borderWidth = 1.0
         recommendContinueButton.layer.borderColor = ThemeColor.main.cgColor
+
+        if self.isFavorite {
+            self.likeButtonView.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            self.likeButtonView.tintColor = UIColor.white
+            self.likeButtonView.backgroundColor = ThemeColor.errorString
+        } else {
+            self.likeButtonView.setImage(UIImage(systemName: "heart"), for: .normal)
+            self.likeButtonView.tintColor = .lightGray
+            self.likeButtonView.backgroundColor = ThemeColor.secondString
+        }
+        
+        if self.reviews.count != 0 {
+            self.noReview.isHidden = true
+            self.noReview.isHidden = true
+        } else {
+            // No review
+            self.noReview.isHidden = false
+            self.noReview.isHidden = false
+            self.reviewContinueButton.isHidden = true
+        }
         
         ratingItemText.text = "spotRatingItemText".localized
         spotIntroTitle.text = "spotIntroTitle".localized
@@ -152,48 +171,96 @@ class SpotContentViewController: UIViewController {
         recommendContinueButton.setTitle("recommedContinueButton".localized, for: .normal)
     }
     
+    func setupData() {
+        self.spotId = self.spot?.id
+        let spotImageURL: URL?
+        if let url = spot?.profile.url {
+            spotImageURL = URL(string: url)
+        } else {
+            spotImageURL = URL(fileURLWithPath: Bundle.main.path(forResource: "toppage_1", ofType: "jpg")!)
+        }
+        self.spotImageView?.sd_setImage(with: spotImageURL, completed: { (image, error, _, _) in
+            if error == nil{
+                self.spotImageView.setNeedsLayout()
+            }
+        })
+        // TODO: 多言語対応にする
+        self.spotTitle.text = spot?.multiProfiles[0].username
+        self.category.text = Constants.majorCategoryMap[spot?.profile.majorCategory ?? 0]
+        self.ratingStar.settings.updateOnTouch = false
+        self.ratingStar.rating = Double(spot?.profile.rating ?? 0.0)
+        self.ratingStar.settings.fillMode = .half
+        self.ratingNumber.text = String(spot?.profile.rating ?? 0.0)
+        self.ratingAmount.text = String(spot?.profile.ratingCount ?? 0)
+        if let isFavorite = spot?.isFavorite {
+            self.isFavorite = isFavorite
+        }
+        self.spotIntroView.text = spot?.multiProfiles[0].selfIntro
+        self.address.text = (spot?.multiProfiles[0].addressPrefecture ?? "") + (spot?.multiProfiles[0].addressCity ?? "") + (spot?.multiProfiles[0].addressCity ?? "")
+        self.telephone.text = spot?.profile.telephone
+        self.spotUrl.text = spot?.profile.companySite
+        self.fee.text = spot?.multiProfiles[0].entranceFee
+        self.businessHour.text = spot?.multiProfiles[0].businessHours
+        self.holiday.text = spot?.multiProfiles[0].holiday
+    }
+    
+    func setupTableView() {
+        reviewTableView.delegate = self
+        reviewTableView.dataSource = self
+        reviewTableView.register(UINib(nibName: "WriterCell", bundle: nil), forCellReuseIdentifier: "WriterCell")
+        reviewTableView.estimatedRowHeight = 110
+        reviewTableView.rowHeight = UITableView.automaticDimension
+        reviewTableView.separatorStyle = .none
+        reviewTableView.bounces = false
+        reviewTableView.isScrollEnabled = false
+    }
+    
+    func setupCollectionView() {
+        recommendCollectionView.dataSource = self
+        recommendCollectionView.delegate = self
+        recommendCollectionView.register(UINib(nibName: "RecommendCell", bundle: nil), forCellWithReuseIdentifier: "RecommendCell")
+    }
     
     @IBAction func cameraAction(_ sender: Any) {
-        self.delegate?.moveToCamera()
+        self.delegate?.moveToCamera(exhibits: self.exhibits!)
     }
     
     @IBAction func likeAction(_ sender: Any) {
-        if isLike{
-            // Likeの場合Likeを消去する
+        if isFavorite {
+            // Remove like if has already been favorite
             self.likeButtonView.setImage(UIImage(systemName: "heart"), for: .normal)
             self.likeButtonView.tintColor = .lightGray
             self.likeButtonView.backgroundColor = ThemeColor.secondString
-            self.isLike = false
-            self.likeUpdate(isLike: false, spotId: String(spotId!))
-        }else{
-            // Likeに追加する
+            self.isFavorite = false
+            self.spot?.removeFavorite(token: self.token, spotId: self.spotId!)
+        } else {
+            // Add like if has never been favorite
             self.likeButtonView.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             self.likeButtonView.tintColor = UIColor.white
             self.likeButtonView.backgroundColor = ThemeColor.errorString
-            self.isLike = true
-            self.likeUpdate(isLike: true, spotId: String(spotId!))
+            self.isFavorite = true
+            self.spot?.addFavorite(token: self.token, spotId: self.spotId!)
         }
     }
     
-    
     @IBAction func introExtendAction(_ sender: Any) {
-        if isIntroExtend{
-            // 説明文を閉じる
+        if isIntroExtend {
+            // Close spot introduction view
             spotIntroView.numberOfLines = 3
             spotIntroButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             isIntroExtend = false
-        }else{
-            // 説明文を開く
+        } else {
+            // Open spot introduction view
             spotIntroView.numberOfLines = 0
             spotIntroButton.setImage(UIImage(systemName: "chevron.up"), for: .normal)
             isIntroExtend = true
         }
         
-        // 遅延処理
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8){
+        // Delay processing to update content height
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             self.contentHeight = self.contentView.frame.origin.y + self.contentView.frame.size.height
-            print("contentHeight1: \(self.contentHeight!)")
             self.delegate?.getContentHeight(height: self.contentHeight!)
+            print("Action: introExtendAction, contentHeight: \(self.contentHeight!)")
         }
     }
     
@@ -206,236 +273,111 @@ class SpotContentViewController: UIViewController {
     }
     
     @IBAction func exhibitContinueAction(_ sender: Any) {
-        self.delegate?.moveToExhibitContinue()
+        self.delegate?.moveToExhibitContinue(exhibits: self.exhibits!)
     }
     
-    
-    
-    
-    func fetchData(){
-        
-        let text = Constants.spotDetailURL + apiKey + Constants.spot + String(spotId!) + Constants.lang + language
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            
-            print(response)
-            switch response.result{
+    func fetchData() {
+        let url = Constants.baseURL + Constants.exhibitURL + "/" + String(self.spot!.id)
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        print("Action: fetchData, url: \(encodedUrl)")
+        AF.request(encodedUrl, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
+            switch response.result {
+            case .success:                
+                self.exhibits = try? JSONDecoder().decode([Exhibit].self, from: response.data!)
                 
-            case .success:
-                let json:JSON = JSON(response.data as Any)
-                
-                // spotデータのParse
-                let spotImageURL = URL(string: json["result"]["spot"]["thumbnail"].string!)
-                self.spotImageView?.sd_setImage(with: spotImageURL, completed: { (image, error, _, _) in
-                    if error == nil{
-                        self.spotImageView.setNeedsLayout()
-                    }
-                })
-                self.spotTitle.text = json["result"]["spot"]["spotTitle"].string!
-                self.category.text = json["result"]["spot"]["category"].string!
-                self.ratingStar.settings.updateOnTouch = false
-                self.ratingStar.rating = Double(json["result"]["spot"]["ratingstar"].float!)
-                self.ratingStar.settings.fillMode = .half
-                self.ratingNumber.text = String(json["result"]["spot"]["ratingstar"].float!)
-                self.ratingAmount.text = String(json["result"]["spot"]["ratingAmount"].int!)
-                self.isLike = json["result"]["spot"]["like"].bool!
-                if self.isLike{
-                    self.likeButtonView.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                    self.likeButtonView.tintColor = UIColor.white
-                    self.likeButtonView.backgroundColor = ThemeColor.errorString
-                }else{
-                    self.likeButtonView.setImage(UIImage(systemName: "heart"), for: .normal)
-                    self.likeButtonView.tintColor = .lightGray
-                    self.likeButtonView.backgroundColor = ThemeColor.secondString
-                }
-                self.spotIntroView.text = json["result"]["spot"]["intro"].string!
-                
-                if let address = json["result"]["spot"]["address"].string, !address.isEmpty{
-                    self.address.text = address
-                }
-                if let telephone = json["result"]["spot"]["telephone"].string, !telephone.isEmpty{
-                    self.telephone.text = telephone
-                }
-                if let url = json["result"]["spot"]["url"].string, !url.isEmpty{
-                    self.spotUrl.text = url
-                }
-                if let fee = json["result"]["spot"]["fee"].string, !fee.isEmpty{
-                    self.fee.text = fee
-                }
-                if let businessHour = json["result"]["spot"]["businessHour"].string, !businessHour.isEmpty{
-                    self.businessHour.text = businessHour
-                }
-                if let holiday = json["result"]["spot"]["holiday"].string, !holiday.isEmpty{
-                    self.holiday.text = holiday
-                }
-                
-                // レビューデータのParse
-//                if let num = json["info"]["reviewNum"].int, num != 0{
-//                    self.noReview.isHidden = true
-//                    self.noReview.isHidden = true
-//                    self.reviewItem = []
-//                    let roopNum = num - 1
-//
-//                    for i in 0...roopNum{
-//                        let writer = json["result"]["review"][i]["writer"].string
-//                        let ratingStar = json["result"]["review"][i]["ratingstar"].float
-//                        let postedReview = json["result"]["review"][i]["postedreview"].string
-//                        let postedDate = json["result"]["review"][i]["posteddate"].string
-//                        let review:Review = Review(writerName: writer!, ratingStar: ratingStar!, postDate: postedDate!, reviewPosted: postedReview!)
-//                        self.reviewItem.append(review)
-//
-//                    }
-//                    print("reviewItem: \(self.reviewItem)")
-//                }else{
-//                    // 検索結果がない場合
-//                    self.noReview.isHidden = false
-//                    self.noReview.isHidden = false
-//                    self.reviewContinueButton.isHidden = true
-//                }
-                
-                // レコメンドデータのParse
-                if let num = json["info"]["recommendNum"].int, num != 0{
+                if let num = self.exhibits?.count, num != 0{
                     self.noRecommend.isHidden = true
-                    self.noRecommend.isHidden = true
-                    self.exhibitItem = []
-                    let roopNum = num - 1
-
-                    for i in 0...roopNum{
-                        let exhibitId = json["result"]["recommend"][i]["exhibitId"].int
-                        let exhibitName =  json["result"]["recommend"][i]["exhibitName"].string
-                        let exhibitUrl = json["result"]["recommend"][i]["exhibitUrl"].string
-                        print("exhibitName: \(exhibitName!), exhibitUrl: \(exhibitUrl!)")
-                        let exhibit: Exhibit = Exhibit(exhibitId: exhibitId!, exhibitName: exhibitName!, exhibitImage: exhibitUrl!, exhibitIntro: "like")
-                        self.exhibitItem.append(exhibit)
-                    }
-                    print("exhibitItem: \(self.exhibitItem)")
-                }else{
-                    // 検索結果がない場合
-                    self.noRecommend.isHidden = false
+                } else {
+                    // No exhibit data
                     self.noRecommend.isHidden = false
                     self.recommendContinueButton.isHidden = true
                 }
-
-                break
             case .failure(let error):
-                print(error)
-                break
+                print("Action: fetchData, Message: Error occured \(error)")
             }
             
-            self.reviewTableView.reloadData()
+            // self.reviewTableView.reloadData()
+            print("Action: fetchData, Message: recommendCollectionView reload is called")
             self.recommendCollectionView.reloadData()
-            // 画像読み込み後再度高さ設定
+            // Set contents heights after loading exhibit data
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8){
                 self.contentHeight = self.contentView.frame.origin.y + self.contentView.frame.size.height
                 self.delegate?.getContentHeight(height: self.contentHeight!)
             }
         }
     }
-    
-    func likeUpdate(isLike: Bool, spotId: String){
-        var text = String()
-        if isLike {
-            // 登録
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "1"
-        }else{
-            // 削除
-            text = Constants.likeURL + apiKey + Constants.spot + spotId + Constants.islike + "0"
-        }
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            print(response)
-            switch response.result{
-            case .success:
-                let json:JSON = JSON(response.data as Any)
-                let isSaved:Bool = json["result"]["like"].bool!
-                
-                if isSaved{
-                    print("正常に処理終了")
-                }
-                
-                break
-            case .failure(let error):
-                print(error)
-                break
-            }
-
-        }
-    }
 }
 
 
-extension SpotContentViewController:UITableViewDataSource{
+extension SpotContentViewController:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("cell is counted")
-        return reviewItem.count
+        // TODO: reviewは最大3つ表示する
+        return self.reviews.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WriterCell", for: indexPath) as! WriterCell
         print("cell is created")
 
-//        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-//        cell.writerName.text = reviewItem[indexPath.row].writerName
-//        cell.postedDate.text = reviewItem[indexPath.row].postDate
-//        // Cosmos
-//        cell.ratingStar.settings.updateOnTouch = false
-//        cell.ratingStar.rating = Double(reviewItem[indexPath.row].ratingStar)
-//        cell.ratingStar.settings.fillMode = .half
-//        cell.ratingNumber.text = String(reviewItem[indexPath.row].ratingStar)
-//        cell.reviewPosted.text = reviewItem[indexPath.row].reviewPosted
-        
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
+        cell.writerName.text = self.reviews[indexPath.row].tourist.username
+        // TODO: 日付の整形
+        cell.postedDate.text = self.reviews[indexPath.row].createdAt
+        // Cosmos
+        cell.ratingStar.settings.updateOnTouch = false
+        cell.ratingStar.rating = Double(self.reviews[indexPath.row].rating)
+        cell.ratingStar.settings.fillMode = .half
+        cell.ratingNumber.text = String(self.reviews[indexPath.row].rating)
+        cell.reviewPosted.text = self.reviews[indexPath.row].postReview
         return cell
     }
 }
 
-extension SpotContentViewController:UITableViewDelegate{
-    
+extension SpotContentViewController:UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
 }
 
-extension SpotContentViewController:UICollectionViewDataSource{
+extension SpotContentViewController:UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return exhibitItem.count
+        // TODO: 表示件数調整
+        print("Action: numberOfItemsInSection, exhibits count: \(exhibits?.count ?? 0)")
+        return self.exhibits?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+        // TODO: CollectionViewが呼ばれないため修正を検討
+        print("Action: CellForItemAt, Message: cellForItemAt is called")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecommendCell", for: indexPath) as! RecommendCell
-        cell.exhibitName.text = exhibitItem[indexPath.row].exhibitName
-        
-        let exhibitImageURL = URL(string: self.exhibitItem[indexPath.row].exhibitImage as String)
-        // 画像の高速化処理
+        cell.exhibitName.text = self.exhibits?[indexPath.row].multiExhibits[0].name
+        let exhibitImageURL: URL?
+        if let url = self.exhibits?[indexPath.row].pictures[0].url {
+            exhibitImageURL = URL(string: url)
+        } else {
+            exhibitImageURL = URL(fileURLWithPath: Bundle.main.path(forResource: "noimage", ofType: "png")!)
+        }
         cell.exhibitImageView?.sd_setImage(with: exhibitImageURL, completed: { (image, error, _, _) in
             if error == nil{
                 cell.setNeedsLayout()
             }
         })
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.delegate?.moveToExhibitDetail(Obj: self.exhibitItem[indexPath.row])
-        // self.delegate?.moveToExhibitDetail(id: self.exhibitItem[indexPath.row].exhibitId)
+        self.delegate?.moveToExhibitDetail(exhibit: self.exhibits![indexPath.row])
     }
 }
 
-extension SpotContentViewController:UICollectionViewDelegateFlowLayout{
-    
+extension SpotContentViewController:UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let horizontalSpace: CGFloat = 10
         let cellWidth:CGFloat = (self.view.bounds.width - horizontalSpace - 40)/2
-        print("collectionview is called: \(cellWidth)")
+        print("Action: collectionView, cellWidth: \(cellWidth)")
         let cellHeight:CGFloat = cellWidth + 50
-        
         return CGSize(width: cellWidth, height: cellHeight)
     }
-    
 }
 

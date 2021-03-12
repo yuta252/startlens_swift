@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -50,9 +52,9 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="16D-AG-Rcm">
                                         <rect key="frame" x="0.0" y="39.5" width="286" height="30"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ffu-6N-wpX" customClass="CosmosView" customModule="Cosmos">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ffu-6N-wpX" customClass="CosmosView" customModule="Cosmos">
                                                 <rect key="frame" x="0.0" y="7" width="110" height="16"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="110" id="NLo-kp-3DL"/>
                                                 </constraints>
@@ -87,7 +89,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="RgM-yh-f0F" firstAttribute="centerY" secondItem="16D-AG-Rcm" secondAttribute="centerY" id="DZx-PC-OMQ"/>
                                             <constraint firstItem="526-jk-vnM" firstAttribute="centerY" secondItem="16D-AG-Rcm" secondAttribute="centerY" id="KmV-zd-IRb"/>
@@ -102,18 +104,6 @@
                                             <constraint firstItem="Ffu-6N-wpX" firstAttribute="centerY" secondItem="16D-AG-Rcm" secondAttribute="centerY" id="nht-qQ-gki"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1w-EZ-aZr">
-                                        <rect key="frame" x="41" y="74.5" width="40" height="22"/>
-                                        <color key="backgroundColor" red="0.18039215689999999" green="0.18823529410000001" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="MQ8-rx-2xT"/>
-                                        </constraints>
-                                        <color key="tintColor" red="0.90196078430000004" green="0.90980392160000001" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" image="camera" catalog="system"/>
-                                        <connections>
-                                            <action selector="cameraAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="xDU-QH-e2v"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iVr-Yb-J9L">
                                         <rect key="frame" x="0.0" y="74.5" width="21" height="22"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -127,13 +117,11 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="iVr-Yb-J9L" firstAttribute="top" secondItem="16D-AG-Rcm" secondAttribute="bottom" constant="5" id="1A1-8L-MHi"/>
                                     <constraint firstItem="pr4-fX-AqC" firstAttribute="leading" secondItem="Zbo-EZ-HGn" secondAttribute="leading" id="1jG-Vl-wey"/>
-                                    <constraint firstItem="A1w-EZ-aZr" firstAttribute="top" secondItem="16D-AG-Rcm" secondAttribute="bottom" constant="5" id="3lE-L6-9EJ"/>
                                     <constraint firstItem="OcB-eC-zLc" firstAttribute="top" secondItem="Zbo-EZ-HGn" secondAttribute="top" id="9Az-E8-Ous"/>
-                                    <constraint firstItem="A1w-EZ-aZr" firstAttribute="leading" secondItem="iVr-Yb-J9L" secondAttribute="trailing" constant="20" id="B13-6b-p3P"/>
                                     <constraint firstItem="16D-AG-Rcm" firstAttribute="leading" secondItem="Zbo-EZ-HGn" secondAttribute="leading" id="Mcj-iZ-pbh"/>
                                     <constraint firstItem="OcB-eC-zLc" firstAttribute="leading" secondItem="Zbo-EZ-HGn" secondAttribute="leading" id="O6L-NW-OOh"/>
                                     <constraint firstItem="pr4-fX-AqC" firstAttribute="top" secondItem="OcB-eC-zLc" secondAttribute="bottom" constant="5" id="P97-QZ-8xm"/>
@@ -145,7 +133,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Zbo-EZ-HGn" secondAttribute="trailing" id="EFF-es-CDF"/>
                             <constraint firstAttribute="bottom" secondItem="Zbo-EZ-HGn" secondAttribute="bottom" id="Ehd-xg-tiR"/>
@@ -168,7 +156,6 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="cameraButton" destination="A1w-EZ-aZr" id="ZCC-gg-45B"/>
                 <outlet property="likeButton" destination="iVr-Yb-J9L" id="HGA-zs-IhH"/>
                 <outlet property="ratingAmount" destination="526-jk-vnM" id="zLB-Y8-o78"/>
                 <outlet property="ratingNumber" destination="SbK-Wl-jcp" id="Tgi-uK-i0T"/>
@@ -182,7 +169,9 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="camera" catalog="system" width="128" height="96"/>
         <image name="heart" catalog="system" width="128" height="109"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

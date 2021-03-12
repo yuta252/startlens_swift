@@ -122,9 +122,9 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             let locationVC = segue.destination as! LocationViewController
             locationVC.delegate = self
             break
-        case "spotdetail":
-            let spotDetailVC = segue.destination as! SpotDetailViewController
-            spotDetailVC.spotId = spotId
+//        case "spotdetail":
+//            let spotDetailVC = segue.destination as! SpotDetailViewController
+//            spotDetailVC.spotId = spotId
         default:
             break
         }
@@ -292,9 +292,9 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        spotId = self.spots[indexPath.row].id
-        // TODO: 変数を渡す処理を変更　navitaionController用に
-        performSegue(withIdentifier: "spotdetail", sender: nil)
+        let spotDetailVC = self.storyboard?.instantiateViewController(identifier: "spotDetail") as! SpotDetailViewController
+        spotDetailVC.spot = self.spots[indexPath.row]
+        self.navigationController?.pushViewController(spotDetailVC, animated: true)
     }
 }
 

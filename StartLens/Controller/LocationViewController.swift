@@ -32,16 +32,20 @@ class LocationViewController: UIViewController {
         super.viewDidLoad()
 
         language = Language.getLanguage()
-        locationManager = CLLocationManager()
-
+        
         setupUI()
+        setupLocationManager()
     }
     
     @IBAction func currentLocationAction(_ sender: Any) {
+        print("Action: currentLocationAction, Message: called")
+        // Handle depends on the status
         let status = CLLocationManager.authorizationStatus()
         if status == .denied {
+            print("Action: currentLocationAction, Message: status denied")
             showAlert()
         } else if status == .authorizedWhenInUse {
+            print("Action: currentLocationAction, Message: status authorizedWhenInUse")
             locationManager.delegate = self
             locationManager.startUpdatingLocation()
             
@@ -53,6 +57,7 @@ class LocationViewController: UIViewController {
                 self.dismiss(animated: true, completion: nil)
             }
         }
+        print("Action: currentLocationAction, Message: end")
     }
     
     @IBAction func deleteAction(_ sender: Any) {
@@ -64,9 +69,15 @@ class LocationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func setupUI(){
+    func setupUI() {
         getCurrentLocationText.setTitle("locationCurrent".localized, for: .normal)
         deleteButton.setTitle("deleteButtonTitle".localized, for: .normal)
+    }
+    
+    func setupLocationManager() {
+        self.locationManager = CLLocationManager()
+        // Show a dialog to permit getting location info
+        self.locationManager.requestWhenInUseAuthorization()
     }
     
     func startIndicator() {
@@ -85,9 +96,17 @@ class LocationViewController: UIViewController {
         let alertTitle = "locationAlertTitle".localized
         let alertMessage = "locationAlertMessage".localized
         let alert:UIAlertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-        
-        let defaultAction: UIAlertAction = UIAlertAction(title: "okButtonText".localized, style: .default, handler: nil)
+        // Okay button Action
+        let defaultAction: UIAlertAction = UIAlertAction(title: "okButtonText".localized, style: .default) { (action: UIAlertAction!) in
+            print("Action: showAlert, Message: Okay button tapped")
+            self.setupLocationManager()
+        }
+        // Cancel button Action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "cancelButton".localized, style: UIAlertAction.Style.cancel) { (action: UIAlertAction!) in
+            print("Action: showAlert, Message: Cancel button tapped")
+        }
         alert.addAction(defaultAction)
+        alert.addAction(cancelAction)
         present(alert, animated: true, completion: nil)
     }
 }

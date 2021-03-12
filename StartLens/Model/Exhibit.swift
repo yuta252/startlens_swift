@@ -8,9 +8,8 @@
 
 import Foundation
 
-struct Exhibit{
-    let exhibitId: Int
-    let exhibitName: String
-    let exhibitImage: String
-    var exhibitIntro: String
+struct Exhibit: Codable {
+    var id: Int
+    var pictures: [Picture]
+    var multiExhibits: [MultiExhibit]
 }

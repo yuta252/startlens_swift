@@ -20,24 +20,15 @@ class ExhibitDetailViewController: UIViewController {
     @IBOutlet weak var exhibitIntroView: UILabel!
     @IBOutlet weak var contentHeight: NSLayoutConstraint!
     
-    
-    var apiKey = String()
-    var spotId: Int?
-    var language = String()
-    var exhibitObj: Exhibit?
-    var exhibitId: Int?
+    var exhibit: Exhibit?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // 初期設定
-        apiKey = UserDefaults.standard.string(forKey: "apiKey")!
-        language = UserDefaults.standard.string(forKey: "language")!
+        // Initial settings
         
-        exhibitId = exhibitObj?.exhibitId
-        
+        // UI settings
         setupUI()
-        fetchData()
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -47,45 +38,13 @@ class ExhibitDetailViewController: UIViewController {
     func setupUI(){
         contentsView.layer.cornerRadius = 10.0
         contentsView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        let exhibitImageURL = URL(string: exhibitObj!.exhibitImage as String)
+        let exhibitImageURL = URL(string: exhibit!.pictures[0].url)
         exhibitImageView?.sd_setImage(with: exhibitImageURL, completed: { (image, error, _, _) in
              if error == nil{
                 self.exhibitImageView.setNeedsLayout()
              }
          })
-        exhibitNameView.text = exhibitObj?.exhibitName
-    }
-    
-    func fetchData(){
-        let text = Constants.exhibitDetailURL + apiKey + Constants.spot + String(spotId!) + Constants.exhibitId + String(exhibitId!) + Constants.lang + language
-        let url = text.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(url)")
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON{ (response) in
-            
-            print(response)
-            switch response.result{
-                
-            case .success:
-                let json:JSON = JSON(response.data as Any)
-                // レコメンドデータのParse
-                if let exhibitIntro = json["result"]["intro"].string{
-                    self.exhibitObj?.exhibitIntro = exhibitIntro
-                    print(exhibitIntro)
-                    DispatchQueue.main.async {
-                        self.exhibitIntroView.text = exhibitIntro
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8){
-                        self.contentHeight.constant = self.exhibitIntroView.frame.size.height + 50
-                        print(self.exhibitIntroView.frame.size.height + 50)
-                    }
-                    
-                }
-                break
-            case .failure(let error):
-                print(error)
-                break
-            }
-            
-        }
+        exhibitNameView.text = exhibit!.multiExhibits[0].name
+        exhibitIntroView.text = exhibit!.multiExhibits[0].description
     }
 }

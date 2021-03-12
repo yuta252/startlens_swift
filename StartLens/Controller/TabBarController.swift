@@ -12,10 +12,11 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //selectedIndex = 1
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
 }

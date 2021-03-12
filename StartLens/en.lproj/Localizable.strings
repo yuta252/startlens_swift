@@ -99,7 +99,7 @@
 // LocationVC
 "locationCurrent" = "Get current location";
 "locationAlertTitle" = "Getting location information is not allowed";
-"locationAlertMessage" = "Please cahnge the setting from Settings>Privacy>Location Services";
+"locationAlertMessage" = "Do you allow the use of location information?";
 
 // FavoriteVC
 "noFavoriteText" = "No favorite registration";
@@ -124,7 +124,8 @@
 // ReviewPostVC
 "reviewPostPlace" = "Enter a review";
 "reviewPostHelp" = "Please enter within 500 characters.";
-"reviewFailText" = "Review failed";
+"reviewFailText" = "Post failed";
+"reviewFailMessage" = "Faied to post a review. Try it again.";
 // ReviewListVC
 "revewListTitle" = "Review list";
 // ExhibitResultVC
