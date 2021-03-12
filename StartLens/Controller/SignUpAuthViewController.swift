@@ -50,7 +50,7 @@ class SignUpAuthViewController: UIViewController, UITextFieldDelegate {
                 // メールアドレスとパスワードをJSON形式でサーバーに送信する
                 let parameters = ["auth":["email": emailAddress]]
 
-                AF.request(Constants.signUpAuthURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+                AF.request(Constants.baseURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
                     print(response)
                     
                     switch response.result{

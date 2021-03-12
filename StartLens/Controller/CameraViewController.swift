@@ -12,41 +12,56 @@ import TensorFlowLite
 import Accelerate
 import Alamofire
 import SwiftyJSON
+import VideoToolbox
 
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate  {
 
-    
     @IBOutlet weak var drawView: UIView!
     @IBOutlet weak var cameraButton: UIButton!
+    @IBOutlet weak var circularProgress: UIActivityIndicatorView!
+    @IBOutlet weak var picturePreview: UIImageView!
     
-    
-    var apiKey = String()
-    var spotId: Int?
-    var exhibitItem = [Exhibit]()
-    // デバイスからの入力と出力を管理するオブジェクト生成
+    var token = String()
+    var spotId = Int()
+    var exhibits = [Exhibit]()
+    var inferredExhibits = [Exhibit]()
+
     var captureSession = AVCaptureSession()
-    // プレビュー表示用のレイヤー
-    var previewLayer: AVCaptureVideoPreviewLayer!
-    // キャプチャーの出力データを受け付けるオブジェクト
+    var mainCamera: AVCaptureDevice?
+    var innerCamera: AVCaptureDevice?
+    var currentDevice: AVCaptureDevice?
+    var previewLayer: AVCaptureVideoPreviewLayer?
     var photoOutput: AVCapturePhotoOutput?
-    // パラメータ
+
     let BATCH_SIZE = 1
     let INPUT_CHANNELS = 3
     let INPUT_WIDTH = 224
     let INPUT_HEIGHT = 224
     let THREAD_COUNT = 1
-    
-    // 参照
+
     var interpreter: Interpreter!
-    //var labels: [String]!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // 初期設定
-        apiKey = UserDefaults.standard.string(forKey: "apiKey")!
+        // Initial settings
+        guard let savedToken = UserDefaults.standard.string(forKey: "token") else {
+            // if cannot get a token, move to login screen
+            print("Action: ViewDidLoad, Message: No token Error")
+            return
+        }
+        token = savedToken
+        
+        // UI settings
         setupUI()
+        
+        // Camera settings
+        setupCaptureSession()
+        setupDevice()
+        setupInputOutput()
+        setupPreviewLayer()
+        // Start capture session
+        captureSession.startRunning()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,22 +70,18 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        do{
-            // モデルパス（変更する）
+        do {
+            print("Action: viewDidAppear, Message: Load tensorflow model")
+            // To be changed depends on learning
             let modelPath = Bundle.main.path(forResource: "embedding_20200117_123222", ofType: "tflite")!
             var options = Interpreter.Options()
             options.threadCount = THREAD_COUNT
-            
-            // インタプリタ生成
+            // Generate interpreter
             interpreter = try Interpreter(modelPath: modelPath, options: options)
             try interpreter.allocateTensors()
-            
         } catch let error{
-            print(error.localizedDescription)
+            print("Action: viewDidAppear, Message: Generate interpreter error, Error: \(error.localizedDescription)")
         }
-        
-        // カメラキャプチャ開始
-        startCapture()
     }
     
     override func viewDidLayoutSubviews() {
@@ -78,175 +89,135 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         print("drawView in viewdidlayoutsubview: \(self.drawView.bounds)")
     }
     
+    func setupUI() {
+        circularProgress.isHidden = true
+        cameraButton.layer.borderColor = UIColor.white.cgColor
+        cameraButton.layer.borderWidth = 5
+        cameraButton.clipsToBounds = true
+        cameraButton.layer.cornerRadius = 30.0
+    }
 
     @IBAction func cameraButtonAction(_ sender: Any) {
-        print("tapped")
-              
-        // ROW出力データの設定
+        print("Action: cameraButonAction, Message: button is tapped")
+        // Output data setting
         let pixelFormatType = kCVPixelFormatType_32BGRA
         guard (self.photoOutput?.availablePhotoPixelFormatTypes.contains(pixelFormatType))! else {return}
-        let photoSettings = AVCapturePhotoSettings(format: [kCVPixelBufferPixelFormatTypeKey as String : pixelFormatType])
-          
-        // フラッシュ設定
-        photoSettings.flashMode = .auto
-        // カメラの手ぶれ補正
-        photoSettings.isAutoStillImageStabilizationEnabled = true
-        // 撮影された画像をdelegateメソッドで処理
-        self.photoOutput?.capturePhoto(with: photoSettings, delegate: self as AVCapturePhotoCaptureDelegate)
+        let settings = AVCapturePhotoSettings(format: [kCVPixelBufferPixelFormatTypeKey as String : pixelFormatType])
+        // Flash setting
+        settings.flashMode = .auto
+        settings.isAutoStillImageStabilizationEnabled = true
+        // Handle a taken picture
+        self.photoOutput?.capturePhoto(with: settings, delegate: self as AVCapturePhotoCaptureDelegate)
     }
     
     @IBAction func backAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    
-    
-    func setupUI(){
-        cameraButton.layer.cornerRadius = 40.0
+    func setupCaptureSession() {
+        // Camera image quality settings
+        captureSession.sessionPreset = AVCaptureSession.Preset.medium
     }
     
-    
-    func startCapture() {
-        // セッションの生成
-        // カメラの画質設定
-        captureSession.sessionPreset = AVCaptureSession.Preset.photo //プリセット
-        let captureDevice: AVCaptureDevice! = self.device(false)
-        //コンフィギュレーションの指定
-        do {
-            try captureDevice.lockForConfiguration()
-            captureDevice.activeVideoMinFrameDuration = CMTimeMake(value: 1, timescale: 20) //FPS
-            captureDevice.focusMode = .continuousAutoFocus //フォーカス
-            captureDevice.exposureMode = .continuousAutoExposure //露出
-            captureDevice.whiteBalanceMode = .continuousAutoWhiteBalance //ホワイトバランス
-            captureDevice.unlockForConfiguration()
-        } catch {
-            return
-        }
-
-        //入力の生成
-        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else {return}
-        guard captureSession.canAddInput(input) else {return}
-        captureSession.addInput(input)
-
-        //出力の生成(カメラ撮影用に変更)
-        photoOutput = AVCapturePhotoOutput()
-        // jpeg形式で出力
-        //photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
-
-        captureSession.addOutput(photoOutput!)
-        
-        // 動画でフレームごとに出力データを予測する場合
-        //let output: AVCaptureVideoDataOutput = AVCaptureVideoDataOutput()
-        //output.setSampleBufferDelegate(self, queue: DispatchQueue(label: "VideoQueue"))
-        //output.videoSettings = [String(kCVPixelBufferPixelFormatTypeKey) : kCMPixelFormat_32BGRA] //画像フォーマット
-        //output.alwaysDiscardsLateVideoFrames = true //出力の遅延フレームの破棄
-        //guard captureSession.canAddOutput(output) else {return}
-        //captureSession.addOutput(output)
-
-        //画面の向き
-        //let videoConnection = output.connection(with: AVMediaType.video)
-        //videoConnection!.videoOrientation = .portrait
-    
-        //プレビューの指定
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
-        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        print("drawView frame in start capture: \(self.drawView.frame)")
-        previewLayer.frame = self.drawView.frame
-        print("previewlayer in start capture: \(previewLayer.frame)")
-        
-        self.view.layer.insertSublayer(previewLayer, at: 2)
-
-        //カメラキャプチャの開始
-        captureSession.startRunning()
-    }
-
-    //デバイスの取得
-    func device(_ frontCamera: Bool) -> AVCaptureDevice! {
-        //AVCaptureDeviceのリストの取得
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(
-            deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera],
-            mediaType: AVMediaType.video,
-            position: AVCaptureDevice.Position.unspecified)
+    func setupDevice() {
+        // Capture devise settings
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
+        // Get camera devices that meet the property conditions
         let devices = deviceDiscoverySession.devices
-
-        //指定したポジションを持つAVCaptureDeviceの検索
-        let position: AVCaptureDevice.Position = frontCamera ? .front : .back
+        
         for device in devices {
-            if device.position == position {
-                return device
+            if device.position == AVCaptureDevice.Position.back {
+                mainCamera = device
+            } else if device.position == AVCaptureDevice.Position.front {
+                innerCamera = device
             }
         }
-        return nil
+        // Set camera position at activating
+        currentDevice = mainCamera
+    }
+    
+    func setupInputOutput() {
+        // Input and Output settings
+        do {
+            // Initialize input device data
+            let captureDeviceInput = try AVCaptureDeviceInput(device: currentDevice!)
+            captureSession.addInput(captureDeviceInput)
+            photoOutput = AVCapturePhotoOutput()
+            // photoOutput!.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
+            captureSession.addOutput(photoOutput!)
+        } catch {
+            print("Action: setupInputOutput, Message: AVCaptureDeviceInput error \(error)")
+        }
+    }
+    
+    func setupPreviewLayer() {
+        // Preview layer settings
+        self.previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        self.previewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        self.previewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+        self.previewLayer?.frame = self.drawView.frame
+        print("Action: setupPreviewLayer, drawView: \(self.drawView.frame)")
+        self.view.layer.insertSublayer(self.previewLayer!, at: 2)
     }
 
- 
-    //予測(引数: CVPixelBuffer）
-    func predict(_ pixelBuffer: CVPixelBuffer){
-        //CMSampleBufferをCVPixelBufferに変換
-        //let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
+    func predict(_ pixelBuffer: CVPixelBuffer) {
+        /**
+         - Parameters
+            pixelBuffer: captured picture in the format of CVPIxelBuffer
+         */
+        // Convert CMSampleBuffer to CVPixelBuffer
+        // let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
 
-        //Pixelフォーマットの確認
+        // Confirm pixel format
         let sourcePixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
         assert(sourcePixelFormat == kCVPixelFormatType_32ARGB ||
             sourcePixelFormat == kCVPixelFormatType_32BGRA ||
             sourcePixelFormat == kCVPixelFormatType_32RGBA)
 
-
-        //画像のクロップとスケーリング
+        // Crop and Scale image
         let scaledSize = CGSize(width: INPUT_WIDTH, height: INPUT_HEIGHT)
         guard let cropPixelBuffer = pixelBuffer.centerThumbnail(ofSize: scaledSize) else {
             return
         }
         
-        print(cropPixelBuffer)
-        
         let outputTensor: Tensor
         do {
-            // RGBデータの生成
+            // Generate RGB data
             let inputTensor = try interpreter.input(at: 0)
-            print("inputTensor data type: \(inputTensor.dataType)")
+            print("Action: predict, inputTensor data type: \(inputTensor.dataType)")
             let rgbData = buffer2rgbData(
                 cropPixelBuffer,
                 byteCount: BATCH_SIZE * INPUT_WIDTH * INPUT_HEIGHT * INPUT_CHANNELS, isModelQuantized: inputTensor.dataType == .uInt8)
-            print("rgbData: \(rgbData!)")
-            // 推論の実行
+            // Execute interpretation
             try interpreter.copy(rgbData!, toInputAt: 0)
             try interpreter.invoke()
             outputTensor = try interpreter.output(at: 0)
-            
         } catch let error {
-            print(error.localizedDescription)
+            print("Action: predict, Message: Error occured. \(error.localizedDescription)")
             return
         }
         
         var results: [Float] = []
-        
-        //量子化モデル
+        // Quantized model
         if outputTensor.dataType == .uInt8 {
             let quantization = outputTensor.quantizationParameters!
             let quantizedResults = [UInt8](outputTensor.data)
             results = quantizedResults.map{
                 quantization.scale * Float(Int($0) - quantization.zeroPoint)}
         }
-        //浮動少数モデル
+        // Float model
         else if outputTensor.dataType == .float32 {
             results = [Float32](unsafeData: outputTensor.data) ?? []
         }
         
-        
-        print("output")
-        print(results)
-        
-        // データ送信
+        print("Action: predict, results: \(results)")
+        // Send 50 dim vector data to API server
         fetchData(result: results)
-        
     }
     
-    // PixelBuffer → rgbDataへの変換処理
-    private func buffer2rgbData(_ buffer: CVPixelBuffer, byteCount: Int, isModelQuantized: Bool) -> Data?{
-        
-        //PixelBuffer→bufferData
+    // Convert PixelBuffer to rgbData
+    private func buffer2rgbData(_ buffer: CVPixelBuffer, byteCount: Int, isModelQuantized: Bool) -> Data? {
+        // from PixelBuffer to bufferData
         CVPixelBufferLockBaseAddress(buffer, .readOnly)
         defer { CVPixelBufferUnlockBaseAddress(buffer, .readOnly) }
         guard let mutableRawPointer = CVPixelBufferGetBaseAddress(buffer) else {
@@ -256,7 +227,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         let bufferData = Data(bytesNoCopy: mutableRawPointer,
             count: count, deallocator: .none)
 
-        //bufferData→rgbBytes
+        // from bufferData to rgbBytes
         var rgbBytes = [UInt8](repeating: 0, count: byteCount)
         var index = 0
         for component in bufferData.enumerated() {
@@ -266,80 +237,95 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
           rgbBytes[index] = component.element
           index += 1
         }
-        print("rgbBytes: \(rgbBytes)")
-        print("rgbBytes flaot: \(rgbBytes.map{Float($0)})")
-        //rgbBytes→rgbData
+        // from rgbBytes to rgbData
         if isModelQuantized {
-            print("量子化モデル")
+            print("Action: buffer2rgbData, Message: quantized model data")
             return Data(bytes: rgbBytes)
         }
         //return Data(copyingBufferOf: rgbBytes.map{Float($0)/255.0})
+        print("Action: buffer2rgbData, Message: float model data")
         return Data(copyingBufferOf: rgbBytes.map{Float($0)/1.0})
     }
     
-    func fetchData(result: [Float]){
-        // POSTするパラメータ作成
-        let parameters = ["apiKey": apiKey, "result": result, "spot": spotId!] as [String : Any]
-        print(parameters)
-        // メールアドレスとパスワードをJSON形式でサーバーに送信する
-        AF.request(Constants.cameraURL, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
-            print(response)
-            
-            switch response.result{
-            
+    // Convert UIImage to CVPixelBUffer
+    func buffer(from image: UIImage) -> CVPixelBuffer? {
+        let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue, kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue] as CFDictionary
+        var pixelBuffer : CVPixelBuffer?
+        let status = CVPixelBufferCreate(kCFAllocatorDefault, Int(image.size.width), Int(image.size.height), kCVPixelFormatType_32BGRA, attrs, &pixelBuffer)
+        guard (status == kCVReturnSuccess) else {
+            return nil
+        }
+        CVPixelBufferLockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+        let pixelData = CVPixelBufferGetBaseAddress(pixelBuffer!)
+        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: pixelData, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: 8, bytesPerRow: CVPixelBufferGetBytesPerRow(pixelBuffer!), space: rgbColorSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue)
+        context?.translateBy(x: 0, y: image.size.height)
+        context?.scaleBy(x: 1.0, y: -1.0)
+        UIGraphicsPushContext(context!)
+        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        UIGraphicsPopContext()
+        CVPixelBufferUnlockBaseAddress(pixelBuffer!, CVPixelBufferLockFlags(rawValue: 0))
+        return pixelBuffer
+    }
+    
+    func fetchData(result: [Float]) {
+        let url = Constants.baseURL + Constants.inferenceURL
+        print("Action: fetchData, url: \(url)")
+        let parameters = ["spotId": self.spotId, "data": result] as [String : Any]
+        print("Action: fetchData, parameters: \(parameters)")
+
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+            switch response.result {
             case .success:
                 let json:JSON = JSON(response.data as Any)
-                
-                self.exhibitItem = []
-                // レコメンドデータのParse
-                if let num = json["info"]["exhibitNum"].int, num != 0{
-                    let roopNum = num - 1
+                let isError: Bool? = json["error"].bool
 
-                    for i in 0...roopNum{
-                        let exhibitId = json["result"][i]["exhibitId"].int
-                        let exhibitName = json["result"][i]["exhibitName"].string
-                        let exhibitUrl = json["result"][i]["exhibitUrl"].string
-                        print("exhibitName: \(exhibitName!), exhibitUrl: \(exhibitUrl!)")
-                        let exhibit: Exhibit = Exhibit(exhibitId: exhibitId!, exhibitName: exhibitName!, exhibitImage: exhibitUrl!, exhibitIntro: "like")
-                        self.exhibitItem.append(exhibit)
-                    }
-                    
-                    // 結果画面へ遷移
+                if let isError = isError, !isError {
+                    // let result: [Int] = json["result"].array as! [Int]
+                    print("Action: fetchData, result:")
+                    // TODO: 結果によりExhibitIdで絞る
+                    self.performSegue(withIdentifier: "exhibitResult", sender: nil)
+                } else {
+                    // TODO: move to isError is true
+                    print("Action: fetchData, Message: Error occured")
+                    let result: [Int] = [21, 17]
+                    // Filter Exhibits
+                    print("Action: fetchData, exhibit: \(self.exhibits)")
+                    self.inferredExhibits = self.exhibits.filter({ exhibit in result.contains(exhibit.id) })
+                    print("Action: fetchData, inferredExhibits: \(self.inferredExhibits)")
                     self.performSegue(withIdentifier: "exhibitResult", sender: nil)
                 }
-                print("exhibitItem: \(self.exhibitItem)")
             case .failure(let error):
-                print(error)
-                
+                print("Action: fetchData, Message: Error occured. \(error)")
             }
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let exhibitResultVC = segue.destination as! ExhibitResultViewController
-        exhibitResultVC.spotId = spotId
-        // exhibitDetailVC.exhibitId = exhibitId
-        exhibitResultVC.exhibitItem = self.exhibitItem
+        exhibitResultVC.exhibits = self.inferredExhibits
     }
 }
 
-//MARK: AVCapturePhotoCaptureDelegateメソッド
-extension CameraViewController: AVCapturePhotoCaptureDelegate{
-
-    // 撮影した画像データが生成されたときに呼び出されるデリゲートメソッド
+extension CameraViewController: AVCapturePhotoCaptureDelegate {
+    // delegate method that called when picture is taken
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        print("avcapturePhotoCaptureDelegate is called")
+        print("Action: photoOutput, Message: AVCapturePhotoCaptureDelegate is called")
         if let imageData = photo.pixelBuffer {
-            print("imageData: \(imageData)")
-            predict(imageData)
+            // Set picture preview
+            let uiImage = UIImage(pixelBuffer: imageData)?.rotatedBy(degree: 90)
+            self.picturePreview.image = uiImage
+            // Conver to CVPixelBuffer
+            let pixelBufferImage = buffer(from: uiImage!)
+            // Predict image data
+            predict(pixelBufferImage!)
         }
     }
 }
 
-
-//CVPixelBufferの拡張
+// Augument CVPixelBuffer
 extension CVPixelBuffer {
-   //画像のトリミングとスケーリング
+   // Trim and scale image
    func centerThumbnail(ofSize size: CGSize ) -> CVPixelBuffer? {
        let imageWidth = CVPixelBufferGetWidth(self)
        let imageHeight = CVPixelBufferGetHeight(self)
@@ -358,13 +344,13 @@ extension CVPixelBuffer {
          originY = (imageHeight - imageWidth) / 2
        }
        
-       //PixelBufferで最大の正方形をみつける
+       // Find out a maximum size square in PixelBuffer
        guard let inputBaseAddress = CVPixelBufferGetBaseAddress(self)?.advanced(
            by: originY * inputImageRowBytes + originX * imageChannels) else {
          return nil
        }
        
-       //入力画像から画像バッファを取得
+       // Get image buffer from input image
        var inputVImageBuffer = vImage_Buffer(
            data: inputBaseAddress, height: UInt(thumbnailSize), width: UInt(thumbnailSize),
            rowBytes: inputImageRowBytes)
@@ -373,11 +359,11 @@ extension CVPixelBuffer {
          return nil
        }
        
-       //サムネイル画像にvImageバッファを割り当て
+       // Allocate vImage buffer for thumbnail images
        var thumbnailVImageBuffer = vImage_Buffer(data: thumbnailBytes,
            height: UInt(size.height), width: UInt(size.width), rowBytes: thumbnailRowBytes)
        
-       //入力画像バッファでスケール操作を実行し、サムネイル画像バッファに保存
+       // Perform a scale operation in the input image buffer and save it in the thumbnail image buffer
        let scaleError = vImageScale_ARGB8888(&inputVImageBuffer, &thumbnailVImageBuffer, nil, vImage_Flags(0))
        CVPixelBufferUnlockBaseAddress(self, CVPixelBufferLockFlags(rawValue: 0))
        guard scaleError == kvImageNoError else {
@@ -388,8 +374,7 @@ extension CVPixelBuffer {
                free(UnsafeMutableRawPointer(mutating: pointer))
            }
        }
-
-       //サムネイルのvImageバッファをCVPixelBufferに変換
+       // Convert vImage buffer to CVPixelBuffer
        var thumbnailPixelBuffer: CVPixelBuffer?
        let conversionStatus = CVPixelBufferCreateWithBytes(
            nil, Int(size.width), Int(size.height), pixelBufferType, thumbnailBytes,
@@ -402,17 +387,17 @@ extension CVPixelBuffer {
    }
 }
 
-//Dataの拡張
+// Augument Data
 extension Data {
-   //float配列→byte配列(長さ4倍)
+   // Convert float array to byte array(4 times length)
    init<T>(copyingBufferOf array: [T]) {
        self = array.withUnsafeBufferPointer(Data.init)
    }
 }
 
-//Arrayの拡張
+// Augument Array
 extension Array {
-   //byte配列→float配列（長さ1/4倍）
+   // Convert byte array to float array(1/4 times length)
    init?(unsafeData: Data) {
        guard unsafeData.count % MemoryLayout<Element>.stride == 0 else { return nil }
        #if swift(>=5.0)
@@ -426,4 +411,33 @@ extension Array {
        }
        #endif  // swift(>=5.0)
    }
+}
+
+// Augument UIImage
+extension UIImage {
+    // Convert from type of CVPixelBuffer to UIImage through CGImage in order to render a picture
+    public convenience init?(pixelBuffer: CVPixelBuffer) {
+        var cgImage: CGImage?
+        VTCreateCGImageFromCVPixelBuffer(pixelBuffer, options: nil, imageOut: &cgImage)
+        
+        if let cgImage = cgImage {
+            self.init(cgImage: cgImage)
+        } else {
+            return nil
+        }
+    }
+    
+    // Rotate UIImage by designated degree
+    func rotatedBy(degree: CGFloat) -> UIImage {
+        let radian = -degree * CGFloat.pi / 180
+        UIGraphicsBeginImageContext(self.size)
+        let context = UIGraphicsGetCurrentContext()!
+        context.translateBy(x: self.size.width / 2, y: self.size.height / 2)
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.rotate(by: radian)
+        context.draw(self.cgImage!, in: CGRect(x: -(self.size.width / 2), y: -(self.size.height / 2), width: self.size.width, height: self.size.height))
+        let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return rotatedImage
+    }
 }

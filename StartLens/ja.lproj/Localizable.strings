@@ -99,7 +99,7 @@
 // LocationVC
 "locationCurrent" = "現在地を取得";
 "locationAlertTitle" = "位置情報の取得が許可されていません";
-"locationAlertMessage" = "設定>プライバシー>位置情報サービスから設定を変更してください。";
+"locationAlertMessage" = "位置情報の利用を許可しますか？";
 
 // FavoriteVC
 "noFavoriteText" = "お気に入り登録はありません。";
@@ -125,6 +125,7 @@
 "reviewPostPlace" = "レビューを入力する";
 "reviewPostHelp" = "500文字以内で入力してください。";
 "reviewFailText" = "レビュー失敗";
+"reviewFailMessage" = "投稿に失敗しました。もう一度お試しください";
 // ReviewListVC
 "revewListTitle" = "レビュー 一覧";
 // ExhibitResultVC

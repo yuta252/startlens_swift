@@ -10,6 +10,6 @@ import Foundation
 
 struct Tourist: Codable {
     var id: Int
-    var thumbnailUrl: String
+    var thumbnailUrl: String?
     var username: String
 }
