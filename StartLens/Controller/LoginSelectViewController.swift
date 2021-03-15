@@ -46,6 +46,7 @@ class LoginSelectViewController: UIViewController {
     }
     
     @IBAction func logInAction(_ sender: Any) {
+        print("Action: logInAction, Message: login button is tapped")
         let logInVC = storyboard?.instantiateViewController(identifier: "logIn") as! LogInViewController
         navigationController?.pushViewController(logInVC, animated: true)
     }

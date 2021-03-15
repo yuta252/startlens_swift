@@ -11,100 +11,87 @@ import UIKit
 class LanguageTableViewController: UITableViewController {
 
     
-    var apiKey = String()
+    var token = String()
     var language = String()
-    let languageArray: KeyValuePairs = [
-        "en": "languageEN".localized,
-        "ja": "languageJA".localized
-    ]
-    
-    let languageItem = [
-        "languageEN".localized,
-        "languageJA".localized
-    ]
+    var touristId = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 初期設定
-        apiKey = UserDefaults.standard.string(forKey: "apiKey")!
-        language = UserDefaults.standard.string(forKey: "language") ?? "en"
+        // Initial settigns
+        language = Language.getLanguage()
+        guard let savedToken = UserDefaults.standard.string(forKey: "token") else{
+            // if cannot get a token, move to login screen
+            print("Action: ViewDidLoad, Message: No token Error")
+            return
+        }
+        token = savedToken
         
-        // TabaleView
+        guard let savedId = UserDefaults.standard.string(forKey: "id") else {
+            print("Action: ViewDidLoad, Message: No touristId Error")
+            return
+        }
+        touristId = savedId
+        
+        setupTableView()
+    }
+    
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    func setupTableView() {
         tableView.register(UINib(nibName: "LanguageCell", bundle: nil), forCellReuseIdentifier: "LanguageCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 60
         tableView.bounces = false
         tableView.isScrollEnabled = false
-        
     }
-    
-    @IBAction func backAction(_ sender: Any) {
-        self.navigationController?.popToRootViewController(animated: true)
-        
-    }
-    
-
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return languageArray.count
+        return Constants.languageArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LanguageCell", for: indexPath) as! LanguageCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        let languageText = cell.languageText!
-        languageText.text = languageItem[indexPath.row]
-        let checkImage = cell.checkMark!
+        cell.languageText.text = Constants.languageArray[indexPath.row].value
         
-        let currentLanguageNum = languageArray.firstIndex(where: { $0.0 == language})
+        let checkImage = cell.checkMark!
+        let currentLanguageNum = Constants.languageArray.firstIndex(where: { $0.0 == language})
         checkImage.image = UIImage(systemName: "checkmark")
         if indexPath.row == currentLanguageNum{
             checkImage.tintColor = ThemeColor.main
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-            print("selected is called")
         }else{
             checkImage.tintColor = .lightGray
         }
-        
-        
-        
-        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Action: didSelectRowAt, Message: function is called")
         //let cell = tableView.dequeueReusableCell(withIdentifier: "LanguageCell", for: indexPath) as! LanguageCell
         let cell = tableView.cellForRow(at: indexPath) as! LanguageCell
         let checkImage = cell.checkMark!
         checkImage.tintColor = ThemeColor.main
-        // Userdefaultの変更
-        print("lang: \(languageArray[indexPath.row].key)")
-        language = languageArray[indexPath.row].key
-        UserDefaults.standard.set(language, forKey: "language")
-        // 更新の反映
+        // Set to UserDefaults
+        language = Constants.languageArray[indexPath.row].key
+        Language.setLanguageToDevise(language: language)
+        // Reset UI View
         resetViews()
-        //self.navigationController?.popViewController(animated: true)
-        
-        // サーバーに情報を送る
-        
+        // Sent to API server
+        Language.updateLanguage(touristId: self.touristId, token: self.token, language: self.language)
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        print("deselect")
+        print("Action: didDeselectRowAt, Message: function is called")
         let cell = tableView.cellForRow(at: indexPath) as! LanguageCell
-        
-        let checkImage = cell.checkMark!
-        checkImage.tintColor = .lightGray
-        
-        
+        cell.checkMark.tintColor = .lightGray
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -115,23 +102,11 @@ class LanguageTableViewController: UITableViewController {
         return 0
     }
 
-    // すべてのUIを更新する処理
-    func resetViews(){
+    // Reset all UI view to change language
+    func resetViews() {
         let storyBoard = UIStoryboard(name:"Main", bundle: nil)
         let tabBarController = storyBoard.instantiateViewController(withIdentifier: "homeTabBar")
-        UIApplication.shared.keyWindow?.rootViewController = tabBarController
-        UIApplication.shared.keyWindow?.makeKeyAndVisible()
-        
-//        let windows = UIApplication.shared.windows as [UIWindow]
-//        print("windows: \(windows)")
-//        for window in windows{
-//            print("window: \(window)")
-//            let subviews = window.subviews as [UIView]
-//            for v in subviews{
-//                print("subview:\(v)")
-//                v.removeFromSuperview()
-//                window.addSubview(v)
-//            }
-//        }
+        UIApplication.shared.windows.first{ $0.isKeyWindow }?.rootViewController = tabBarController
+        UIApplication.shared.windows.first{ $0.isKeyWindow }?.makeKeyAndVisible()
     }
 }

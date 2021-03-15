@@ -146,14 +146,11 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
         let url = Constants.baseURL + Constants.spotURL
         let urlWithParams = createURLWithParameters(url: url, params: params)
         let encodedUrl = urlWithParams.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        print("url: \(encodedUrl)")
+
         AF.request(encodedUrl, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
             switch response.result {
             case .success:
-                let json:JSON = JSON(response.data as Any)
-                print("json: \(json)")
                 self.pagedSpot = try? JSONDecoder().decode(PagedSpot.self, from: response.data!)
-                print("pagedSpot: \(self.pagedSpot)")
                 self.spots = []
                 if let num = self.pagedSpot?.data.count, num != 0 {
                     self.spots = self.pagedSpot!.data
@@ -164,7 +161,7 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
                     self.noSearchSubtitle.isHidden = false
                 }
             case .failure(let error):
-                print(error)
+                print("Action: fetchData, Message: Error. \(error)")
                 break
             }
             self.tableView.reloadData()
