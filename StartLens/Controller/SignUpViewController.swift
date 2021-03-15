@@ -68,7 +68,7 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
                 print("json: \(json)")
                 if json["id"].exists() {
                     print("signup")
-                    UserDefaults.standard.set(json["id"].int, forKey: "id")
+                    UserDefaults.standard.set(String(json["id"].int!), forKey: "id")
                     self.signInAction()
                 } else {
                     print("error: cannot parse json")
@@ -102,8 +102,6 @@ class SignUpViewController: UIViewController, UITextViewDelegate, UITextFieldDel
         let parameters = ["tourist":["email": authEmail, "password": authPassWord]]
         print("parameters: \(parameters)")
         AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
-            print(response)
-            
             switch response.result{
             case .success:
                 let json: JSON = JSON(response.data as Any)

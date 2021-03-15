@@ -21,6 +21,7 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
     
     var authEmail = String()
     var authPassWord = String()
+    var token = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,21 +60,18 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         let parameters = ["tourist":["email": authEmail, "password": authPassWord]]
         print("parameters: \(parameters)")
         
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
-            print(response)
-            
-            switch response.result{
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in            
+            switch response.result {
             case .success:
                 let json: JSON = JSON(response.data as Any)
                 print("json: \(json)")
                 if let token = json["token"].string {
-                    print("signin")
+                    print("Action: logInAction, Message: Login successfully")
+                    self.token = token
                     UserDefaults.standard.set(token, forKey: "token")
                     UserDefaults.standard.set(true, forKey: "isLogIn")
-//                    let homeVC = self.storyboard?.instantiateViewController(identifier: "home") as! HomeViewController
-//                    self.navigationController?.pushViewController(homeVC, animated: true)
-                    let tabBarVC = self.storyboard?.instantiateViewController(identifier: "homeTabBar") as! TabBarController
-                    self.navigationController?.pushViewController(tabBarVC, animated: true)
+                    // If succeeded to login, fetch touristId from API server
+                    self.getProfile()
                 } else {
                     print("error: cannot parse json")
                     DispatchQueue.main.async {
@@ -91,12 +89,38 @@ class LogInViewController: UIViewController, UITextViewDelegate, UITextFieldDele
         }
     }
     
-    func setupUI(){
+    func setupUI() {
         signInTitle.text = "logInButtonText".localized
         emailField.placeholder = "emailInputPlace".localized
         passWordField.placeholder = "passwordInputPlace".localized
         passWordMessage.text = "signupErrorMessage".localized
         signinButtonText.setTitle("logInButtonText".localized, for: .normal)
+    }
+    
+    func getProfile() {
+        let headers: HTTPHeaders = ["Authorization": self.token]
+        let url = Constants.baseURL + Constants.touristLoadURL
+        
+        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                let json: JSON = JSON(response.data as Any)
+                print("json: \(json)")
+                if json["id"].exists() {
+                    print("Action: getProfile, Message: Succeeded to load tourist profile")
+                    UserDefaults.standard.set(String(json["id"].int!), forKey: "id")
+                    // To be considered: Save tourist profile if necessary
+                    
+                    // Move to Home controller
+                    let tabBarVC = self.storyboard?.instantiateViewController(identifier: "homeTabBar") as! TabBarController
+                    self.navigationController?.pushViewController(tabBarVC, animated: true)
+                } else {
+                    print("Action: getProfile, Message: Error. cannot parse json")
+                }
+            case .failure(let error):
+                print("Action: getProfile, Message: Error. \(error)")
+            }
+        }
     }
     
     // Close keyboard when tapped on the areas which is not keyboard

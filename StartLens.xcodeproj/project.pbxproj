@@ -47,7 +47,6 @@
 		E9BD888424A76EBB0023DF27 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD888324A76EBA0023DF27 /* SettingsTableViewController.swift */; };
 		E9CB139624A79DBD003E249C /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB139524A79DBD003E249C /* PrivacyPolicyViewController.swift */; };
 		E9CB139824A7A29D003E249C /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB139724A7A29D003E249C /* TermsViewController.swift */; };
-		E9CB139A24A7AD3F003E249C /* ContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB139924A7AD3F003E249C /* ContactViewController.swift */; };
 		E9CB139C24A85034003E249C /* LanguageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB139B24A85034003E249C /* LanguageTableViewController.swift */; };
 		E9CB139F24A85807003E249C /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB139D24A85807003E249C /* LanguageCell.swift */; };
 		E9CB13A024A85807003E249C /* LanguageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9CB139E24A85807003E249C /* LanguageCell.xib */; };
@@ -113,7 +112,6 @@
 		E9BD888324A76EBA0023DF27 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		E9CB139524A79DBD003E249C /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
 		E9CB139724A7A29D003E249C /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
-		E9CB139924A7AD3F003E249C /* ContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewController.swift; sourceTree = "<group>"; };
 		E9CB139B24A85034003E249C /* LanguageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTableViewController.swift; sourceTree = "<group>"; };
 		E9CB139D24A85807003E249C /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		E9CB139E24A85807003E249C /* LanguageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageCell.xib; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 				E9BD888324A76EBA0023DF27 /* SettingsTableViewController.swift */,
 				E9CB139524A79DBD003E249C /* PrivacyPolicyViewController.swift */,
 				E9CB139724A7A29D003E249C /* TermsViewController.swift */,
-				E9CB139924A7AD3F003E249C /* ContactViewController.swift */,
 				E9CB139B24A85034003E249C /* LanguageTableViewController.swift */,
 				E9CB13A124A978E0003E249C /* CountryTableViewController.swift */,
 			);
@@ -449,7 +446,6 @@
 				E9544A5924700A76000CB1D4 /* PasswordResetViewController.swift in Sources */,
 				E9544A51246A7557000CB1D4 /* SignUpCompleteViewController.swift in Sources */,
 				E9BD888224A3AA900023DF27 /* TabBarController.swift in Sources */,
-				E9CB139A24A7AD3F003E249C /* ContactViewController.swift in Sources */,
 				E979375925F61E1600FCCD89 /* Tourist.swift in Sources */,
 				E9ABC4252495D6A400A9FF38 /* ReviewPostViewController.swift in Sources */,
 				E9544A5B24701586000CB1D4 /* ResetAuthViewController.swift in Sources */,

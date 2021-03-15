@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 struct Language {
     var locale: [String]
@@ -60,6 +62,36 @@ struct Language {
         }
         print("Action: getLanguage, Message: language is default en")
         return "en"
+    }
+    
+    static func setLanguageToDevise(language: String) {
+        UserDefaults.standard.set(language, forKey: "language")
+        print("Action: setLanguageToDevise, Message: language is set to UserDefaults")
+    }
+    
+    static func updateLanguage(touristId: String, token: String, language: String) {
+        print("Action: updateLanguage, Message: language in Server is to be updated")
+        let headers: HTTPHeaders = ["Content-Type": "application/json", "Authorization": token]
+        let url = Constants.baseURL + Constants.touristsURL + "/" + touristId
+        let parameters = ["tourist":["lang": language]]
+        
+        AF.request(url, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            switch response.result {
+            case .success:
+                let json: JSON = JSON(response.data as Any)
+                print("Action: updateLanguage, json: \(json)")
+
+                if json["id"].int == nil {
+                    // Failed to update language
+                    print("Action: updateLanguage, Message: Failed to update language")
+                } else {
+                    // Successfully update language
+                    print("Action: updateLanguage, Message: Successed to update language")
+                }
+            case .failure(let error):
+                print("Action: updateLanguage, Message: Error occured. \(error)")
+            }
+        }
     }
     
     static func getCountry() -> String {
