@@ -73,7 +73,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         do {
             print("Action: viewDidAppear, Message: Load tensorflow model")
             // To be changed depends on learning
-            let modelPath = Bundle.main.path(forResource: "embedding_20200117_123222", ofType: "tflite")!
+            let modelPath = Bundle.main.path(forResource: "embedding_20210210_051144", ofType: "tflite")!
             var options = Interpreter.Options()
             options.threadCount = THREAD_COUNT
             // Generate interpreter

@@ -152,97 +152,164 @@
 // PrivacyPolicyVC
 "privacyPolicyTitle" = "Privacy Policy";
 "privacyPolicyContent" = "
-LINE株式会社は、利用者のプライバシー保護を重要なものと考えています。この度、当社における利用者情報の取扱いの明確化を図ること、及び利用者の皆様によりよいサービスを提供していくことを目的として、プライバシーポリシーを変更いたします。主要な変更点は以下のとおりです。
+Startlens Co., Ltd. (hereinafter referred to as \"our company\") handles the personal information of users in the media service for tourism provided by our company (hereinafter referred to as \"this service\") as follows. We will establish a privacy policy (hereinafter referred to as \"this policy\").
 
-・2018年1月15日より「サービス向上のための情報利用」にご同意いただいたお客様に限り新たな情報の利用を開始します。対象情報の概要は以下のとおりです（詳細はこちら）。
-　•公式アカウント等に投稿、送信したテキスト、画像、動画等（コンテンツ）
-　•コンテンツの送信相手、日時、データ形式、アクセスURL情報等
-　なお、これらの情報の利用は情報利用にご同意されたお客様に限られます。ご同意はいつでもLINEの「設定>プライバシー管理」から変更可能です。これにあわせて、当社においてどのような情報が取得され、どのように利用されるのかをより明確にするため、取得される情報及び利用目的を再整理いたしました。
+Article 1 (Personal information)
+\"Personal information\" refers to \"personal information\" as defined in the Personal Information Protection Law, and is information about living individuals, such as name, date of birth, address, telephone number, contact information, etc. included in the information. Information that can identify a specific individual by the description etc. and information that can identify a specific individual from the relevant information alone such as appearance, fingerprint, voiceprint data, and insurer number of health insurance certificate (personal identification information).
 
-・公式アカウント運営者等の第三者に対して利用者情報の一部を提供することがあることを記載いたしました。これにより例えばLINEで公式アカウントを友だちにする際の許諾画面が省略されることになります。提供される情報は内部識別子、言語設定などの機器情報等、必要最低限の情報に限られます、これら以外の情報の提供にあたっては従来どおりお客様の意思確認を行います。
-・LINEグループ会社に対してお客様情報を共同利用することがある旨記載いたしました。これは例えばLINEグループ会社間でサービス上の不正を早期に防止することや、グループ会社が提供するサービス（LINE Payなどが該当します）とアカウント情報を連携したお客様に重複した個人情報の入力を省略することなどが目的です。共同利用は必要最低限かつ当社の責任範囲内においてのみ行われます。
-・広告に関する記載を追加いたしました。当社は各種サービスを原則無償で提供しており、サービス内でお客様の興味関心に即した広告を配信することで収益を得て運営しております。これら広告の配信においては当然ながらお客様のプライバシーを重視しており、その仕組や配信の停止/再開方法等について記載いたしました。
+Article 2 (How to collect personal information)
+We may ask for personal information such as name, date of birth, telephone number, and e-mail address when the user registers for use.
 
-また、本プライバシーポリシー改定は日本国内のお客様のみが対象であり、海外でご利用のお客様は他言語のプライバシーポリシーが適用されます。
+Article 3 (Purpose of collecting and using personal information)
+The purposes for which we collect and use personal information are as follows.
 
-＝＝
+1. For the provision and operation of our services
+2. To answer inquiries from users (including verification of identity)
+3. To send e-mails about new functions, updates, etc. of the service being used by the user and information on other services provided by the Company.
+4. For maintenance, important notices, etc. to contact you as needed
+5. To identify users who violate the terms of use or who intend to use the service for fraudulent or unreasonable purposes, and refuse to use the service.
+6. To allow users to view, change, delete, and view usage status of their own registration information.
+7. To charge the user a usage fee for a paid service
+8. Purposes incidental to the above purposes of use
 
-私たちLINE株式会社（以下、「当社」といいます）は、当社が提供するLINE サービスにおける利用者に関する情報（サービスをご利用いただくお客様に関する全ての情報を指し、以下、「利用者情報」といいます）を以下の通り取り扱います。
+Article 4 (Change of purpose of use)
+The Company shall change the purpose of use of personal information only when it is reasonably recognized that the purpose of use is related to that before the change.
+If the purpose of use is changed, the changed purpose shall be notified to the user or announced on this website by the method prescribed by the Company.
 
-適用範囲
-本プライバシーポリシーはLINEに関する全てのサービス（以下、「本サービス」といいます）に適用されます。サービス別のプライバシーポリシーまたは利用規約等（以下、「個別規約」といいます）において個別に利用者情報の取り扱いを規定する場合は、個別規約も適用されます。本プライバシーポリシーと個別規約において矛盾が発生する場合は個別規約が優先されます。
-なお、「他社モジュールの設置について」等に記載される他事業者等による利用者情報の収集は、本プライバシーポリシーの適用範囲ではございません。また、本プライバシーポリシーは日本で本サービスをご利用のお客様に適用されます。日本以外でご利用のお客様はこちらをご覧ください。
+Article 5 (Provision of personal information to a third party)
+1. We will not provide personal information to a third party without the prior consent of the user, except in the following cases. However, this does not apply when permitted by the Personal Information Protection Law and other laws and regulations.
+    1. When it is necessary to protect the life, body or property of a person and it is difficult to obtain the consent of the person.
+    2. When it is particularly necessary to improve public health or promote the sound development of children, and it is difficult to obtain the consent of the person.
+    3. When it is necessary for a national institution or a local public body or a person entrusted with it to cooperate in carrying out the affairs stipulated by laws and regulations, and with the consent of the person himself / herself, in carrying out the affairs. When there is a risk of hindrance
+    4. When the following matters have been announced or announced in advance and the Company has notified the Personal Information Protection Commission.
+        1. The purpose of use includes provision to a third party
+        2. Items of data provided to third parties
+        3. Means or method of provision to a third party
+        4. Stop providing personal information to third parties at the request of the person
+        5. How to accept the request of the person
 
-取得する利用者情報及び利用方法
-当社は本サービスにおいて次のように利用者情報を取得及び利用いたします。
+2. Notwithstanding the provisions of the preceding paragraph, in the following cases, the information is provided to a third party.
+    1. When we outsource all or part of the handling of personal information to the extent necessary to achieve the purpose of use
+    2. When personal information is provided due to business succession due to merger or other reasons
+    3. When personal information is shared with a specific person, the fact, the items of personal information used jointly, the range of people who jointly use it, and the use of those who use it. When the person is notified in advance of the purpose and the name or name of the person who is responsible for the management of the personal information, or the person is placed in a state where the person can easily know.
 
-ご提供いただく情報
-お客様が本サービスをご利用いただくに当たり、以下情報のご提供をお願いする場合があります。ご提供はお客様の任意ですが、ご提供いただけない場合、本サービスまたは本サービスの一部をご利用いただけない場合がございます。
+Article 6 (Disclosure of personal information)
+1. When requested by the person to disclose personal information, we will disclose it to the person without delay. However, if the disclosure falls under any of the following, we may not disclose all or part of it, and if we decide not to disclose it, we will notify you to that effect without delay. A fee of 1,000 yen will be charged for each disclosure of personal information.
+    1. When there is a risk of harming the life, body, property or other rights and interests of the person or a third party
+    2. When there is a risk of significant hindrance to the proper implementation of our business
+    3. When it violates other laws and regulations
+2. Notwithstanding the provisions of the preceding paragraph, in principle, we will not disclose information other than personal information such as history information and characteristic information.
 
-•アカウント登録情報
-お客様が本サービスをご利用開始いただく際、電話番号、メールアドレス、FacebookID等をご登録いただく場合がございます。これらの情報は利用者による本サービスへのログイン、アカウントの引継ぎ等、本サービス上における利用者識別等に利用いたします。
+Article 7 (Correction and deletion of personal information)
+1. If the user's personal information held by the Company is incorrect, the user shall correct, add or delete the personal information to the Company according to the procedure established by the Company (hereinafter referred to as \"correction, etc.\"). You can request.
+2. If we receive a request from the user and determine that it is necessary to respond to the request, we shall correct the personal information without delay.
+3. The Company will notify the user without delay when it makes corrections, etc. based on the provisions of the preceding paragraph, or when it decides not to make corrections, etc.
 
-•アドレス帳
-お客様が友だち自動追加機能をご利用の場合、端末のアドレス帳を取得する場合がございます。アドレス帳からは電話番号と、フィーチャーフォンをご利用の場合に限り携帯電話用メールアドレスを取得いたします。アドレス帳に登録されている氏名、写真、住所、携帯電話用以外のメールアドレス等の情報は取得いたしません。これらの情報は知り合いまたは知り合いの可能性がある他の利用者を探して友だちとして登録または推薦するため、及び不正利用防止のためにのみ利用いたします。
+Article 8 (suspension of use of personal information, etc.)
+1. The Company suspends or deletes the use of personal information from the person because the personal information is handled beyond the scope of the purpose of use or because it was obtained by fraudulent means (hereinafter, If you are asked to \"suspend use, etc.\"), we will carry out the necessary investigation without delay.
+2. If we determine that it is necessary to respond to the request based on the survey results in the preceding paragraph, we will suspend the use of the personal information without delay.
+3. The Company will notify the user without delay when it suspends use, etc. based on the provisions of the preceding paragraph, or when it decides not to suspend use, etc.
+4. Notwithstanding the preceding two paragraphs, if there is a large amount of cost for suspension of use, etc., or if it is difficult to suspend the use, etc., it is necessary to take alternative measures to protect the rights and interests of the user. If so, this alternative shall be taken.
 
-•プロフィール情報
-本サービスの円滑利用やお客様間で円滑にコミュニケーションを行っていただく等の目的で、プロフィール情報（本サービス上での表示名、アイコン画像、ステータスメッセージ、氏名、生年月日等）をご登録いただく場合がございます。生年月日など一部の非公開設定が可能な項目を除き、プロフィール情報は本サービス上や本サービスをご利用される他のお客様（公式アカウントを運用する企業等の第三者を含みます）も閲覧することができます。
+Article 9 (Change of privacy policy)
+1. The contents of this policy may be changed without notifying the user, except for laws and regulations and other matters specified otherwise in this policy.
+2. Unless otherwise specified by the Company, the changed privacy policy shall take effect from the time it is posted on this website.
 
- •キャンペーン等で取得する情報
-アンケートやキャンペーン及びそれらに関わる抽選及び賞品発送、ご購入商品の発送等の目的で、氏名、住所、電話番号、メールアドレス、性別、生年月日等を取得する場合がございます。
+Article 10 (Inquiry window)
+For inquiries regarding this policy, please contact the following.
 
-•お問い合わせ
-電話番号、メールアドレス、端末機種名、OS情報等を取得しております。これらの情報はお問い合わせに対する調査、返答、及びご本人確認等のために利用いたします。
+Company name: Startlens Co., Ltd.
+Email address: info.startlens@gmail.com
+";
 
-•お支払い情報
-商品購入や有料サービス利用時等、お客様にご利用代金をお支払いいただくためにクレジットカード情報等の入力を求める場合がございます。ただし、決済は決済代行会社が行うため、当社はクレジットカード情報を保有いたしません。";
 // TermsVC
 "termsTitle" = "Terms of service";
 "termsContent" = "
-LINE株式会社は、利用者のプライバシー保護を重要なものと考えています。この度、当社における利用者情報の取扱いの明確化を図ること、及び利用者の皆様によりよいサービスを提供していくことを目的として、プライバシーポリシーを変更いたします。主要な変更点は以下のとおりです。
+These Terms of Use (hereinafter referred to as \"Terms\") are media services for tourism provided by Startlens Co., Ltd. (hereinafter referred to as \"Company\") (hereinafter referred to as \"Service\"). ) Establishes the terms of use. Registered users (hereinafter referred to as \"users\") are required to use this service in accordance with this agreement.
 
-・2018年1月15日より「サービス向上のための情報利用」にご同意いただいたお客様に限り新たな情報の利用を開始します。対象情報の概要は以下のとおりです（詳細はこちら）。
-　•公式アカウント等に投稿、送信したテキスト、画像、動画等（コンテンツ）
-　•コンテンツの送信相手、日時、データ形式、アクセスURL情報等
-　なお、これらの情報の利用は情報利用にご同意されたお客様に限られます。ご同意はいつでもLINEの「設定>プライバシー管理」から変更可能です。これにあわせて、当社においてどのような情報が取得され、どのように利用されるのかをより明確にするため、取得される情報及び利用目的を再整理いたしました。
+Article 1 (Applicable)
+1. This agreement shall apply to all relationships related to the use of this service between the user and our company.
+2. Regarding this service, in addition to this agreement, we may make various provisions (hereinafter referred to as \"individual provisions\") such as rules for use. These individual provisions shall form part of this agreement regardless of their name.
+3. If the provisions of this agreement contradict the provisions of the individual provisions of the preceding article, the provisions of the individual provisions shall prevail unless otherwise specified in the individual provisions.
 
-・公式アカウント運営者等の第三者に対して利用者情報の一部を提供することがあることを記載いたしました。これにより例えばLINEで公式アカウントを友だちにする際の許諾画面が省略されることになります。提供される情報は内部識別子、言語設定などの機器情報等、必要最低限の情報に限られます、これら以外の情報の提供にあたっては従来どおりお客様の意思確認を行います。
-・LINEグループ会社に対してお客様情報を共同利用することがある旨記載いたしました。これは例えばLINEグループ会社間でサービス上の不正を早期に防止することや、グループ会社が提供するサービス（LINE Payなどが該当します）とアカウント情報を連携したお客様に重複した個人情報の入力を省略することなどが目的です。共同利用は必要最低限かつ当社の責任範囲内においてのみ行われます。
-・広告に関する記載を追加いたしました。当社は各種サービスを原則無償で提供しており、サービス内でお客様の興味関心に即した広告を配信することで収益を得て運営しております。これら広告の配信においては当然ながらお客様のプライバシーを重視しており、その仕組や配信の停止/再開方法等について記載いたしました。
+Article 2 (Registration for use)
+1. In this service, the registration applicant shall agree to this agreement, apply for usage registration by the method specified by the Company, and the usage registration shall be completed when the Company approves this.
+2. The Company may not approve the application for use registration if it judges that the applicant for use registration has the following reasons, and shall not be obliged to disclose the reason.
+    1. When false matters are reported when applying for usage registration
+    2. When the application is from a person who has violated this agreement
+    3. In addition, when we judge that the usage registration is not appropriate
 
-また、本プライバシーポリシー改定は日本国内のお客様のみが対象であり、海外でご利用のお客様は他言語のプライバシーポリシーが適用されます。
+Article 3 (Management of user ID and password)
+1. The user shall manage the user ID and password of this service appropriately at his / her own risk.
+2. The user may not transfer or lend the user ID and password to a third party or share it with a third party under any circumstances. If the combination of user ID and password matches the registered information and you are logged in, we will consider it to be used by the user who has registered that user ID.
+3. The Company shall not be liable for any damages caused by the use of the user ID and password by a third party, unless the Company has intentional or gross negligence.
 
-＝＝
+Article 4 (Prohibited matters)
+The user must not do the following when using this service.
 
-私たちLINE株式会社（以下、「当社」といいます）は、当社が提供するLINE サービスにおける利用者に関する情報（サービスをご利用いただくお客様に関する全ての情報を指し、以下、「利用者情報」といいます）を以下の通り取り扱います。
+1. Acts that violate laws and regulations or public order and morals
+2. Acts related to criminal acts
+3. Acts that infringe copyrights, trademark rights and other intellectual property rights included in this service, such as the contents of this service
+4. Acts that destroy or interfere with the functions of our company, other users, or other third party servers or networks.
+5. The act of using the information obtained by this service commercially
+6. Actions that may interfere with the operation of our services
+7. Unauthorized access or attempting this
+8. Acts of collecting or accumulating personal information about other users
+9. Acts of using this service for improper purposes
+10. Acts that cause disadvantage, damage, or discomfort to other users of this service or other third parties
+11. Impersonating another user
+12. Advertising, advertising, solicitation, or business activities on this service that we do not permit
+13. Acts aimed at meeting an unfamiliar opposite sex
+14. Acts that directly or indirectly benefit antisocial forces in connection with our services
+15. Other acts that the Company deems inappropriate
 
-適用範囲
-本プライバシーポリシーはLINEに関する全てのサービス（以下、「本サービス」といいます）に適用されます。サービス別のプライバシーポリシーまたは利用規約等（以下、「個別規約」といいます）において個別に利用者情報の取り扱いを規定する場合は、個別規約も適用されます。本プライバシーポリシーと個別規約において矛盾が発生する場合は個別規約が優先されます。
-なお、「他社モジュールの設置について」等に記載される他事業者等による利用者情報の収集は、本プライバシーポリシーの適用範囲ではございません。また、本プライバシーポリシーは日本で本サービスをご利用のお客様に適用されます。日本以外でご利用のお客様はこちらをご覧ください。
 
-取得する利用者情報及び利用方法
-当社は本サービスにおいて次のように利用者情報を取得及び利用いたします。
+Article 5 (suspension of provision of this service, etc.)
+1. The Company shall be able to suspend or suspend the provision of all or part of this service without notifying the user in advance if it is determined that there is any of the following reasons.
+    1. When performing maintenance, inspection or updating of the computer system related to this service
+    2. When it becomes difficult to provide this service due to force majeure such as an earthquake, lightning strike, fire, power outage or natural disaster.
+    3. When the computer or communication line stops due to an accident
+    4. In addition, when we judge that it is difficult to provide this service
+    5. The Company shall not be liable for any disadvantage or damage suffered by the user or a third party due to the suspension or interruption of the provision of this service.
 
-ご提供いただく情報
-お客様が本サービスをご利用いただくに当たり、以下情報のご提供をお願いする場合があります。ご提供はお客様の任意ですが、ご提供いただけない場合、本サービスまたは本サービスの一部をご利用いただけない場合がございます。
+Article 6 (Usage restrictions and deregistration)
+1. If the user falls under any of the following, we will restrict the use of all or part of this service to the user or cancel the registration as a user without prior notice. Suppose you can.
+    1. If you violate any provision of this agreement
+    2. When it turns out that there is a false fact in the registered items
+    3. When there is a default of payment obligations such as fees
+    4. If there is no response to the contact from us for a certain period of time
+    5. When this service has not been used for a certain period of time since the last use
+    6. In addition, when we judge that the use of this service is not appropriate
+2. The Company shall not be liable for any damage caused to the user due to the actions taken by the Company based on this article.
 
-•アカウント登録情報
-お客様が本サービスをご利用開始いただく際、電話番号、メールアドレス、FacebookID等をご登録いただく場合がございます。これらの情報は利用者による本サービスへのログイン、アカウントの引継ぎ等、本サービス上における利用者識別等に利用いたします。
+Article 7 (withdrawal)
+The user shall be able to withdraw from this service by the withdrawal procedure specified by the Company.
 
-•アドレス帳
-お客様が友だち自動追加機能をご利用の場合、端末のアドレス帳を取得する場合がございます。アドレス帳からは電話番号と、フィーチャーフォンをご利用の場合に限り携帯電話用メールアドレスを取得いたします。アドレス帳に登録されている氏名、写真、住所、携帯電話用以外のメールアドレス等の情報は取得いたしません。これらの情報は知り合いまたは知り合いの可能性がある他の利用者を探して友だちとして登録または推薦するため、及び不正利用防止のためにのみ利用いたします。
+Article 8 (Denial of Warranty and Disclaimer)
+1. Our company has de facto or legal defects in this service (safety, reliability, accuracy, completeness, effectiveness, suitability for a specific purpose, security defects, errors and bugs, infringement of rights, etc. We do not guarantee that there is no such thing, either explicitly or implicitly.
+2. Our company does not take any responsibility for any damage caused to the user due to this service. However, if the contract between the Company and the user regarding this service (including this agreement) is a consumer contract stipulated in the Consumer Contract Law, this disclaimer does not apply.
+3. Even in the case specified in the proviso of the preceding paragraph, the Company shall suffer damages caused by special circumstances among the damages caused to the user due to default or illegal acts due to the Company's negligence (excluding gross negligence) (the Company or We do not take any responsibility for (including the case where the user foresaw or could foresee the occurrence of damage). In addition, compensation for damages caused to the user due to default or illegal acts due to our negligence (excluding gross negligence) shall be limited to the amount of usage fee received from the user in the month in which the damage occurred.
+4. The Company shall not be liable for any transactions, communications or disputes that occur between the user and other users or third parties regarding this service.
 
-•プロフィール情報
-本サービスの円滑利用やお客様間で円滑にコミュニケーションを行っていただく等の目的で、プロフィール情報（本サービス上での表示名、アイコン画像、ステータスメッセージ、氏名、生年月日等）をご登録いただく場合がございます。生年月日など一部の非公開設定が可能な項目を除き、プロフィール情報は本サービス上や本サービスをご利用される他のお客様（公式アカウントを運用する企業等の第三者を含みます）も閲覧することができます。
+Article 9 (Changes in service content, etc.)
+The Company shall be able to change the contents of this service or discontinue the provision of this service without notifying the user, and shall not be liable for any damage caused to the user by this.
 
- •キャンペーン等で取得する情報
-アンケートやキャンペーン及びそれらに関わる抽選及び賞品発送、ご購入商品の発送等の目的で、氏名、住所、電話番号、メールアドレス、性別、生年月日等を取得する場合がございます。
+Article 10 (Change of Terms of Use)
+The Company shall be able to change this agreement at any time without notifying the user if it deems it necessary. If you start using this service after changing this agreement, the user will be deemed to have agreed to the changed agreement.
 
-•お問い合わせ
-電話番号、メールアドレス、端末機種名、OS情報等を取得しております。これらの情報はお問い合わせに対する調査、返答、及びご本人確認等のために利用いたします。
+Article 11 (Handling of personal information)
+We will handle personal information acquired by using this service appropriately in accordance with our \"Privacy Policy\".
 
-•お支払い情報
-商品購入や有料サービス利用時等、お客様にご利用代金をお支払いいただくためにクレジットカード情報等の入力を求める場合がございます。ただし、決済は決済代行会社が行うため、当社はクレジットカード情報を保有いたしません。";
+Article 12 (Notification or Contact)
+Notification or communication between the user and the Company shall be made by the method specified by the Company. The Company considers that the currently registered contact is valid and notifies or contacts the contact unless the user notifies the change according to the method separately determined by the user, and these are notified or contacted by the user at the time of transmission. It is considered that you have reached.
+
+Article 13 (Prohibition of transfer of rights and obligations)
+The user may not assign the status under the usage contract or the rights or obligations based on this agreement to a third party or provide it as collateral without the prior written consent of the Company.
+
+Article 14 (Governing law / jurisdiction)
+1. In interpreting this agreement, Japanese law shall be the governing law.
+2. If a dispute arises regarding this service, the court having jurisdiction over the location of our head office shall be the exclusive jurisdiction.
+";
 
 // LanguageVC
 "languageEN" = "English";
