@@ -39,6 +39,14 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
     var parameters = [String: String]()
     let refresh = UIRefreshControl()
     
+    let majorCategoryMap = [
+        0: "unselected".localized, 11: "mountains".localized, 12: "plateau".localized, 13: "lake".localized, 14: "river".localized, 15: "waterfall".localized,
+        16: "coast".localized, 17: "rock".localized, 18: "animal".localized, 19: "plant".localized, 20: "naturalPhenomenon".localized,
+        21: "historicSite".localized, 22: "religiousBuilding".localized, 23: "castle".localized, 24: "village".localized, 25: "localLandscape".localized,
+        26: "park".localized, 27: "building".localized, 28: "annualEvent".localized, 29: "zoo".localized, 30: "museum".localized,
+        31: "themePark".localized, 32: "hotSpring".localized, 33: "food".localized, 34: "event".localized
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -122,9 +130,6 @@ class HomeViewController: UIViewController, UIScrollViewDelegate {
             let locationVC = segue.destination as! LocationViewController
             locationVC.delegate = self
             break
-//        case "spotdetail":
-//            let spotDetailVC = segue.destination as! SpotDetailViewController
-//            spotDetailVC.spotId = spotId
         default:
             break
         }
@@ -245,11 +250,11 @@ extension HomeViewController: UITableViewDataSource{
         height.constant = CGFloat(Double(self.spots.count) * 150 + 43)
         
         cell.spotId = self.spots[indexPath.row].id
-        // TODO: 言語ごとに切り替える
-        cell.spotTitle.text = self.spots[indexPath.row].multiProfiles[0].username
+        let multiProfile: MultiProfile = self.spots[indexPath.row].selectMultiProfileByLang(lang: self.language)
+        cell.spotTitle.text = multiProfile.username
         cell.spotTitle?.adjustsFontSizeToFitWidth = true
-        cell.spotCategory.text = Constants.majorCategoryMap[self.spots[indexPath.row].profile.majorCategory]
-        cell.spotAddress.text = self.spots[indexPath.row].multiProfiles[0].addressPrefecture + self.spots[indexPath.row].multiProfiles[0].addressCity + self.spots[indexPath.row].multiProfiles[0].addressStreet
+        cell.spotCategory.text = self.majorCategoryMap[self.spots[indexPath.row].profile.majorCategory]
+        cell.spotAddress.text = multiProfile.addressPrefecture + multiProfile.addressCity + multiProfile.addressStreet
         cell.spotAddress?.adjustsFontSizeToFitWidth = true
         // Cosmos
         cell.ratingStar.settings.updateOnTouch = false

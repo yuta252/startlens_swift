@@ -3391,7 +3391,7 @@
                                                 <rect key="frame" x="20" y="53" width="374" height="658"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="658" id="1vg-Ep-NKd"/>
+                                                    <constraint firstAttribute="height" constant="658" id="kNt-44-wdf"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="U5Y-fx-z9H">
                                                     <size key="itemSize" width="176" height="173"/>
@@ -3421,6 +3421,7 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="726" id="2bf-TJ-wjK"/>
                                             <constraint firstItem="fmw-hG-Ylp" firstAttribute="top" secondItem="cj4-h9-ONw" secondAttribute="bottom" constant="10" id="FOh-0l-yc1"/>
                                             <constraint firstAttribute="trailing" secondItem="cj4-h9-ONw" secondAttribute="trailing" constant="20" id="LpJ-kd-TNO"/>
                                             <constraint firstItem="cj4-h9-ONw" firstAttribute="leading" secondItem="hCd-SO-xgB" secondAttribute="leading" constant="20" id="QuO-9O-N2n"/>
@@ -3461,7 +3462,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="collectionIViewHeight" destination="1vg-Ep-NKd" id="TKs-U2-zrh"/>
+                        <outlet property="collectionHeight" destination="kNt-44-wdf" id="wGn-vd-95B"/>
+                        <outlet property="contentHeight" destination="2bf-TJ-wjK" id="EWA-L0-qS5"/>
+                        <outlet property="contentView" destination="hCd-SO-xgB" id="fnt-uK-wwA"/>
                         <outlet property="noExhibit" destination="fmw-hG-Ylp" id="yzV-sI-E4u"/>
                         <outlet property="recommendCollectionView" destination="3Zu-Qc-Ekz" id="iZe-81-QOv"/>
                         <outlet property="recommendTitleText" destination="cj4-h9-ONw" id="VWM-XU-QLe"/>
@@ -3941,8 +3944,8 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="8IO-YJ-jwc"/>
-        <segue reference="NQc-ue-ym3"/>
+        <segue reference="nun-hf-OFu"/>
+        <segue reference="Num-bA-bf9"/>
         <segue reference="DWf-SA-Qqr"/>
     </inferredMetricsTieBreakers>
     <resources>

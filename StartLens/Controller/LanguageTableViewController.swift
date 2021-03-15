@@ -10,10 +10,14 @@ import UIKit
 
 class LanguageTableViewController: UITableViewController {
 
-    
     var token = String()
     var language = String()
     var touristId = String()
+    
+    let languageArray: KeyValuePairs = [
+        "en": "languageEN".localized,
+        "ja": "languageJA".localized
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,16 +57,16 @@ class LanguageTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Constants.languageArray.count
+        return self.languageArray.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LanguageCell", for: indexPath) as! LanguageCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.languageText.text = Constants.languageArray[indexPath.row].value
+        cell.languageText.text = self.languageArray[indexPath.row].value
         
         let checkImage = cell.checkMark!
-        let currentLanguageNum = Constants.languageArray.firstIndex(where: { $0.0 == language})
+        let currentLanguageNum = self.languageArray.firstIndex(where: { $0.0 == language})
         checkImage.image = UIImage(systemName: "checkmark")
         if indexPath.row == currentLanguageNum{
             checkImage.tintColor = ThemeColor.main
@@ -80,7 +84,7 @@ class LanguageTableViewController: UITableViewController {
         let checkImage = cell.checkMark!
         checkImage.tintColor = ThemeColor.main
         // Set to UserDefaults
-        language = Constants.languageArray[indexPath.row].key
+        language = self.languageArray[indexPath.row].key
         Language.setLanguageToDevise(language: language)
         // Reset UI View
         resetViews()

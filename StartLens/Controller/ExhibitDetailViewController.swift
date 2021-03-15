@@ -21,11 +21,13 @@ class ExhibitDetailViewController: UIViewController {
     @IBOutlet weak var contentHeight: NSLayoutConstraint!
     
     var exhibit: Exhibit?
+    var language = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Initial settings
+        language = Language.getLanguage()
         
         // UI settings
         setupUI()
@@ -35,7 +37,7 @@ class ExhibitDetailViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    func setupUI(){
+    func setupUI() {
         contentsView.layer.cornerRadius = 10.0
         contentsView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         let exhibitImageURL = URL(string: exhibit!.pictures[0].url)
@@ -44,7 +46,9 @@ class ExhibitDetailViewController: UIViewController {
                 self.exhibitImageView.setNeedsLayout()
              }
          })
-        exhibitNameView.text = exhibit!.multiExhibits[0].name
-        exhibitIntroView.text = exhibit!.multiExhibits[0].description
+        
+        let multiExhibit = exhibit!.selectMultiExhibitByLang(lang: language)
+        exhibitNameView.text = multiExhibit.name
+        exhibitIntroView.text = multiExhibit.description
     }
 }

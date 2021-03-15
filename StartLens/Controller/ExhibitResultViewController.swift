@@ -11,10 +11,10 @@ import SDWebImage
 
 class ExhibitResultViewController: UIViewController {
 
-    // var spotId: Int?
     var exhibits = [Exhibit]()
     var apiKey = String()
     var exhibit: Exhibit?
+    var language = String()
     
     @IBOutlet weak var predictionTitle: UILabel!
     @IBOutlet weak var exhibitNum: UILabel!
@@ -25,7 +25,7 @@ class ExhibitResultViewController: UIViewController {
         super.viewDidLoad()
 
         // Initial settings
-        
+        language = Language.getLanguage()
         // UI settings
         setupUI()
         setupCollectionView()
@@ -73,8 +73,8 @@ extension ExhibitResultViewController:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("Action: cellForItemAt, exhibit: \(exhibits[indexPath.row])")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecommendCell", for: indexPath) as! RecommendCell
-        // TODO: 多言語対応
-        cell.exhibitName.text = exhibits[indexPath.row].multiExhibits[0].name
+        let multiExhibit = exhibits[indexPath.row].selectMultiExhibitByLang(lang: language)
+        cell.exhibitName.text = multiExhibit.name
         let exhibitImageURL = URL(string: self.exhibits[indexPath.row].pictures[0].url)
         cell.exhibitImageView?.sd_setImage(with: exhibitImageURL, completed: { (image, error, _, _) in
             if error == nil{
@@ -85,7 +85,6 @@ extension ExhibitResultViewController:UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //exhibitId = exhibitItem[indexPath.row].exhibitId
         self.exhibit = exhibits[indexPath.row]
         performSegue(withIdentifier: "exhibitDetail", sender: nil)
     }

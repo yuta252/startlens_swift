@@ -281,18 +281,20 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 let isError: Bool? = json["error"].bool
 
                 if let isError = isError, !isError {
-                    // let result: [Int] = json["result"].array as! [Int]
-                    print("Action: fetchData, result:")
-                    // TODO: 結果によりExhibitIdで絞る
+                    // Succeeded to fetch inferred results
+                    var results = [Int]()
+                    if let items = json["result"].array {
+                        for item in items {
+                            results.append(item.int!)
+                        }
+                    }
+                    print("Action: fetchData, result: \(results)")
+                    // Filter Exhibits
+                    self.inferredExhibits = self.exhibits.filter({ exhibit in results.contains(exhibit.id) })
                     self.performSegue(withIdentifier: "exhibitResult", sender: nil)
                 } else {
                     // TODO: move to isError is true
                     print("Action: fetchData, Message: Error occured")
-                    let result: [Int] = [21, 17]
-                    // Filter Exhibits
-                    print("Action: fetchData, exhibit: \(self.exhibits)")
-                    self.inferredExhibits = self.exhibits.filter({ exhibit in result.contains(exhibit.id) })
-                    print("Action: fetchData, inferredExhibits: \(self.inferredExhibits)")
                     self.performSegue(withIdentifier: "exhibitResult", sender: nil)
                 }
             case .failure(let error):
