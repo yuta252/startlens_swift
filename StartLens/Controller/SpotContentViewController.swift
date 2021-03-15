@@ -78,6 +78,7 @@ class SpotContentViewController: UIViewController {
     var isIntroExtend = false
     var reviews = [Review]()
     var exhibits: [Exhibit]?
+    var format = ISO8601DateFormatter()
     
     var delegate: SpotDetailDelegate?
     
@@ -153,6 +154,9 @@ class SpotContentViewController: UIViewController {
             self.reviewContinueButton.isHidden = true
         }
         
+        // Date format
+        format.formatOptions = .withFullDate
+        
         ratingItemText.text = "spotRatingItemText".localized
         spotIntroTitle.text = "spotIntroTitle".localized
         basicInfoTitle.text = "spotBasicInfoTitle".localized
@@ -184,8 +188,8 @@ class SpotContentViewController: UIViewController {
                 self.spotImageView.setNeedsLayout()
             }
         })
-        // TODO: 多言語対応にする
-        self.spotTitle.text = spot?.multiProfiles[0].username
+        let multiProfile: MultiProfile = self.spot!.selectMultiProfileByLang(lang: self.language)
+        self.spotTitle.text = multiProfile.username
         self.category.text = Constants.majorCategoryMap[spot?.profile.majorCategory ?? 0]
         self.ratingStar.settings.updateOnTouch = false
         self.ratingStar.rating = Double(spot?.profile.rating ?? 0.0)
@@ -195,13 +199,13 @@ class SpotContentViewController: UIViewController {
         if let isFavorite = spot?.isFavorite {
             self.isFavorite = isFavorite
         }
-        self.spotIntroView.text = spot?.multiProfiles[0].selfIntro
-        self.address.text = (spot?.multiProfiles[0].addressPrefecture ?? "") + (spot?.multiProfiles[0].addressCity ?? "") + (spot?.multiProfiles[0].addressCity ?? "")
+        self.spotIntroView.text = multiProfile.selfIntro
+        self.address.text = multiProfile.addressPrefecture + multiProfile.addressCity + multiProfile.addressCity
         self.telephone.text = spot?.profile.telephone
         self.spotUrl.text = spot?.profile.companySite
-        self.fee.text = spot?.multiProfiles[0].entranceFee
-        self.businessHour.text = spot?.multiProfiles[0].businessHours
-        self.holiday.text = spot?.multiProfiles[0].holiday
+        self.fee.text = multiProfile.entranceFee
+        self.businessHour.text = multiProfile.businessHours
+        self.holiday.text = multiProfile.holiday
     }
     
     func setupTableView() {
@@ -313,7 +317,8 @@ extension SpotContentViewController:UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: reviewは最大3つ表示する
-        return self.reviews.count
+        // return self.reviews.count
+        return min(self.reviews.count, 3)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -322,8 +327,9 @@ extension SpotContentViewController:UITableViewDataSource {
 
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.writerName.text = self.reviews[indexPath.row].tourist.username
-        // TODO: 日付の整形
-        cell.postedDate.text = self.reviews[indexPath.row].createdAt
+        // Format date to string
+        let date = format.date(from: self.reviews[indexPath.row].createdAt)
+        cell.postedDate.text = format.string(from: date!)
         // Cosmos
         cell.ratingStar.settings.updateOnTouch = false
         cell.ratingStar.rating = Double(self.reviews[indexPath.row].rating)
@@ -342,16 +348,16 @@ extension SpotContentViewController:UITableViewDelegate {
 
 extension SpotContentViewController:UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // TODO: 表示件数調整
         print("Action: numberOfItemsInSection, exhibits count: \(exhibits?.count ?? 0)")
-        return self.exhibits?.count ?? 0
+        let exhibitsNum = self.exhibits?.count ?? 0
+        return min(exhibitsNum, 4)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // TODO: CollectionViewが呼ばれないため修正を検討
         print("Action: CellForItemAt, Message: cellForItemAt is called")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecommendCell", for: indexPath) as! RecommendCell
-        cell.exhibitName.text = self.exhibits?[indexPath.row].multiExhibits[0].name
+        let multiExhibit = self.exhibits?[indexPath.row].selectMultiExhibitByLang(lang: language)
+        cell.exhibitName.text = multiExhibit?.name
         let exhibitImageURL: URL?
         if let url = self.exhibits?[indexPath.row].pictures[0].url {
             exhibitImageURL = URL(string: url)

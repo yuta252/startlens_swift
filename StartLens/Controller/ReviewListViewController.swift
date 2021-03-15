@@ -23,6 +23,7 @@ class ReviewListViewController: UIViewController {
     var spotId: Int?
     var language = String()
     var reviews = [Review]()
+    var format = ISO8601DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,10 @@ class ReviewListViewController: UIViewController {
             self.noReview.isHidden = false
             self.noReview.isHidden = false
         }
+        
+        // Date format
+        format.formatOptions = .withFullDate
+
         reviewTitleText.text = "revewListTitle".localized
         noReview.text = "noReviewText".localized
     }
@@ -88,8 +93,9 @@ extension ReviewListViewController: UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "WriterCell", for: indexPath) as! WriterCell
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.writerName.text = reviews[indexPath.row].tourist.username
-        // TODO: 日付整形
-        cell.postedDate.text = reviews[indexPath.row].createdAt
+        // Format date to string
+        let date = format.date(from: self.reviews[indexPath.row].createdAt)
+        cell.postedDate.text = format.string(from: date!)
         // Cosmos
         cell.ratingStar.settings.updateOnTouch = false
         cell.ratingStar.rating = Double(reviews[indexPath.row].rating)

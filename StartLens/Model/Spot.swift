@@ -17,6 +17,25 @@ struct Spot: Codable {
     var multiProfiles: [MultiProfile]
     var reviews: [Review]
     
+    func selectMultiProfileByLang(lang: String) -> MultiProfile {
+        // 1st priority
+        var multiProfile = self.multiProfiles.filter{ (multiProfile) in
+            return multiProfile.lang == lang
+        }
+        if (!multiProfile.isEmpty) { return multiProfile[0] }
+        // default language
+        multiProfile = self.multiProfiles.filter{ (multiProfile) in
+            return multiProfile.lang == "en"
+        }
+        if (!multiProfile.isEmpty) { return multiProfile[0] }
+        // japanese
+        multiProfile = self.multiProfiles.filter{ (multiProfile) in
+            return multiProfile.lang == "ja"
+        }
+        if (!multiProfile.isEmpty) { return multiProfile[0] }
+        return multiProfiles[0]
+    }
+    
     mutating func addFavorite(token: String, spotId: Int) {
         /**
          - Parameters:

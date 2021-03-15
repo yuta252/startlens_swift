@@ -16,7 +16,10 @@ class ExhibitListViewController: UIViewController {
     @IBOutlet weak var recommendTitleText: UILabel!
     @IBOutlet weak var recommendCollectionView: UICollectionView!
     @IBOutlet weak var noExhibit: UILabel!
-    @IBOutlet weak var collectionIViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var contentHeight: NSLayoutConstraint!
+    @IBOutlet weak var collectionHeight: NSLayoutConstraint!
+    @IBOutlet weak var contentView: UIView!
+    
     
     var token = String()
     var spotId: Int?
@@ -27,10 +30,20 @@ class ExhibitListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Initial settings
+        language = Language.getLanguage()
         setupUI()
         setupCollectionView()
         // fetchData()
         recommendCollectionView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        collectionHeight.constant = recommendCollectionView.contentSize.height
+        print("Action: viewDidAppear, collectionHeight: \(collectionHeight!)")
+        // Set content height
+        contentHeight.constant = collectionHeight.constant + 80
+        print("Action: viewDidAppear, contentHeight: \(contentHeight!)")
     }
     
     @IBAction func backAction(_ sender: Any) {
@@ -49,6 +62,7 @@ class ExhibitListViewController: UIViewController {
     }
     
     func setupUI() {
+        // recommendCollectionView.isScrollEnabled = false
         if self.exhibits.count != 0 {
             self.noExhibit.isHidden = true
         } else {
@@ -76,8 +90,8 @@ extension ExhibitListViewController:UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("Action: CellForItemAt, Message: cellForItemAt is called")
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RecommendCell", for: indexPath) as! RecommendCell
-        // TODO: 多言語対応
-        cell.exhibitName.text = exhibits[indexPath.row].multiExhibits[0].name
+        let multiExhibit = exhibits[indexPath.row].selectMultiExhibitByLang(lang: language)
+        cell.exhibitName.text = multiExhibit.name
         let exhibitImageURL = URL(string: self.exhibits[indexPath.row].pictures[0].url)
         cell.exhibitImageView?.sd_setImage(with: exhibitImageURL, completed: { (image, error, _, _) in
             if error == nil{
