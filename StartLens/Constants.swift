@@ -14,7 +14,7 @@ enum Environment: String {
 
 struct Constants {
     // To be changed by environment
-    static let environment = Environment.test
+    static let environment = Environment.production
       
     static let appName = "Start Lens"
     static let yearList = ["1941", "1942", "1943", "1944", "1945", "1946", "1947", "1948", "1949", "1950",
@@ -45,6 +45,21 @@ struct Constants {
             }
         }
     }
+
+    static var learningURL: String {
+        get {
+            switch Self.environment {
+            case Environment.development:
+                return "http://0.0.0.0:3100/api/v1/"
+            case Environment.test:
+                return "http://startlens.local/api/v1/"
+            case Environment.production:
+                //return "http://learning.startlens.jp/api/v1/"
+                return "http://startlens.local:3100/api/v1/"
+            }
+        }
+    }
+
     static let touristLoadURL = "tourist/load"
     static let touristsURL = "tourist/tourists"
     static let tokenURL = "tourist/token"
