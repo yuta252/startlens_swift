@@ -130,6 +130,7 @@
 		E9EB7AE72466F6DE00EDE7F2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9F623F125F8789E00E71851 /* Picture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
 		E9F623F425F878D400E71851 /* MultiExhibit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiExhibit.swift; sourceTree = "<group>"; };
+		E9F623F925FFB36200E71851 /* embedding_20210210_051144.tflite */ = {isa = PBXFileReference; lastKnownFileType = file; name = embedding_20210210_051144.tflite; path = ../../../../../Desktop/embedding_20210210_051144.tflite; sourceTree = "<group>"; };
 		E9F8A1BA249120CD0082F9AE /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		E9F8A1BC24912E2C0082F9AE /* WriterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriterCell.swift; sourceTree = "<group>"; };
 		E9F8A1BD24912E2C0082F9AE /* WriterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WriterCell.xib; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 		E91859C5249A6CF700A26A32 /* TFLite */ = {
 			isa = PBXGroup;
 			children = (
+				E9F623F925FFB36200E71851 /* embedding_20210210_051144.tflite */,
 				E91859C6249A6D3800A26A32 /* embedding_20200117_123222.tflite */,
 			);
 			path = TFLite;

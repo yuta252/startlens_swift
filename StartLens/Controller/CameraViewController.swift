@@ -73,7 +73,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         do {
             print("Action: viewDidAppear, Message: Load tensorflow model")
             // To be changed depends on learning
-            let modelPath = Bundle.main.path(forResource: "embedding_20200117_123222", ofType: "tflite")!
+            let modelPath = Bundle.main.path(forResource: "embedding_20210210_051144", ofType: "tflite")!
             var options = Interpreter.Options()
             options.threadCount = THREAD_COUNT
             // Generate interpreter
@@ -170,6 +170,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
 
         // Confirm pixel format
         let sourcePixelFormat = CVPixelBufferGetPixelFormatType(pixelBuffer)
+        print("Action: predict, sourcePixelFormat: \(sourcePixelFormat)")
         assert(sourcePixelFormat == kCVPixelFormatType_32ARGB ||
             sourcePixelFormat == kCVPixelFormatType_32BGRA ||
             sourcePixelFormat == kCVPixelFormatType_32RGBA)
@@ -189,6 +190,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 cropPixelBuffer,
                 byteCount: BATCH_SIZE * INPUT_WIDTH * INPUT_HEIGHT * INPUT_CHANNELS, isModelQuantized: inputTensor.dataType == .uInt8)
             // Execute interpretation
+            print("Action: predict, rgbData: \(rgbData!)")
+            print("Action: predict, rgbData count: \(rgbData!.count)")
             try interpreter.copy(rgbData!, toInputAt: 0)
             try interpreter.invoke()
             outputTensor = try interpreter.output(at: 0)
@@ -228,21 +231,25 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             count: count, deallocator: .none)
 
         // from bufferData to rgbBytes
-        var rgbBytes = [UInt8](repeating: 0, count: byteCount)
+        var bgrBytes = [UInt8](repeating: 0, count: byteCount)
         var index = 0
         for component in bufferData.enumerated() {
           let offset = component.offset
           let isAlphaComponent = (offset % 4) == 3
           guard !isAlphaComponent else {continue}
-          rgbBytes[index] = component.element
+          bgrBytes[index] = component.element
           index += 1
         }
+        print("Action: buffer2rgbData, bgrBytes: \(bgrBytes[0...100])")
+        print("Action: buffer2rgbData, length of bgrBytes: \(bgrBytes.count)")
+        // BGRからRGBへ変換
+        let rgbBytes: [UInt8] = convertBgr2Rgb(bgrBytes: bgrBytes)
+        print("Action: buffer2rgbData, rgbBytes: \(rgbBytes[0...100])")
         // from rgbBytes to rgbData
         if isModelQuantized {
             print("Action: buffer2rgbData, Message: quantized model data")
             return Data(bytes: rgbBytes)
         }
-        //return Data(copyingBufferOf: rgbBytes.map{Float($0)/255.0})
         print("Action: buffer2rgbData, Message: float model data")
         return Data(copyingBufferOf: rgbBytes.map{Float($0)/1.0})
     }
@@ -268,8 +275,18 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         return pixelBuffer
     }
     
+    func convertBgr2Rgb(bgrBytes: [UInt8]) -> [UInt8] {
+        var rgbBytes = [UInt8]()
+        for i in stride(from: 0, to: bgrBytes.count, by: 3) {
+            rgbBytes.append(bgrBytes[i + 2])
+            rgbBytes.append(bgrBytes[i + 1])
+            rgbBytes.append(bgrBytes[i])
+        }
+        return rgbBytes
+    }
+    
     func fetchData(result: [Float]) {
-        let url = Constants.baseURL + Constants.inferenceURL
+        let url = Constants.learningURL + Constants.inferenceURL
         print("Action: fetchData, url: \(url)")
         let parameters = ["spotId": self.spotId, "data": result] as [String : Any]
         print("Action: fetchData, parameters: \(parameters)")
@@ -319,6 +336,12 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             self.picturePreview.image = uiImage
             // Conver to CVPixelBuffer
             let pixelBufferImage = buffer(from: uiImage!)
+            
+            // TODO: test case
+            // let picturePath = Bundle.main.path(forResource: "04a16fec-645a-4e9a-99b8-126098f90f75", ofType: "jpg")!
+            // let uiImage = UIImage(contentsOfFile: picturePath)
+            // let pixelBufferImage = buffer(from: uiImage!)
+
             // Predict image data
             predict(pixelBufferImage!)
         }
@@ -332,7 +355,7 @@ extension CVPixelBuffer {
        let imageWidth = CVPixelBufferGetWidth(self)
        let imageHeight = CVPixelBufferGetHeight(self)
        let pixelBufferType = CVPixelBufferGetPixelFormatType(self)
-       assert(pixelBufferType == kCVPixelFormatType_32BGRA)
+       // assert(pixelBufferType == kCVPixelFormatType_32BGRA)
        let inputImageRowBytes = CVPixelBufferGetBytesPerRow(self)
        let imageChannels = 4
        let thumbnailSize = min(imageWidth, imageHeight)
